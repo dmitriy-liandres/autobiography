@@ -2,12 +2,14 @@ package com.autobiography.db;
 
 import com.autobiography.core.Person;
 import com.google.common.base.Optional;
+import com.google.inject.Inject;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class PersonDAO extends AbstractDAO<Person> {
+    @Inject
     public PersonDAO(SessionFactory factory) {
         super(factory);
     }

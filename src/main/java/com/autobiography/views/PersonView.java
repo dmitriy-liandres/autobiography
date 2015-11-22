@@ -4,26 +4,12 @@ import com.autobiography.core.Person;
 
 import io.dropwizard.views.View;
 
-public class PersonView extends View {
+public class PersonView extends GenericView {
     private final Person person;
 
-    public enum Template {
-        FREEMARKER("freemarker/person.ftl"),
-        MUSTACHE("mustache/person.mustache");
 
-        private String templateName;
-
-        Template(String templateName) {
-            this.templateName = templateName;
-        }
-
-        public String getTemplateName() {
-            return templateName;
-        }
-    }
-
-    public PersonView(PersonView.Template template, Person person) {
-        super(template.getTemplateName());
+    public PersonView(Person person) {
+        super("person.ftl");
         this.person = person;
     }
 

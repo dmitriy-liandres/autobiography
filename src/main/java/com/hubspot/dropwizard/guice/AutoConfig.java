@@ -1,5 +1,6 @@
 package com.hubspot.dropwizard.guice;
 
+import com.autobiography.db.PersonDAO;
 import com.google.common.base.Optional;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Key;
@@ -22,9 +23,11 @@ import org.reflections.util.FilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
+import java.awt.event.ActionEvent;
 import java.lang.reflect.Modifier;
 import java.util.Set;
 
@@ -51,7 +54,7 @@ public class AutoConfig {
   public void run(Environment environment, Injector injector) {
     addHealthChecks(environment, injector);
     addProviders(environment);
-    addResources(environment);
+    addResources(environment, injector);
     addTasks(environment, injector);
     addManaged(environment, injector);
     addParamConverterProviders(environment);
@@ -107,12 +110,13 @@ public class AutoConfig {
     }
   }
 
-  private void addResources(Environment environment) {
+  private void addResources(Environment environment, Injector injector) {
     Set<Class<?>> resourceClasses = reflections
         .getTypesAnnotatedWith(Path.class);
     for (Class<?> resource : resourceClasses) {
       if(Resource.isAcceptable(resource)) {
-        environment.jersey().register(resource);
+       Object resourceObj = injector.getInstance(resource);
+        environment.jersey().register(resourceObj);
         logger.info("Added resource class: {}", resource);
       }
     }

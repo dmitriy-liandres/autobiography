@@ -1,7 +1,6 @@
 package com.autobiography.resources;
 
-import com.autobiography.auth.ExampleAuthenticator;
-import com.autobiography.auth.ExampleAuthorizer;
+
 import com.autobiography.core.User;
 import io.dropwizard.auth.*;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class ProtectedResourceTest {
-    private static final BasicCredentialAuthFilter<User> BASIC_AUTH_HANDLER =
+  /*  private static final BasicCredentialAuthFilter<User> BASIC_AUTH_HANDLER =
             new BasicCredentialAuthFilter.Builder<User>()
                     .setAuthenticator(new ExampleAuthenticator())
                     .setAuthorizer(new ExampleAuthorizer())
@@ -75,5 +74,5 @@ public class ProtectedResourceTest {
         } catch (WebApplicationException e) {
             assertThat(e.getResponse().getStatus()).isEqualTo(403);
         }
-    }
+    }*/
 }

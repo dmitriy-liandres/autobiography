@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="com.example.views.PersonView" -->
+<#-- @ftlvariable name="" type="com.autobiography.views.PersonView" -->
 <html>
     <body>
         <!-- calls getPerson().getFullName() and sanitizes it -->

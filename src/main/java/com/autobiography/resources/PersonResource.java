@@ -19,12 +19,12 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
-    @Inject
+
     private PersonDAO peopleDAO;
 
-
-    public PersonResource() {
-
+    @Inject
+    public PersonResource(PersonDAO peopleDAO) {
+        this.peopleDAO = peopleDAO;
     }
 
     @GET
@@ -38,16 +38,9 @@ public class PersonResource {
     @UnitOfWork
     @Produces(MediaType.TEXT_HTML)
     public PersonView getPersonViewFreemarker(@PathParam("personId") LongParam personId) {
-        return new PersonView(PersonView.Template.FREEMARKER, findSafely(personId.get()));
+        return new PersonView(findSafely(personId.get()));
     }
 
-    @GET
-    @Path("/view_mustache")
-    @UnitOfWork
-    @Produces(MediaType.TEXT_HTML)
-    public PersonView getPersonViewMustache(@PathParam("personId") LongParam personId) {
-        return new PersonView(PersonView.Template.MUSTACHE, findSafely(personId.get()));
-    }
 
     private Person findSafely(long personId) {
         final Optional<Person> person = peopleDAO.findById(personId);

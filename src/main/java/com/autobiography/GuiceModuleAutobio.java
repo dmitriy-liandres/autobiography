@@ -10,11 +10,11 @@ import org.hibernate.SessionFactory;
  * Author Dmitriy Liandres
  * Date 08.10.2015
  */
-public class GuiceModule extends AbstractModule {
+public class GuiceModuleAutobio extends AbstractModule {
 
     private HibernateBundle<AutobiographyConfiguration> hibernateBundle;
 
-    public GuiceModule(HibernateBundle<AutobiographyConfiguration> hibernateBundle) {
+    public GuiceModuleAutobio(HibernateBundle<AutobiographyConfiguration> hibernateBundle) {
         this.hibernateBundle = hibernateBundle;
     }
 
@@ -24,7 +24,6 @@ public class GuiceModule extends AbstractModule {
     }
 
     @Provides
-    @Singleton
     public SessionFactory constructSessionFactory() {
         return hibernateBundle.getSessionFactory();
     }
