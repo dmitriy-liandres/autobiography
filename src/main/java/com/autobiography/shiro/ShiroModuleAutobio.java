@@ -9,7 +9,6 @@ import org.apache.shiro.guice.ShiroModule;
  */
 public class ShiroModuleAutobio extends ShiroModule {
 
-
     @Override
     protected void configureShiro() {
 

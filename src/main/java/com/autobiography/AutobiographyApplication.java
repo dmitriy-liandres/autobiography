@@ -1,7 +1,9 @@
 package com.autobiography;
 
 import com.autobiography.core.Person;
+import com.autobiography.filters.UserAuthenticationFilter;
 import com.autobiography.shiro.ShiroModuleAutobio;
+import com.google.inject.Provider;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -15,12 +17,25 @@ import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.guice.aop.ShiroAopModule;
+import org.eclipse.jetty.server.handler.ContextHandler;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.ServletContext;
+import java.util.EnumSet;
 import java.util.Map;
 
 public class AutobiographyApplication extends Application<AutobiographyConfiguration> {
 
     private GuiceBundle<AutobiographyConfiguration> guiceBundle;
+
+    private ServletContext servletContext = new ContextHandler.NoContext();
+
+    private Provider<ServletContext>  servletContextProvider=new Provider<ServletContext>() {
+        @Override
+        public ServletContext get() {
+            return servletContext;
+        }
+    };
 
 
     public static void main(String[] args) throws Exception {
@@ -86,6 +101,8 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
 
         org.apache.shiro.mgt.SecurityManager securityManager = guiceBundle.getInjector().getInstance(org.apache.shiro.mgt.SecurityManager.class);
         SecurityUtils.setSecurityManager(securityManager);
+
+        servletContext = environment.getApplicationContext().getServletContext();
 //
 //        final Template template = configuration.buildTemplate();
 //
@@ -94,8 +111,8 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
 //        environment.jersey().register(RolesAllowedDynamicFeature.class);
 //
 //
-//        environment.servlets().addFilter("UserAuthenticationFilter", new UserAuthenticationFilter())
-//                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+        environment.servlets().addFilter("UserAuthenticationFilter", new UserAuthenticationFilter())
+                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 
 
     }

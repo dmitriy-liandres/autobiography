@@ -1,7 +1,10 @@
 package com.autobiography.filters;
 
+import org.eclipse.jetty.server.Response;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -30,8 +33,14 @@ public class UserAuthenticationFilter implements Filter {
 //            forwardToSupportedUrl(servletRequest, servletResponse);
 //        }
 //        //todo let's do not filter for now
-        filterChain.doFilter(servletRequest, servletResponse);
 
+        filterChain.doFilter(servletRequest, servletResponse);
+//        int responseStatus = ((Response) servletResponse).getStatus();
+//        if( responseStatus == javax.ws.rs.core.Response.Status.UNAUTHORIZED.getStatusCode()
+//                || responseStatus == javax.ws.rs.core.Response.Status.FORBIDDEN.getStatusCode()){
+         //   forwardToLogin(servletRequest, servletResponse);
+       // }
+        //
 
     }
 
@@ -41,7 +50,7 @@ public class UserAuthenticationFilter implements Filter {
     }
 
     //Forward the request to / resource to make a client redirect to login page
-    private void forwardToSupportedUrl(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
+    private void forwardToLogin(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         request.getRequestDispatcher("/").forward(servletRequest, servletResponse);
     }

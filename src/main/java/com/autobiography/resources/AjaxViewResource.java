@@ -27,9 +27,7 @@ public class AjaxViewResource {
     @GET
     @Path("profile")
     @Produces(MediaType.TEXT_HTML)
-
     public ProfileView getProfileView() {
-        SecurityUtils.getSubject();
         return new ProfileView();
     }
 

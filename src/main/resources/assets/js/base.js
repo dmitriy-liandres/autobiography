@@ -5,7 +5,7 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
         $routeProvider.
-            when('/login', {
+            when('/', {
                 templateUrl: 'ajax/login',
                 controller: 'AutoBioController'
             }).when('/profile', {
@@ -13,6 +13,6 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
                 controller: 'AutoBioController'
             }).
             otherwise({
-                redirectTo: '/login'
+                redirectTo: '/'
             });
     }]);

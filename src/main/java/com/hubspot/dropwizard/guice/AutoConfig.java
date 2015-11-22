@@ -1,6 +1,5 @@
 package com.hubspot.dropwizard.guice;
 
-import com.autobiography.db.PersonDAO;
 import com.google.common.base.Optional;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Key;
@@ -53,7 +52,7 @@ public class AutoConfig {
 
   public void run(Environment environment, Injector injector) {
     addHealthChecks(environment, injector);
-    addProviders(environment);
+    addProviders(environment, injector);
     addResources(environment, injector);
     addTasks(environment, injector);
     addManaged(environment, injector);
@@ -101,11 +100,12 @@ public class AutoConfig {
     }
   }
 
-  private void addProviders(Environment environment) {
+  private void addProviders(Environment environment, Injector injector) {
     Set<Class<?>> providerClasses = reflections
         .getTypesAnnotatedWith(Provider.class);
     for (Class<?> provider : providerClasses) {
-      environment.jersey().register(provider);
+      Object providerObj = injector.getInstance(provider);
+      environment.jersey().register(providerObj);
       logger.info("Added provider class: {}", provider);
     }
   }

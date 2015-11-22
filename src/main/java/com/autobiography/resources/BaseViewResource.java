@@ -31,7 +31,8 @@ public class BaseViewResource {
     @GET
     @Path("profile")
     @Produces(MediaType.TEXT_HTML)
-    //@RequiresPermissions("account:create")
+
+    @RequiresPermissions("account:create")
     public BaseView getPersonViewFreemarker() {
         return new BaseView();
     }
