@@ -22,11 +22,9 @@ import org.reflections.util.FilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
-import java.awt.event.ActionEvent;
 import java.lang.reflect.Modifier;
 import java.util.Set;
 
@@ -46,14 +44,14 @@ public class AutoConfig {
     }
 
     cfgBldr.filterInputsBy(filterBuilder).setScanners(
-        new SubTypesScanner(), new TypeAnnotationsScanner());
+            new SubTypesScanner(), new TypeAnnotationsScanner());
     this.reflections = new Reflections(cfgBldr);
   }
 
   public void run(Environment environment, Injector injector) {
     addHealthChecks(environment, injector);
-    addProviders(environment, injector);
-    addResources(environment, injector);
+    addProviders(environment);
+    addResources(environment);
     addTasks(environment, injector);
     addManaged(environment, injector);
     addParamConverterProviders(environment);
@@ -66,7 +64,7 @@ public class AutoConfig {
 
   private void addManaged(Environment environment, Injector injector) {
     Set<Class<? extends Managed>> managedClasses = reflections
-        .getSubTypesOf(Managed.class);
+            .getSubTypesOf(Managed.class);
     for (Class<? extends Managed> managed : managedClasses) {
       Optional<? extends Managed> maybeManaged = getFromGuiceIfPossible(injector, managed);
       if (maybeManaged.isPresent()) {
@@ -78,7 +76,7 @@ public class AutoConfig {
 
   private void addTasks(Environment environment, Injector injector) {
     Set<Class<? extends Task>> taskClasses = reflections
-        .getSubTypesOf(Task.class);
+            .getSubTypesOf(Task.class);
     for (Class<? extends Task> task : taskClasses) {
       Optional<? extends Task> maybeTask = getFromGuiceIfPossible(injector, task);
       if (maybeTask.isPresent()) {
@@ -90,7 +88,7 @@ public class AutoConfig {
 
   private void addHealthChecks(Environment environment, Injector injector) {
     Set<Class<? extends InjectableHealthCheck>> healthCheckClasses = reflections
-        .getSubTypesOf(InjectableHealthCheck.class);
+            .getSubTypesOf(InjectableHealthCheck.class);
     for (Class<? extends InjectableHealthCheck> healthCheck : healthCheckClasses) {
       Optional<? extends InjectableHealthCheck> maybeHealthCheck = getFromGuiceIfPossible(injector, healthCheck);
       if (maybeHealthCheck.isPresent()) {
@@ -100,23 +98,21 @@ public class AutoConfig {
     }
   }
 
-  private void addProviders(Environment environment, Injector injector) {
+  private void addProviders(Environment environment) {
     Set<Class<?>> providerClasses = reflections
-        .getTypesAnnotatedWith(Provider.class);
+            .getTypesAnnotatedWith(Provider.class);
     for (Class<?> provider : providerClasses) {
-      Object providerObj = injector.getInstance(provider);
-      environment.jersey().register(providerObj);
+      environment.jersey().register(provider);
       logger.info("Added provider class: {}", provider);
     }
   }
 
-  private void addResources(Environment environment, Injector injector) {
+  private void addResources(Environment environment) {
     Set<Class<?>> resourceClasses = reflections
-        .getTypesAnnotatedWith(Path.class);
+            .getTypesAnnotatedWith(Path.class);
     for (Class<?> resource : resourceClasses) {
       if(Resource.isAcceptable(resource)) {
-       Object resourceObj = injector.getInstance(resource);
-        environment.jersey().register(resourceObj);
+        environment.jersey().register(resource);
         logger.info("Added resource class: {}", resource);
       }
     }
@@ -124,7 +120,7 @@ public class AutoConfig {
 
   private void addBundles(Bootstrap<?> bootstrap, Injector injector) {
     Set<Class<? extends Bundle>> bundleClasses = reflections
-        .getSubTypesOf(Bundle.class);
+            .getSubTypesOf(Bundle.class);
     for (Class<? extends Bundle> bundle : bundleClasses) {
       Optional<? extends Bundle> maybeBundle = getFromGuiceIfPossible(injector, bundle);
       if (maybeBundle.isPresent()) {
@@ -137,7 +133,7 @@ public class AutoConfig {
   @SuppressWarnings("unchecked")
   private void addConfiguredBundles(Bootstrap<?> bootstrap, Injector injector) {
     Set<Class<? extends ConfiguredBundle>> configuredBundleClasses = reflections
-        .getSubTypesOf(ConfiguredBundle.class);
+            .getSubTypesOf(ConfiguredBundle.class);
     for (Class<? extends ConfiguredBundle> configuredBundle : configuredBundleClasses) {
       if (configuredBundle != GuiceBundle.class) {
         Optional<? extends ConfiguredBundle> maybeConfiguredBundle = getFromGuiceIfPossible(injector, configuredBundle);
@@ -151,7 +147,7 @@ public class AutoConfig {
 
   private void addParamConverterProviders(Environment environment) {
     Set<Class<? extends ParamConverterProvider>> providerClasses = reflections
-        .getSubTypesOf(ParamConverterProvider.class);
+            .getSubTypesOf(ParamConverterProvider.class);
     for (Class<?> provider : providerClasses) {
       environment.jersey().register(provider);
       logger.info("Added ParamConverterProvider class: {}", provider);

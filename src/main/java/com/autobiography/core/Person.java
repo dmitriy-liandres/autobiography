@@ -1,21 +1,17 @@
 package com.autobiography.core;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "people")
+@Table(name = "person")
 @NamedQueries({
         @NamedQuery(
-                name = "com.example.helloworld.core.Person.findAll",
+                name = "com.autobiography.core.Person.findAll",
                 query = "SELECT p FROM Person p"
+        ),
+        @NamedQuery(
+                name = "com.autobiography.core.Person.findByUsername",
+                query = "SELECT p FROM Person p where username = :username"
         )
 })
 public class Person {
@@ -23,18 +19,13 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "fullName", nullable = false)
-    private String fullName;
+    @Column(name = "username", nullable = false , unique = true)
+    private String username;
 
-    @Column(name = "jobTitle", nullable = false)
-    private String jobTitle;
+    @Column(name = "password", nullable = false)
+    private String password;
 
     public Person() {
-    }
-
-    public Person(String fullName, String jobTitle) {
-        this.fullName = fullName;
-        this.jobTitle = jobTitle;
     }
 
     public long getId() {
@@ -45,40 +36,19 @@ public class Person {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getJobTitle() {
-        return jobTitle;
+    public String getPassword() {
+        return password;
     }
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Person)) {
-            return false;
-        }
-
-        final Person that = (Person) o;
-
-        return Objects.equals(this.id, that.id) &&
-                Objects.equals(this.fullName, that.fullName) &&
-                Objects.equals(this.jobTitle, that.jobTitle);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, fullName, jobTitle);
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

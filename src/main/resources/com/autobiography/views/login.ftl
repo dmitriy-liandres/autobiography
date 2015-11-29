@@ -15,10 +15,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="inputEmail3" class="sr-only">Username</label>
+                <label for="inputEmail3" class="sr-only">Email</label>
 
                 <div class="col-sm-12">
-                    <input type="text" name="username" class="form-control"  placeholder="Username">
+                    <input type="text" name="email" class="form-control"  placeholder="Email" value="username">
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
 
                 <div class="col-sm-12">
                     <input type="password" name="password" class="form-control"
-                           placeholder="Password">
+                           placeholder="Password" value="password">
                 </div>
 
             </div>

@@ -1,5 +1,6 @@
 package com.hubspot.dropwizard.guice;
 
+import com.autobiography.shiro.ShiroModuleAutobio;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -86,19 +87,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
 
     @Override
     public void initialize(Bootstrap<?> bootstrap) {
-        if (configurationClass.isPresent()) {
-            dropwizardEnvironmentModule = new DropwizardEnvironmentModule<>(configurationClass.get());
-        } else {
-            dropwizardEnvironmentModule = new DropwizardEnvironmentModule<>(Configuration.class);
-        }
-        modules.add(new ServletModule());
-        modules.add(dropwizardEnvironmentModule);
 
-        initInjector();
-
-        if (autoConfig != null) {
-            autoConfig.initialize(bootstrap, injector);
-        }
     }
 
 
@@ -113,6 +102,22 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
 
     @Override
     public void run(final T configuration, final Environment environment) {
+
+        if (configurationClass.isPresent()) {
+            dropwizardEnvironmentModule = new DropwizardEnvironmentModule<>(configurationClass.get());
+        } else {
+            dropwizardEnvironmentModule = new DropwizardEnvironmentModule<>(Configuration.class);
+        }
+        modules.add(new ServletModule());
+        modules.add(dropwizardEnvironmentModule);
+        modules.add(new ShiroModuleAutobio(environment.getApplicationContext().getServletContext()));
+
+        initInjector();
+
+//        if (autoConfig != null) {
+//            autoConfig.initialize(bootstrap, injector);
+//        }
+//
         JerseyUtil.registerGuiceBound(injector, environment.jersey());
         JerseyUtil.registerGuiceFilter(environment);
         setEnvironment(configuration, environment);

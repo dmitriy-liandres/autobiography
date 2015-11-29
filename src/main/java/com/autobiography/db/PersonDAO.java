@@ -18,11 +18,15 @@ public class PersonDAO extends AbstractDAO<Person> {
         return Optional.fromNullable(get(id));
     }
 
+    public Person findByUsername(String username) {
+        return uniqueResult(namedQuery("com.autobiography.core.Person.findByUsername").setString("username", username));
+    }
+
     public Person create(Person person) {
         return persist(person);
     }
 
     public List<Person> findAll() {
-        return list(namedQuery("com.example.helloworld.core.Person.findAll"));
+        return list(namedQuery("com.autobiography.core.Person.findAll"));
     }
 }

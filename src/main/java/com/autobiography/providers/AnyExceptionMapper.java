@@ -18,7 +18,7 @@ public class AnyExceptionMapper implements ExceptionMapper<Throwable> {
     public AnyExceptionMapper() throws URISyntaxException {
         this.startPageUri = new URI("/");
         //todo set correct url
-        this.errorPageUri = new URI("/error");
+        this.errorPageUri = new URI("/");
     }
 
     public Response toResponse(Throwable ex) {
@@ -26,14 +26,15 @@ public class AnyExceptionMapper implements ExceptionMapper<Throwable> {
         switch (ex.getClass().getSimpleName()) {
             case "UnauthenticatedException":
             case "AuthenticationException":
+            case "UnknownAccountException":
+            case "UnauthorizedException":
                 redirectUri = startPageUri;
                 break;
             default:
                 redirectUri = errorPageUri;
         }
 
-        return Response.temporaryRedirect(redirectUri).
-                build();
+        return Response.seeOther(redirectUri). build();
     }
 
 

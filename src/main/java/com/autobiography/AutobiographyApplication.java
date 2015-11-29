@@ -18,24 +18,23 @@ import io.dropwizard.views.ViewBundle;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.guice.aop.ShiroAopModule;
 import org.eclipse.jetty.server.handler.ContextHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import java.util.EnumSet;
 import java.util.Map;
 
+//import com.yammer.dropwizard.db.DatabaseConfiguration;
+//import com.yammer.dropwizard.migrations.ManagedLiquibase;
+
 public class AutobiographyApplication extends Application<AutobiographyConfiguration> {
+
+    private static final Logger logger = LoggerFactory.getLogger(AutobiographyApplication.class);
 
     private GuiceBundle<AutobiographyConfiguration> guiceBundle;
 
-    private ServletContext servletContext = new ContextHandler.NoContext();
-
-    private Provider<ServletContext>  servletContextProvider=new Provider<ServletContext>() {
-        @Override
-        public ServletContext get() {
-            return servletContext;
-        }
-    };
 
 
     public static void main(String[] args) throws Exception {
@@ -62,8 +61,6 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
 
         guiceBundle = GuiceBundle.<AutobiographyConfiguration>newBuilder()
                 .addModule(new GuiceModuleAutobio(hibernateBundle))
-                .addModule(new ShiroModuleAutobio())
-                .addModule(new ShiroAopModule())
                 .enableAutoConfig(getClass().getPackage().getName())
                 .setConfigClass(AutobiographyConfiguration.class)
                 .build();
@@ -94,15 +91,16 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
                 return configuration.getViewRendererConfiguration();
             }
         });
+
+
     }
 
     @Override
-    public void run(AutobiographyConfiguration configuration, Environment environment) {
+    public void run(AutobiographyConfiguration configuration, Environment environment) throws Exception {
 
         org.apache.shiro.mgt.SecurityManager securityManager = guiceBundle.getInjector().getInstance(org.apache.shiro.mgt.SecurityManager.class);
         SecurityUtils.setSecurityManager(securityManager);
 
-        servletContext = environment.getApplicationContext().getServletContext();
 //
 //        final Template template = configuration.buildTemplate();
 //
@@ -111,9 +109,17 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
 //        environment.jersey().register(RolesAllowedDynamicFeature.class);
 //
 //
-        environment.servlets().addFilter("UserAuthenticationFilter", new UserAuthenticationFilter())
-                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+//        environment.servlets().addFilter("UserAuthenticationFilter", new UserAuthenticationFilter())
+//                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 
+        migrateDB(configuration);
+
+
+    }
+
+
+    public void migrateDB(AutobiographyConfiguration configuration) throws Exception {
+        DBMigration.update(hibernateBundle, configuration);
 
     }
 
