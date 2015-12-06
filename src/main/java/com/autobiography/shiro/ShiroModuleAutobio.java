@@ -2,11 +2,9 @@ package com.autobiography.shiro;
 
 import com.autobiography.shiro.realms.AuthenticatingRealmAutobioProvider;
 import com.google.inject.binder.AnnotatedBindingBuilder;
-import org.apache.shiro.guice.ShiroModule;
 import org.apache.shiro.guice.web.ShiroWebModule;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 
 import javax.servlet.ServletContext;
 

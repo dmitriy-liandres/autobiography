@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for {@link PeopleResource}.
  */
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class PeopleResourceTest {
    /* private static final PersonDAO dao = mock(PersonDAO.class);
     @ClassRule

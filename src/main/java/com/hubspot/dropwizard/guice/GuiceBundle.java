@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
-import com.google.inject.servlet.ServletModule;
+
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -108,7 +108,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
         } else {
             dropwizardEnvironmentModule = new DropwizardEnvironmentModule<>(Configuration.class);
         }
-        modules.add(new ServletModule());
+        modules.add(new JerseyModule());
         modules.add(dropwizardEnvironmentModule);
         modules.add(new ShiroModuleAutobio(environment.getApplicationContext().getServletContext()));
 
@@ -117,7 +117,8 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
 //        if (autoConfig != null) {
 //            autoConfig.initialize(bootstrap, injector);
 //        }
-//
+
+
         JerseyUtil.registerGuiceBound(injector, environment.jersey());
         JerseyUtil.registerGuiceFilter(environment);
         setEnvironment(configuration, environment);

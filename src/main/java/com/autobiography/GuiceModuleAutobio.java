@@ -1,5 +1,7 @@
 package com.autobiography;
 
+import com.autobiography.db.PersonDAO;
+import com.autobiography.resources.BaseViewResource;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -16,15 +18,23 @@ public class GuiceModuleAutobio extends AbstractModule {
 
     public GuiceModuleAutobio(HibernateBundle<AutobiographyConfiguration> hibernateBundle) {
         this.hibernateBundle = hibernateBundle;
+
     }
 
     @Override
     protected void configure() {
-
     }
 
     @Provides
+    @Singleton
     public SessionFactory constructSessionFactory() {
         return hibernateBundle.getSessionFactory();
     }
+
+    @Provides
+    @Singleton
+    public PersonDAO providesPersonDAO() { return new PersonDAO(constructSessionFactory());}
+
+
+
 }

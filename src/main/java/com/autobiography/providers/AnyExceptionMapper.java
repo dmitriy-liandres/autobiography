@@ -31,6 +31,7 @@ public class AnyExceptionMapper implements ExceptionMapper<Throwable> {
                 redirectUri = startPageUri;
                 break;
             default:
+                ex.printStackTrace();
                 redirectUri = errorPageUri;
         }
 

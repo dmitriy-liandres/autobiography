@@ -11,7 +11,7 @@
     </div>
     </#if>
 <p>Please enter your username and password.</p>
-<form class="form-horizontal login-form" role="form" method="post" action="/login" ng-submit="submit()" >
+<form class="form-horizontal login-form" role="form" method="post" action="{{submitAction}}"  >
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -39,7 +39,8 @@
     </div>
     <div class="form-group" style="padding-top: 10px">
         <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-primary" ng-click="submitLogin()">Sign in</button>
+            <button type="submit" class="btn btn-primary" ng-click="submitRegister()">Register</button>
         </div>
     </div>
 </form>

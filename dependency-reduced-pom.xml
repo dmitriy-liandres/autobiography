@@ -120,7 +120,7 @@
     <dependency>
       <groupId>io.dropwizard</groupId>
       <artifactId>dropwizard-testing</artifactId>
-      <version>0.9.0-rc5-SNAPSHOT</version>
+      <version>0.9.1</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -139,29 +139,9 @@
           <artifactId>assertj-core</artifactId>
           <groupId>org.assertj</groupId>
         </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-      <artifactId>jersey-test-framework-provider-inmemory</artifactId>
-      <version>2.22</version>
-      <scope>test</scope>
-      <exclusions>
         <exclusion>
-          <artifactId>javax.servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>junit</artifactId>
-          <groupId>junit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jersey-test-framework-core</artifactId>
-          <groupId>org.glassfish.jersey.test-framework</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>asm-debug-all</artifactId>
-          <groupId>org.ow2.asm</groupId>
+          <artifactId>jersey-test-framework-provider-inmemory</artifactId>
+          <groupId>org.glassfish.jersey.test-framework.providers</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -180,6 +160,10 @@
           <groupId>junit</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>jersey-test-framework-core</artifactId>
+          <groupId>org.glassfish.jersey.test-framework</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>jersey-container-grizzly2-http</artifactId>
           <groupId>org.glassfish.jersey.containers</groupId>
         </exclusion>
@@ -188,22 +172,31 @@
           <groupId>org.glassfish.jersey.containers</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>jersey-test-framework-core</artifactId>
-          <groupId>org.glassfish.jersey.test-framework</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>asm-debug-all</artifactId>
           <groupId>org.ow2.asm</groupId>
         </exclusion>
       </exclusions>
     </dependency>
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-bom</artifactId>
+        <version>${dropwizard.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <properties>
     <h2.version>1.4.187</h2.version>
-    <dropwizard.version>0.9.0-rc5-SNAPSHOT</dropwizard.version>
+    <dropwizard.version>0.9.1</dropwizard.version>
     <jersey.version>2.22</jersey.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 </project>
 

@@ -1,9 +1,13 @@
-var autoBio = angular.module('AutoBioControllersModule',[]);
+var autoBio = angular.module('AutoBioControllersModule', []);
 
-autoBio.controller('AutoBioController', ['$scope', function($scope) {
+autoBio.controller('AutoBioController', ['$scope', function ($scope) {
+    $scope.submitAction = "/login";
+    $scope.submitLogin = function () {
+        return true;
+    };
 
-    $scope.submit = function() {
-       console.info("okkkkkk");
+    $scope.submitRegister = function () {
+        $scope.submitAction = "/register";
         return true;
     };
 }]);

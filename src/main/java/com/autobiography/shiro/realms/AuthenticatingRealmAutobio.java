@@ -13,9 +13,7 @@ import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.DomainPermission;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.CollectionUtils;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 

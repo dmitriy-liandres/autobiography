@@ -1,9 +1,6 @@
 package com.autobiography;
 
 import com.autobiography.core.Person;
-import com.autobiography.filters.UserAuthenticationFilter;
-import com.autobiography.shiro.ShiroModuleAutobio;
-import com.google.inject.Provider;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -16,14 +13,9 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.guice.aop.ShiroAopModule;
-import org.eclipse.jetty.server.handler.ContextHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.ServletContext;
-import java.util.EnumSet;
 import java.util.Map;
 
 //import com.yammer.dropwizard.db.DatabaseConfiguration;
@@ -34,7 +26,6 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
     private static final Logger logger = LoggerFactory.getLogger(AutobiographyApplication.class);
 
     private GuiceBundle<AutobiographyConfiguration> guiceBundle;
-
 
 
     public static void main(String[] args) throws Exception {
