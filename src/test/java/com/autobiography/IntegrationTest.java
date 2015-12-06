@@ -1,22 +1,5 @@
 package com.autobiography;
 
-import com.autobiography.AutobiographyApplication;
-import com.autobiography.AutobiographyConfiguration;
-import com.autobiography.core.Person;
-import com.autobiography.api.Saying;
-import com.google.common.base.Optional;
-import io.dropwizard.testing.ConfigOverride;
-import io.dropwizard.testing.ResourceHelpers;
-import io.dropwizard.testing.junit.DropwizardAppRule;
-import org.junit.*;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.io.IOException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IntegrationTest {

@@ -1,22 +1,8 @@
 package com.autobiography.resources;
 
-import com.autobiography.core.Person;
-import com.autobiography.db.PersonDAO;
-import com.google.common.base.Optional;
-import io.dropwizard.testing.junit.ResourceTestRule;
-import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-
-import javax.ws.rs.core.Response;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for {@link PersonResource}.

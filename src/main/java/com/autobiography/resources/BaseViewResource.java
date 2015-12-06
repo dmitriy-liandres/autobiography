@@ -1,10 +1,8 @@
 package com.autobiography.resources;
 
-import com.autobiography.core.Person;
 import com.autobiography.db.PersonDAO;
-import com.autobiography.shiro.GeneralDomainPermission;
-import com.autobiography.shiro.PermissionObjectType;
-import com.autobiography.views.BaseView;
+import com.autobiography.model.db.Person;
+import com.autobiography.views.GenericView;
 import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.apache.shiro.SecurityUtils;
@@ -30,32 +28,23 @@ public class BaseViewResource {
     @Inject
     public BaseViewResource(PersonDAO personDAO) {
         this.personDAO = personDAO;
+
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public BaseView getMainView() {
-        return new BaseView();
+    public GenericView getMainView() {
+        return new GenericView(GenericView.BASE_FTL);
     }
 
 
     @GET
     @Path("{urlPath}")
     @Produces(MediaType.TEXT_HTML)
-    public BaseView profileView(@PathParam("urlPath") String urlPath) {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view"));
-        return new BaseView();
+    public GenericView profileView(@PathParam("urlPath") String urlPath) {
+        return getMainView();
     }
 
-
-    @GET
-    @Path("logout")
-    @Produces(MediaType.TEXT_HTML)
-    public Response logoutView() {
-        SecurityUtils.getSubject().logout();
-        URI uri = UriBuilder.fromUri("/").build();
-        return Response.seeOther(uri).build();
-    }
 
     @POST
     @Path("register")
@@ -89,12 +78,10 @@ public class BaseViewResource {
 
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(email, password);
-        //this is all you have to do to support 'remember me' (no config - built in!):
         token.setRememberMe(rememberMe);
         currentUser.login(token);
-        URI uri = UriBuilder.fromUri("/profile").build();
+        URI uri = UriBuilder.fromUri("/main").build();
         return Response.seeOther(uri).build();
     }
-
 
 }

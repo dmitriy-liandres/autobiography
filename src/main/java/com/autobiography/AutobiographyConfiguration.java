@@ -1,6 +1,6 @@
 package com.autobiography;
 
-import com.autobiography.core.Template;
+import com.autobiography.model.db.Template;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
 import io.dropwizard.Configuration;
@@ -22,7 +22,7 @@ public class AutobiographyConfiguration extends Configuration {
     @Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
-    
+
     @NotNull
     private Map<String, Map<String, String>> viewRendererConfiguration = Collections.emptyMap();
 

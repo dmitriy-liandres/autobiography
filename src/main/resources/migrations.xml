@@ -18,5 +18,24 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <createTable tableName="profile">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="profile"
+                                 baseColumnNames="id"
+                                 constraintName="fk_profile_person"
+                                 referencedTableName="person"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
     </changeSet>
 </databaseChangeLog>

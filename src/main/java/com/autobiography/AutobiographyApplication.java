@@ -1,6 +1,7 @@
 package com.autobiography;
 
-import com.autobiography.core.Person;
+import com.autobiography.model.db.Person;
+import com.autobiography.model.db.Profile;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -33,7 +34,7 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
     }
 
     private final HibernateBundle<AutobiographyConfiguration> hibernateBundle =
-            new HibernateBundle<AutobiographyConfiguration>(Person.class) {
+            new HibernateBundle<AutobiographyConfiguration>(Person.class, Profile.class) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(AutobiographyConfiguration configuration) {
                     return configuration.getDataSourceFactory();
@@ -67,6 +68,7 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
+
         bootstrap.addBundle(new AssetsBundle());
 
         bootstrap.addBundle(new MigrationsBundle<AutobiographyConfiguration>() {

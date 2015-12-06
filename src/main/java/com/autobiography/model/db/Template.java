@@ -1,4 +1,4 @@
-package com.autobiography.core;
+package com.autobiography.model.db;
 
 import com.google.common.base.Optional;
 
@@ -12,7 +12,7 @@ public class Template {
         this.content = content;
         this.defaultName = defaultName;
     }
-    
+
     public String render(Optional<String> name) {
         return format(content, name.or(defaultName));
     }

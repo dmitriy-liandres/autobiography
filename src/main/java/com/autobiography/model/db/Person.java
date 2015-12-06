@@ -1,4 +1,4 @@
-package com.autobiography.core;
+package com.autobiography.model.db;
 
 import javax.persistence.*;
 
@@ -19,7 +19,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "username", nullable = false , unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)

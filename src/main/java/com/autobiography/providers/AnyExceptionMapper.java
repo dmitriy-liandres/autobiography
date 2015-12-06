@@ -35,7 +35,7 @@ public class AnyExceptionMapper implements ExceptionMapper<Throwable> {
                 redirectUri = errorPageUri;
         }
 
-        return Response.seeOther(redirectUri). build();
+        return Response.seeOther(redirectUri).build();
     }
 
 

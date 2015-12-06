@@ -1,6 +1,6 @@
 package com.autobiography.db;
 
-import com.autobiography.core.Person;
+import com.autobiography.model.db.Person;
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import io.dropwizard.hibernate.AbstractDAO;

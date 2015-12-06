@@ -1,7 +1,7 @@
 package com.autobiography;
 
 import com.autobiography.db.PersonDAO;
-import com.autobiography.resources.BaseViewResource;
+import com.autobiography.db.ProfileDAO;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -33,8 +33,15 @@ public class GuiceModuleAutobio extends AbstractModule {
 
     @Provides
     @Singleton
-    public PersonDAO providesPersonDAO() { return new PersonDAO(constructSessionFactory());}
+    public PersonDAO providesPersonDAO() {
+        return new PersonDAO(constructSessionFactory());
+    }
 
+    @Provides
+    @Singleton
+    public ProfileDAO providesProfileDAO() {
+        return new ProfileDAO(constructSessionFactory());
+    }
 
 
 }

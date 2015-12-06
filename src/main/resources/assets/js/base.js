@@ -2,15 +2,24 @@ var autobiographyApp = angular.module('autobiographyApp', ["AutoBioControllersMo
 
 
 autobiographyApp.config(['$routeProvider', '$locationProvider',
-    function($routeProvider, $locationProvider) {
+    function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
         $routeProvider.
             when('/', {
                 templateUrl: 'ajax/login',
-                controller: 'AutoBioController'
-            }).when('/profile', {
+                controller: 'LoginController'
+            })
+            .when('/main', {
+                templateUrl: 'ajax/main',
+                controller: 'EmptyController'
+            })
+            .when('/profile', {
                 templateUrl: 'ajax/profile',
-                controller: 'AutoBioController'
+                controller: 'ProfileController'
+            })
+            .when('/logout', {
+                templateUrl: 'ajax/logout',
+                controller: 'LogoutController'
             }).
             otherwise({
                 redirectTo: '/'

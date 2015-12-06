@@ -13,6 +13,7 @@ import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.apache.shiro.guice.web.ShiroWebModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,6 +112,7 @@ public class GuiceBundle<T extends Configuration> implements ConfiguredBundle<T>
         modules.add(new JerseyModule());
         modules.add(dropwizardEnvironmentModule);
         modules.add(new ShiroModuleAutobio(environment.getApplicationContext().getServletContext()));
+        modules.add(ShiroWebModule.guiceFilterModule());
 
         initInjector();
 

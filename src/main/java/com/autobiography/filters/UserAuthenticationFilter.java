@@ -1,10 +1,7 @@
 package com.autobiography.filters;
 
-import org.eclipse.jetty.server.Response;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -38,8 +35,8 @@ public class UserAuthenticationFilter implements Filter {
 //        int responseStatus = ((Response) servletResponse).getStatus();
 //        if( responseStatus == javax.ws.rs.core.Response.Status.UNAUTHORIZED.getStatusCode()
 //                || responseStatus == javax.ws.rs.core.Response.Status.FORBIDDEN.getStatusCode()){
-         //   forwardToLogin(servletRequest, servletResponse);
-       // }
+        //   forwardToLogin(servletRequest, servletResponse);
+        // }
         //
 
     }

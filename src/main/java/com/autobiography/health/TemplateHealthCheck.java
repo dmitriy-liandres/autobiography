@@ -1,7 +1,7 @@
 package com.autobiography.health;
 
+import com.autobiography.model.db.Template;
 import com.codahale.metrics.health.HealthCheck;
-import com.autobiography.core.Template;
 import com.google.common.base.Optional;
 
 public class TemplateHealthCheck extends HealthCheck {

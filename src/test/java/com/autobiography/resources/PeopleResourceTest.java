@@ -1,31 +1,9 @@
 package com.autobiography.resources;
 
-import com.autobiography.core.Person;
-import com.autobiography.db.PersonDAO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.common.collect.ImmutableList;
-import io.dropwizard.testing.junit.ResourceTestRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for {@link PeopleResource}.

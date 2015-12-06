@@ -7,13 +7,15 @@
 
 
     <script src="../../../assets/js/angular.js"></script>
+    <script src="../../../assets/js/angular-resource.js"></script>
     <script src="../../../assets/js/angular-route.js"></script>
 
+    <script src="../../../assets/js/factories.js"></script>
     <script src="../../../assets/js/controllers.js"></script>
     <script src="../../../assets/js/base.js"></script>
 
 </head>
-<body ng-controller="AutoBioController">
+<body ng-controller="EmptyController">
 
 
 <header class="header">

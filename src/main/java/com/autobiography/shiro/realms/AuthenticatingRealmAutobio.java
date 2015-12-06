@@ -1,7 +1,7 @@
 package com.autobiography.shiro.realms;
 
-import com.autobiography.core.Person;
 import com.autobiography.db.PersonDAO;
+import com.autobiography.model.db.Person;
 import com.autobiography.shiro.AuthorizationInfoExtended;
 import com.autobiography.shiro.GeneralDomainPermission;
 import com.autobiography.shiro.PermissionObjectType;

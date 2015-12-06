@@ -20,6 +20,7 @@ public class ShiroModuleAutobio extends ShiroWebModule {
     @Override
     protected void configureShiroWeb() {
         bindRealm().toProvider(AuthenticatingRealmAutobioProvider.class);
+
     }
 
     @Override
