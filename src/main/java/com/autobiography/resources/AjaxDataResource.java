@@ -5,6 +5,7 @@ import com.autobiography.model.db.Person;
 import com.autobiography.model.db.Profile;
 import com.autobiography.model.view.ProfileViewModel;
 import com.autobiography.shiro.GeneralDomainPermission;
+import com.autobiography.shiro.PermissionActionType;
 import com.autobiography.shiro.PermissionObjectType;
 import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -51,12 +52,16 @@ public class AjaxDataResource {
     @Path("profile")
     @UnitOfWork
     public void saveProfileView(ProfileViewModel profileViewModel) throws InvocationTargetException, IllegalAccessException {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view"));
-        Profile profile = new Profile();
-        BeanUtils.copyProperties(profile, profileViewModel);
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
+        Profile profile = profileDAO.findById(person.getId());
+        if(profile == null){
+            profile = new Profile();
+        }
+        BeanUtils.copyProperties(profile, profileViewModel);
+
         profile.setId(person.getId());
-        profileDAO.save(profile);
+        profileDAO.saveOrUpdate(profile);
 
     }
 

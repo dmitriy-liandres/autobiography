@@ -37,14 +37,12 @@ public class AjaxViewResource {
     @GET
     @Path("main")
     public GenericView getMainView() {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view"));
         return new GenericView(GenericView.MAIN_FTL);
     }
 
     @GET
     @Path("profile")
     public GenericView getProfileView() {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view"));
         return new GenericView(GenericView.PROFILE_FTL);
     }
 }
