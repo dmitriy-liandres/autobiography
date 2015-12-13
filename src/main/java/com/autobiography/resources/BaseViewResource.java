@@ -86,8 +86,13 @@ public class BaseViewResource {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(email, password);
         token.setRememberMe(rememberMe);
-        currentUser.login(token);
-        String redirectUrl = StringUtils.isNoneEmpty(redir) ? redir : "/main";
+        String redirectUrl = StringUtils.isNoneEmpty(redir) ? redir : "";
+        try {
+            currentUser.login(token);
+        } catch (Exception e) {
+            return Response.seeOther(UriBuilder.fromUri("/?e=1&redir=" + redirectUrl).build()).entity("").build();
+        }
+
         URI uri = UriBuilder.fromUri(redirectUrl).build();
         Person principal = (Person) SecurityUtils.getSubject().getPrincipal();
         SecurityUtils.getSubject().getSession().setAttribute("profile", profileDAO.findById(principal.getId()));

@@ -25,7 +25,11 @@ public class AjaxViewResource {
     @GET
     @Path("login")
     public GenericView getLoginView() {
-        return new GenericView(GenericView.LOGIN_FTL);
+        if (SecurityUtils.getSubject().isAuthenticated()) {
+            return getMainView();
+        } else {
+            return new GenericView(GenericView.LOGIN_FTL);
+        }
     }
 
     @GET

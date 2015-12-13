@@ -4,19 +4,55 @@ autoBio.controller('EmptyController', ['$scope', function ($scope) {
 
 }]);
 
-autoBio.controller('LoginController', ['$scope', '$routeParams', function ($scope, $routeParams) {
+autoBio.controller('LoginController', ['$scope', '$routeParams', '$location', function ($scope, $routeParams, $location) {
+    //if next field is not empty, it means that login page was loaded after wrong loginsubmit
+    $scope.error = $location.search().e;
+    //param which used to decide where we should redirect user after successful login
     var redirectParam = $routeParams.redir;
     var redirectQueryParam = redirectParam == undefined ? "" : "?redir=" + redirectParam;
-    $scope.submitLogin = function () {
+
+    $scope.submitted = false;
+    $scope.submitLogin = function (loginForm, $event) {
         $scope.submitAction = "/login" + redirectQueryParam;
-        return true;
+        return $scope.submitLoginOrRegister(loginForm, $event);
     };
 
-    $scope.submitRegister = function () {
+    $scope.submitRegister = function (loginForm, $event) {
         $scope.submitAction = "/register" + redirectQueryParam;
-        return true;
+        return $scope.submitLoginOrRegister(loginForm, $event);
     };
 
+    $scope.submitLoginOrRegister = function (loginForm, $event) {
+
+        Object.keys(loginForm.$error).forEach(function (key) {
+            var errorText = null;
+            var elements = loginForm.$error[key];
+            if (key == "required") {
+                errorText = "This field is required";
+            } else if (key == "minlength") {
+                errorText = "Value is too short";
+            } else if (key == "maxlength") {
+                errorText = "This field is big (long)";
+            }
+
+            if (errorText != null) {
+                var node = document.createElement("div");
+                var textNode = document.createTextNode(errorText);
+                node.appendChild(textNode);
+                elements.forEach(function(element){
+                    document.getElementById(element.$name).parentElement.appendChild(node);
+                })
+
+
+            }
+
+        });
+        $scope.submitted = true;
+        if (!loginForm.$valid) {
+            $event.preventDefault();
+        }
+        return loginForm.$valid;
+    };
 }]);
 
 autoBio.controller('ProfileController', ['$scope', 'ProfileLoaded', '$location', '$window', function ($scope, ProfileLoaded, $location, $window) {
