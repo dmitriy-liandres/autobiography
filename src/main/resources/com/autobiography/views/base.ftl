@@ -25,8 +25,9 @@
     <nav class="navigation">
         <div class="navContainer">
             <#if username??>
-                Welcome, ${username?html}!
+                Welcome, ${(fullName?html)!username?html}!
                 <a class="logout-link" href="logout">logout</a></li>
+                <input type="hidden" value="true" id="isLoggedIn"></a>
             </#if>
 
         </div>

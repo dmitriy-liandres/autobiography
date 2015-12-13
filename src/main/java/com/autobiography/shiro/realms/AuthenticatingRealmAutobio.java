@@ -78,10 +78,10 @@ public class AuthenticatingRealmAutobio extends AuthorizingRealm {
     }
 
     private void produceProfilePermissions(Set<DomainPermission> producedPermissions, Long userId, Set<String> targets, Set<String> actions) {
-        if (org.apache.commons.collections.CollectionUtils.isEmpty(targets)) {
+        //if (org.apache.commons.collections.CollectionUtils.isEmpty(targets)) {
             //user views his own profile
             producedPermissions.add(new GeneralDomainPermission(PermissionObjectType.PROFILE, actions, targets));
 
-        }
+        //}
     }
 }

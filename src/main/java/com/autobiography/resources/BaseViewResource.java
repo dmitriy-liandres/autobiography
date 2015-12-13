@@ -1,14 +1,17 @@
 package com.autobiography.resources;
 
 import com.autobiography.db.PersonDAO;
+import com.autobiography.db.ProfileDAO;
 import com.autobiography.model.db.Person;
 import com.autobiography.views.GenericView;
 import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
+import javax.annotation.Nullable;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,10 +27,12 @@ import java.net.URI;
 public class BaseViewResource {
 
     private PersonDAO personDAO;
+    private ProfileDAO profileDAO;
 
     @Inject
-    public BaseViewResource(PersonDAO personDAO) {
+    public BaseViewResource(PersonDAO personDAO, ProfileDAO profileDAO) {
         this.personDAO = personDAO;
+        this.profileDAO = profileDAO;
 
     }
 
@@ -52,7 +57,8 @@ public class BaseViewResource {
     @UnitOfWork
     public Response registerView(@FormParam("email") String email,
                                  @FormParam("password") String password,
-                                 @FormParam("rememberMe") @DefaultValue("false") Boolean rememberMe) {
+                                 @FormParam("rememberMe") @DefaultValue("false") Boolean rememberMe,
+                                 @Nullable @QueryParam("redir") String redir) {
         Person person = personDAO.findByUsername(email);
         if (person != null) {
 //error
@@ -64,7 +70,7 @@ public class BaseViewResource {
             person.setUsername(email);
             personDAO.create(person);
         }
-        return loginView(email, password, rememberMe);
+        return loginView(email, password, rememberMe, redir);
     }
 
 
@@ -74,13 +80,17 @@ public class BaseViewResource {
     @UnitOfWork
     public Response loginView(@FormParam("email") String email,
                               @FormParam("password") String password,
-                              @FormParam("rememberMe") @DefaultValue("false") Boolean rememberMe) {
+                              @FormParam("rememberMe") @DefaultValue("false") Boolean rememberMe,
+                              @Nullable @QueryParam("redir") String redir) {
 
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(email, password);
         token.setRememberMe(rememberMe);
         currentUser.login(token);
-        URI uri = UriBuilder.fromUri("/main").build();
+        String redirectUrl = StringUtils.isNoneEmpty(redir) ? redir : "/main";
+        URI uri = UriBuilder.fromUri(redirectUrl).build();
+        Person principal = (Person) SecurityUtils.getSubject().getPrincipal();
+        SecurityUtils.getSubject().getSession().setAttribute("profile", profileDAO.findById(principal.getId()));
         return Response.seeOther(uri).build();
     }
 

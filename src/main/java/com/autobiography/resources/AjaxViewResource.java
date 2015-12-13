@@ -1,6 +1,7 @@
 package com.autobiography.resources;
 
 import com.autobiography.shiro.GeneralDomainPermission;
+import com.autobiography.shiro.PermissionActionType;
 import com.autobiography.shiro.PermissionObjectType;
 import com.autobiography.views.GenericView;
 import org.apache.shiro.SecurityUtils;
@@ -37,12 +38,26 @@ public class AjaxViewResource {
     @GET
     @Path("main")
     public GenericView getMainView() {
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
         return new GenericView(GenericView.MAIN_FTL);
     }
 
     @GET
     @Path("profile")
     public GenericView getProfileView() {
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
         return new GenericView(GenericView.PROFILE_FTL);
+    }
+
+    @GET
+    @Path("not-found")
+    public GenericView getNotFoundView() {
+        return new GenericView(GenericView.NOT_FOUND_FTL);
+    }
+
+    @GET
+    @Path("not-authorized")
+    public GenericView getNotAuthorizedView() {
+        return new GenericView(GenericView.NOT_AUTHORIZED_FTL);
     }
 }

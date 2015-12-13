@@ -10,6 +10,7 @@ import com.autobiography.shiro.PermissionObjectType;
 import com.google.inject.Inject;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 
 import javax.annotation.Nullable;
@@ -37,10 +38,19 @@ public class AjaxDataResource {
     @GET
     @Path("profile")
     @UnitOfWork
-    public ProfileViewModel getProfileView(@Nullable @QueryParam("personId") Long personId) throws InvocationTargetException, IllegalAccessException {
-        //todo SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view", personId.toString()));
+    public ProfileViewModel getProfileView(@Nullable @QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
+        Long personIdLong;
+        if (StringUtils.isNotEmpty(personId)) {
+            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view", personId));
+            personIdLong = Long.valueOf(personId);
+        } else {
+            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view"));
+            Person person = (Person) SecurityUtils.getSubject().getPrincipal();
+            personIdLong = person.getId();
+        }
+
         ProfileViewModel profileViewModel = new ProfileViewModel();
-        Profile profile = profileDAO.findById(personId);
+        Profile profile = profileDAO.findById(personIdLong);
         if (profile != null) {
             BeanUtils.copyProperties(profileViewModel, profile);
         }
@@ -55,13 +65,14 @@ public class AjaxDataResource {
         SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
         Profile profile = profileDAO.findById(person.getId());
-        if(profile == null){
+        if (profile == null) {
             profile = new Profile();
         }
         BeanUtils.copyProperties(profile, profileViewModel);
 
         profile.setId(person.getId());
         profileDAO.saveOrUpdate(profile);
+        SecurityUtils.getSubject().getSession().setAttribute("profile", profile);
 
     }
 
