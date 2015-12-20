@@ -43,14 +43,29 @@ autobiographyApp.factory('myHttpInterceptor', ['$q', '$location', function ($q, 
                 //401 Unauthorized response should be used for missing or bad authentication.
                 url = '/';// + encodeURIComponent($location.path());
                 $location.search('redir', $location.path());
+                $location.path(url);
             } else if (status == 403) {
                 //403 Forbidden response should be used afterwards,
                 //when the user is authenticated but isn’t authorized to perform the requested operation on the given resource.
                 url = '/not-authorized';
+                $location.path(url);
+            } else if (status == 422) {
+                //422 validation error
+                rejection.data.errors.forEach(function(error){
+                    var fieldNameAndId = error.split(" ")[0];
+                    error = error.replace(fieldNameAndId + " ", "");
+                    var node = document.createElement("div");
+                    node.setAttribute("class", "validation-error-ui");
+                    var textNode = document.createTextNode(error);
+                    node.appendChild(textNode);
+                    document.getElementById(fieldNameAndId).parentElement.appendChild(node.cloneNode(true));
+
+                })
+
             } else {
                 url = '/error';
+                $location.path(url);
             }
-            $location.path(url);
 
             return $q.reject(rejection);
         }

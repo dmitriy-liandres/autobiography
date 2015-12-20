@@ -13,7 +13,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 
-import javax.annotation.Nullable;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.lang.reflect.InvocationTargetException;
@@ -38,7 +38,7 @@ public class AjaxDataResource {
     @GET
     @Path("profile")
     @UnitOfWork
-    public ProfileViewModel getProfileView(@Nullable @QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
+    public ProfileViewModel getProfileView(@QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
         Long personIdLong;
         if (StringUtils.isNotEmpty(personId)) {
             SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, "view", personId));
@@ -61,7 +61,7 @@ public class AjaxDataResource {
     @POST
     @Path("profile")
     @UnitOfWork
-    public void saveProfileView(ProfileViewModel profileViewModel) throws InvocationTargetException, IllegalAccessException {
+    public String saveProfileView(@Valid ProfileViewModel profileViewModel) throws InvocationTargetException, IllegalAccessException {
         SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
         Profile profile = profileDAO.findById(person.getId());
@@ -73,6 +73,7 @@ public class AjaxDataResource {
         profile.setId(person.getId());
         profileDAO.saveOrUpdate(profile);
         SecurityUtils.getSubject().getSession().setAttribute("profile", profile);
+        return null;
 
     }
 

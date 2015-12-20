@@ -23,49 +23,32 @@ autoBio.controller('LoginController', ['$scope', '$routeParams', '$location', fu
     };
 
     $scope.submitLoginOrRegister = function (loginForm, $event) {
-
-        Object.keys(loginForm.$error).forEach(function (key) {
-            var errorText = null;
-            var elements = loginForm.$error[key];
-            if (key == "required") {
-                errorText = "This field is required";
-            } else if (key == "minlength") {
-                errorText = "Value is too short";
-            } else if (key == "maxlength") {
-                errorText = "This field is big (long)";
-            }
-
-            if (errorText != null) {
-                var node = document.createElement("div");
-                var textNode = document.createTextNode(errorText);
-                node.appendChild(textNode);
-                elements.forEach(function(element){
-                    document.getElementById(element.$name).parentElement.appendChild(node);
-                })
-
-
-            }
-
-        });
+        var isFormValid = isValid(loginForm);
         $scope.submitted = true;
-        if (!loginForm.$valid) {
+        if (!isFormValid) {
             $event.preventDefault();
         }
-        return loginForm.$valid;
+        return isFormValid;
     };
 }]);
 
 autoBio.controller('ProfileController', ['$scope', 'ProfileLoaded', '$location', '$window', function ($scope, ProfileLoaded, $location, $window) {
     $scope.profile = {};
     var personId = $location.path().split("/")[3];
+    if(personId == undefined || personId == null){
+        personId = "";
+    }
+
     ProfileLoaded.get({personId: personId}, function (loadedProfile) {
         $scope.profile = loadedProfile;
     });
 
-    $scope.updateProfile = function () {
-        ProfileLoaded.add($scope.profile, function () {
-            $window.location.href = '/profile';
-        });
+    $scope.updateProfile = function (profileForm) {
+        if(isValid(profileForm)) {
+            ProfileLoaded.add($scope.profile, function () {
+                $window.location.href = '/profile';
+            });
+        }
     };
 }]);
 
@@ -87,6 +70,41 @@ autoBio.controller('ErrorController', ['$scope', '$window', function ($scope, $w
     redirectToMain($window);
 
 }]);
+
+function isValid(formName) {
+    var errorElements = document.getElementsByClassName("validation-error-ui");
+
+    var previousErrorsNumber = errorElements.length;
+    for (var i = previousErrorsNumber - 1; i >= 0; i--) {
+        errorElements[i].parentNode.removeChild(errorElements[i]);
+    }
+
+
+    Object.keys(formName.$error).forEach(function (key) {
+        var errorText = null;
+        var angularElements = formName.$error[key];
+        if (key == "required") {
+            errorText = "This field is required";
+        } else if (key == "minlength") {
+            errorText = "Value is too short";
+        } else if (key == "maxlength") {
+            errorText = "This field is long";
+        }
+
+        if (errorText != null) {
+            var node = document.createElement("div");
+            node.setAttribute("class", "validation-error-ui");
+            var textNode = document.createTextNode(errorText);
+            node.appendChild(textNode);
+            angularElements.forEach(function (angularElement) {
+                document.getElementById(angularElement.$name).parentElement.appendChild(node.cloneNode(true));
+            })
+        }
+
+    });
+
+    return formName.$valid;
+}
 
 function redirectToMain($window) {
     setTimeout(function () {

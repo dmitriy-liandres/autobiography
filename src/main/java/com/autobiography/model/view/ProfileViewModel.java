@@ -1,5 +1,8 @@
 package com.autobiography.model.view;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * Author Dmitriy Liandres
  * Date 06.12.2015
@@ -8,7 +11,11 @@ package com.autobiography.model.view;
 
 public class ProfileViewModel {
     private String id;
+    @NotEmpty
+    @Length(max = 100)
     private String name;
+    @NotEmpty
+    @Length(max = 100)
     private String surname;
 
     public String getId() {
