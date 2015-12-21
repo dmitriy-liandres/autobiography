@@ -2,8 +2,9 @@
 <html lang="en" ng-app="autobiographyApp">
 <head>
     <base href="/">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 
     <script src="../../../assets/js/angular.js"></script>
@@ -25,10 +26,12 @@
     <nav class="navigation">
         <div class="navContainer">
             <#if username??>
-                Welcome, ${(fullName?html)!username?html}!
-                <a class="logout-link" href="logout">logout</a></li>
+            ${message("welcome")}, ${(fullName?html)!username?html}!
+                <a class="logout-link" href="logout"> ${message("logout")}</a></li>
                 <input type="hidden" value="true" id="isLoggedIn"></a>
             </#if>
+            <a href="?lang=en" target="_self">English</a>
+            <a href="?lang=ru" target="_self">Русский</a>
 
         </div>
     </nav>

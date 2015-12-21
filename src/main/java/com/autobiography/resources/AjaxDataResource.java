@@ -23,7 +23,7 @@ import java.lang.reflect.InvocationTargetException;
  * Date 06.12.2015
  */
 @Path("/data")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON+ "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON)
 public class AjaxDataResource {
 

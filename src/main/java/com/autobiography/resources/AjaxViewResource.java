@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
  * Date 25.10.2015
  */
 @Path("/ajax")
-@Produces(MediaType.TEXT_HTML)
+@Produces(MediaType.TEXT_HTML+ "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON)
 public class AjaxViewResource {
 

@@ -17,13 +17,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
+import java.util.Locale;
 
 /**
  * Author Dmitriy Liandres
  * Date 25.10.2015
  */
 @Path("/")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON+ "; charset=UTF-8")
 public class BaseViewResource {
 
     private PersonDAO personDAO;
@@ -38,7 +39,18 @@ public class BaseViewResource {
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public GenericView getMainView() {
+    public GenericView getMainView(@QueryParam("lang") String lang) {
+        if (lang != null) {
+            switch (lang) {
+                case "ru":
+                    Locale.setDefault(new Locale.Builder().setLanguage("ru").setRegion("RU").build());
+                    break;
+                default:
+                    Locale.setDefault(Locale.US);
+                    break;
+            }
+        }
+
         return new GenericView(GenericView.BASE_FTL);
     }
 
@@ -47,7 +59,7 @@ public class BaseViewResource {
     @Path("{urlPath}")
     @Produces(MediaType.TEXT_HTML)
     public GenericView profileView(@PathParam("urlPath") String urlPath) {
-        return getMainView();
+        return getMainView(null);
     }
 
 
