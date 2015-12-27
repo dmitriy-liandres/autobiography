@@ -15,6 +15,8 @@
     <script src="../../../assets/js/controllers.js"></script>
     <script src="../../../assets/js/base.js"></script>
 
+    <script src="../../../assets/js/messages_js_${getServerLocale()}.js"></script>
+
 </head>
 <body ng-controller="EmptyController">
 

@@ -84,11 +84,11 @@ function isValid(formName) {
         var errorText = null;
         var angularElements = formName.$error[key];
         if (key == "required") {
-            errorText = "This field is required";
+            errorText = VALIDATION_REQUIRED;
         } else if (key == "minlength") {
-            errorText = "Value is too short";
+            errorText = VALIDATION_MIN_LENGTH;
         } else if (key == "maxlength") {
-            errorText = "This field is long";
+            errorText = VALIDATION_MAX_LENGTH;
         }
 
         if (errorText != null) {

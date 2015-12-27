@@ -51,6 +51,12 @@ public class GenericView extends View {
 
     }
 
+    public String getServerLocale() throws IOException {
+       return Locale.getDefault().toString();
+    }
+
+
+
     public String message(String messageKey) throws IOException {
         Locale locale = Locale.getDefault();
         Properties propertiesWithMessages = messagesPerLocation.get(locale);
