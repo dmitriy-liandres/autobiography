@@ -24,6 +24,9 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
             .when('/not-authorized', {
                 templateUrl: 'ajax/not-authorized',
                 controller: 'NotAuthorizedController'
+            }) .when('/autobiography-full', {
+                templateUrl: 'ajax/autobiography-full',
+                controller: 'AutoBiographyFullController'
             }).
             otherwise({
                 templateUrl: 'ajax/not-found',

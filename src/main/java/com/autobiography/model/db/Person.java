@@ -6,18 +6,18 @@ import javax.persistence.*;
 @Table(name = "person")
 @NamedQueries({
         @NamedQuery(
-                name = "com.autobiography.core.Person.findAll",
+                name = "Person.findAll",
                 query = "SELECT p FROM Person p"
         ),
         @NamedQuery(
-                name = "com.autobiography.core.Person.findByUsername",
+                name = "Person.findByUsername",
                 query = "SELECT p FROM Person p where username = :username"
         )
 })
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -28,11 +28,11 @@ public class Person {
     public Person() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

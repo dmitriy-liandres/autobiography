@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-
     <script src="../../../assets/js/angular.js"></script>
     <script src="../../../assets/js/angular-resource.js"></script>
     <script src="../../../assets/js/angular-route.js"></script>

@@ -38,4 +38,53 @@
                                  referencedColumnNames="id"
                                  onDelete="CASCADE" />
     </changeSet>
+
+    <changeSet id="2" author="d_liandres">
+
+
+        <createTable tableName="autobio_full">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="text" type="CLOB">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="autobio_full"
+                                 baseColumnNames="id"
+                                 constraintName="fk_autobio_full"
+                                 referencedTableName="person"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
+    </changeSet>
+
+    <changeSet id="3" author="d_liandres">
+
+
+        <createTable tableName="auto_bio_file">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="person_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_type" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_type" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_name" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="auto_bio_file"
+                                 baseColumnNames="person_id"
+                                 constraintName="fk_auto_bio_file_person_id"
+                                 referencedTableName="person"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE" />
+    </changeSet>
 </databaseChangeLog>

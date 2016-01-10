@@ -1,5 +1,6 @@
 package com.autobiography;
 
+import com.autobiography.db.AutoBioFileDao;
 import com.autobiography.db.PersonDAO;
 import com.autobiography.db.ProfileDAO;
 import com.google.inject.AbstractModule;
@@ -31,17 +32,6 @@ public class GuiceModuleAutobio extends AbstractModule {
         return hibernateBundle.getSessionFactory();
     }
 
-    @Provides
-    @Singleton
-    public PersonDAO providesPersonDAO() {
-        return new PersonDAO(constructSessionFactory());
-    }
-
-    @Provides
-    @Singleton
-    public ProfileDAO providesProfileDAO() {
-        return new ProfileDAO(constructSessionFactory());
-    }
 
 
 }

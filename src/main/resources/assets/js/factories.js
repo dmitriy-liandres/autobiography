@@ -15,3 +15,19 @@ autoBioFactories.factory('ProfileLoaded', ['$resource',
         });
     }
 ]);
+
+
+autoBioFactories.factory('AutobiofullSaver', ['$resource',
+    function ($resource, personId) {
+        return $resource('data/autobiofull', {}, {
+            query: {
+                method: 'GET',
+                cache: false,
+                params: {time: Date.now()}
+            },
+            add: {
+                method: 'POST'
+            }
+        });
+    }
+]);

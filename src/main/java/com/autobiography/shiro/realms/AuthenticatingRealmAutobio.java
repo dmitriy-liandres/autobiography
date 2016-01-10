@@ -66,6 +66,10 @@ public class AuthenticatingRealmAutobio extends AuthorizingRealm {
         switch (generalDomainPermission.getPermissionObjectType()) {
             case PROFILE:
                 produceProfilePermissions(perms, userId, ((GeneralDomainPermission) permission).getTargets(), ((GeneralDomainPermission) permission).getActions());
+                break;
+            case FILE:
+                produceFilePermissions(perms, userId, ((GeneralDomainPermission) permission).getTargets(), ((GeneralDomainPermission) permission).getActions());
+                break;
         }
         if (!perms.isEmpty()) {
             for (Permission perm : perms) {
@@ -77,10 +81,18 @@ public class AuthenticatingRealmAutobio extends AuthorizingRealm {
         return false;
     }
 
+    private void produceFilePermissions(Set<DomainPermission> producedPermissions, Long userId, Set<String> targets, Set<String> actions) {
+        //if (org.apache.commons.collections.CollectionUtils.isEmpty(targets)) {
+        //user views his own profile
+        producedPermissions.add(new GeneralDomainPermission(PermissionObjectType.FILE, actions, targets));
+
+        //}
+    }
+
     private void produceProfilePermissions(Set<DomainPermission> producedPermissions, Long userId, Set<String> targets, Set<String> actions) {
         //if (org.apache.commons.collections.CollectionUtils.isEmpty(targets)) {
-            //user views his own profile
-            producedPermissions.add(new GeneralDomainPermission(PermissionObjectType.PROFILE, actions, targets));
+        //user views his own profile
+        producedPermissions.add(new GeneralDomainPermission(PermissionObjectType.PROFILE, actions, targets));
 
         //}
     }

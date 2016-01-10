@@ -1,5 +1,8 @@
 package com.autobiography;
 
+import com.autobiography.helpers.FileUtils;
+import com.autobiography.model.db.AutoBioFile;
+import com.autobiography.model.db.AutoBioFull;
 import com.autobiography.model.db.Person;
 import com.autobiography.model.db.Profile;
 import com.hubspot.dropwizard.guice.GuiceBundle;
@@ -17,6 +20,8 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 //import com.yammer.dropwizard.db.DatabaseConfiguration;
@@ -34,7 +39,7 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
     }
 
     private final HibernateBundle<AutobiographyConfiguration> hibernateBundle =
-            new HibernateBundle<AutobiographyConfiguration>(Person.class, Profile.class) {
+            new HibernateBundle<AutobiographyConfiguration>(Person.class, Profile.class, AutoBioFile.class, AutoBioFull.class) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(AutobiographyConfiguration configuration) {
                     return configuration.getDataSourceFactory();
@@ -106,6 +111,7 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
 //                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 
         migrateDB(configuration);
+        FileUtils.initFileSystem();
 
 
     }

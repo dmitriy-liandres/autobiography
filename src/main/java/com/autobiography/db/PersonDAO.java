@@ -19,7 +19,7 @@ public class PersonDAO extends AbstractDAO<Person> {
     }
 
     public Person findByUsername(String username) {
-        return uniqueResult(namedQuery("com.autobiography.core.Person.findByUsername").setString("username", username));
+        return uniqueResult(namedQuery("Person.findByUsername").setString("username", username));
     }
 
     public Person create(Person person) {
@@ -27,6 +27,6 @@ public class PersonDAO extends AbstractDAO<Person> {
     }
 
     public List<Person> findAll() {
-        return list(namedQuery("com.autobiography.core.Person.findAll"));
+        return list(namedQuery("Person.findAll"));
     }
 }

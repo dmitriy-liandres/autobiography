@@ -35,7 +35,7 @@ autoBio.controller('LoginController', ['$scope', '$routeParams', '$location', fu
 autoBio.controller('ProfileController', ['$scope', 'ProfileLoaded', '$location', '$window', function ($scope, ProfileLoaded, $location, $window) {
     $scope.profile = {};
     var personId = $location.path().split("/")[3];
-    if(personId == undefined || personId == null){
+    if (personId == undefined || personId == null) {
         personId = "";
     }
 
@@ -44,7 +44,7 @@ autoBio.controller('ProfileController', ['$scope', 'ProfileLoaded', '$location',
     });
 
     $scope.updateProfile = function (profileForm) {
-        if(isValid(profileForm)) {
+        if (isValid(profileForm)) {
             ProfileLoaded.add($scope.profile, function () {
                 $window.location.href = '/profile';
             });
@@ -70,6 +70,90 @@ autoBio.controller('ErrorController', ['$scope', '$window', function ($scope, $w
     redirectToMain($window);
 
 }]);
+
+autoBio.controller('AutoBiographyFullController', ['$scope', '$location', 'AutobiofullSaver', function ($scope, $location, AutobiofullSaver) {
+    //$scope.autobioFull = "";
+    var personId = $location.path().split("/")[3];
+    if (personId == undefined || personId == null) {
+        personId = "";
+    }
+    var isEditorReady = false;
+    var autobioFullText = null;
+
+    loadScript("../../../assets/js/ckeditor/ckeditor.js", function () {
+        var lang = document.getElementById("lang-input-id").value;
+        /**Added plugins:
+         * Enhanced Image, Find / Replace, Font Size and Family, Image Browser,
+         * Justify, Print, Upload Image
+         * Removed plugins:
+         * About CKEditor
+         */
+
+        CKEDITOR.replace('autobioText', {
+
+            imageBrowser_listUrl: '/data/files',
+            filebrowserUploadUrl: '/data/file',
+            language: lang,
+            height: 500
+            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+
+
+        });
+
+        CKEDITOR.on("instanceReady", function (event) {
+            if (autobioFullText != null && !isEditorReady) {
+                CKEDITOR.instances.autobioText.setData(autobioFullText);
+            }
+            isEditorReady = true;
+
+
+        });
+
+
+    });
+    AutobiofullSaver.get({personId: personId}, function (autobioFull) {
+        if (autobioFull != null) {
+            autobioFullText = autobioFull.text;
+        } else {
+            autobioFullText = "";
+        }
+        if (isEditorReady) {
+            CKEDITOR.instances.autobioText.setData(autobioFullText);
+        }
+    });
+
+    $scope.saveAutobioFull = function () {
+        var data = CKEDITOR.instances.autobioText.getData();
+        console.info(data);
+        AutobiofullSaver.add(data, function () {
+
+        });
+    }
+}]);
+
+function loadScript(url, callback) {
+
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+
+    if (script.readyState) {  //IE
+        script.onreadystatechange = function () {
+            if (script.readyState == "loaded" ||
+                script.readyState == "complete") {
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    } else {  //Others
+        script.onload = function () {
+            callback();
+        };
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+
 
 function isValid(formName) {
     var errorElements = document.getElementsByClassName("validation-error-ui");

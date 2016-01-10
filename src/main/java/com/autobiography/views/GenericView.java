@@ -1,5 +1,6 @@
 package com.autobiography.views;
 
+import com.autobiography.helpers.MessageProvider;
 import com.autobiography.model.db.Person;
 import com.autobiography.model.db.Profile;
 import io.dropwizard.views.View;
@@ -24,7 +25,8 @@ public class GenericView extends View {
     public static final String PROFILE_FTL = "profile.ftl";
     public static final String NOT_FOUND_FTL = "not-found.ftl";
     public static final String NOT_AUTHORIZED_FTL = "not-authorized.ftl";
-    private static Map<Locale, Properties> messagesPerLocation = new HashMap<>();
+    public static final String AUTOBIOGRAPHY_FULL_FTL = "autobiography-full.ftl";
+
 
     public GenericView(String templateName) {
         super(templateName, Charset.forName("UTF-8"));
@@ -52,25 +54,16 @@ public class GenericView extends View {
     }
 
     public String getServerLocale() throws IOException {
-       return Locale.getDefault().toString();
+        return Locale.getDefault().toString();
+    }
+
+    public String getServerLang() throws IOException {
+        return Locale.getDefault().getLanguage().toLowerCase();
     }
 
 
-
     public String message(String messageKey) throws IOException {
-        Locale locale = Locale.getDefault();
-        Properties propertiesWithMessages = messagesPerLocation.get(locale);
-        if (propertiesWithMessages == null) {
-            //lazy initialization
-
-            propertiesWithMessages = new Properties();
-            InputStream in = getClass().getResourceAsStream("../messages_" + locale.toString()+ ".properties");
-            InputStreamReader isr = new InputStreamReader(in, "UTF-8");
-            propertiesWithMessages.load(isr);
-            in.close();
-            messagesPerLocation.put(locale, propertiesWithMessages);
-        }
-        return (String) propertiesWithMessages.get(messageKey);
+        return MessageProvider.message(messageKey);
 
     }
 }
