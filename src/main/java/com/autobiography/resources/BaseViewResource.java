@@ -24,7 +24,7 @@ import java.util.Locale;
  * Date 25.10.2015
  */
 @Path("/")
-@Produces(MediaType.APPLICATION_JSON+ "; charset=UTF-8")
+@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 public class BaseViewResource {
 
     private PersonDAO personDAO;

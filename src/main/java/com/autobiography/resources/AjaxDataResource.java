@@ -1,11 +1,13 @@
 package com.autobiography.resources;
 
 import com.autobiography.db.AutoBioFileDao;
-import com.autobiography.db.AutoBioFullDao;
+import com.autobiography.db.AutoBioTemplateDao;
+import com.autobiography.db.AutoBioTextDao;
 import com.autobiography.db.ProfileDAO;
 import com.autobiography.helpers.FileUtils;
 import com.autobiography.helpers.MessageProvider;
 import com.autobiography.model.db.*;
+import com.autobiography.model.view.AutoBioTemplateView;
 import com.autobiography.model.view.ProfileViewModel;
 import com.autobiography.shiro.GeneralDomainPermission;
 import com.autobiography.shiro.PermissionActionType;
@@ -33,6 +35,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * Author Dmitriy Liandres
@@ -46,16 +50,19 @@ public class AjaxDataResource {
     private final static Long MAX_FILE_SIZE = 1024 * 1024 * 5L;//5 MB
 
     private ProfileDAO profileDAO;
-    private AutoBioFullDao autoBioFullDao;
+    private AutoBioTextDao autoBioTextDao;
     private AutoBioFileDao autoBioFileDao;
+    private AutoBioTemplateDao autoBioTemplateDao;
 
     @Inject
     public AjaxDataResource(ProfileDAO profileDAO,
-                            AutoBioFullDao autoBioFullDao,
-                            AutoBioFileDao autoBioFileDao) {
+                            AutoBioTextDao autoBioTextDao,
+                            AutoBioFileDao autoBioFileDao,
+                            AutoBioTemplateDao autoBioTemplateDao) {
         this.profileDAO = profileDAO;
-        this.autoBioFullDao = autoBioFullDao;
+        this.autoBioTextDao = autoBioTextDao;
         this.autoBioFileDao = autoBioFileDao;
+        this.autoBioTemplateDao = autoBioTemplateDao;
     }
 
 
@@ -101,30 +108,33 @@ public class AjaxDataResource {
     }
 
     @POST
-    @Path("autobiofull")
+    @Path("autobio-text/{autoBioTextType}")
     @UnitOfWork
-    public void saveAutobiofull(String autobiofullText) throws InvocationTargetException, IllegalAccessException {
+    public void saveAutobioText(@PathParam("autoBioTextType") AutoBioTextType autoBioTextType,
+                                String autobioText) throws InvocationTargetException, IllegalAccessException {
         SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
-        AutoBioFull autoBioFull = autoBioFullDao.findById(person.getId());
-        if (autoBioFull == null) {
-            autoBioFull = new AutoBioFull();
-            autoBioFull.setId(person.getId());
+        AutoBioText autoBioText = autoBioTextDao.findByIdAndType(person.getId(), autoBioTextType);
+        if (autoBioText == null) {
+            autoBioText = new AutoBioText();
+            autoBioText.setId(person.getId());
+            autoBioText.setAutoBioTextType(autoBioTextType);
         }
 
-        autoBioFull.setText(autobiofullText);
-        autoBioFullDao.saveOrUpdate(autoBioFull);
+        autoBioText.setText(autobioText);
+        autoBioTextDao.saveOrUpdate(autoBioText);
     }
 
     @GET
-    @Path("autobiofull")
+    @Path("autobio-text/{autoBioTextType}")
     @UnitOfWork
-    public AutoBioFull getAutobiofull(String autobiofull) throws InvocationTargetException, IllegalAccessException {
+    public AutoBioText getAutobioText(@PathParam("autoBioTextType") AutoBioTextType autoBioTextType,
+                                      @QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
         SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
-        AutoBioFull autoBioFull = autoBioFullDao.findById(person.getId());
-        if (autoBioFull != null) {
-            return autoBioFull;//autoBioFull.getText();
+        AutoBioText autoBioText = autoBioTextDao.findByIdAndType(person.getId(), autoBioTextType);
+        if (autoBioText != null) {
+            return autoBioText;
         }
         return null;
     }
@@ -212,5 +222,32 @@ public class AjaxDataResource {
 
         return
                 "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", '" + fileUrl + "', '" + errorMessage + "');</script>";
+    }
+
+    @GET
+    @Path("autobio-text/templates/")
+    @UnitOfWork
+    public List<AutoBioTemplateView> getAutoBioTemplates() throws InvocationTargetException, IllegalAccessException, IOException {
+        List<AutoBioTemplate> autoBioTemplates = autoBioTemplateDao.findByLocale(Locale.getDefault().toString());
+        List<AutoBioTemplateView> autoBioTemplateViews;
+        //let's clear contents because ehy can be too big
+        if (CollectionUtils.isNotEmpty(autoBioTemplates)) {
+            autoBioTemplateViews = autoBioTemplates.stream().map(autoBioTemplate -> new AutoBioTemplateView(autoBioTemplate.getId(), autoBioTemplate.getName())).collect(Collectors.toList());
+        } else {
+            autoBioTemplateViews = new ArrayList<>();
+        }
+        return autoBioTemplateViews;
+
+    }
+
+    @GET
+    @Path("autobio-text/templates/{templateId}")
+    @UnitOfWork
+    public AutoBioTemplate getAutoBioTemplateType(@PathParam("templateId") Long templateId) throws InvocationTargetException, IllegalAccessException, IOException {
+        AutoBioTemplate autoBioTemplate = autoBioTemplateDao.findById(templateId).get();
+        if (autoBioTemplate == null) {
+            autoBioTemplate = new AutoBioTemplate();
+        }
+        return autoBioTemplate;
     }
 }

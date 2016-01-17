@@ -27,6 +27,9 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
             }) .when('/autobiography-full', {
                 templateUrl: 'ajax/autobiography-full',
                 controller: 'AutoBiographyFullController'
+            }) .when('/autobiography-for-work', {
+                templateUrl: 'ajax/autobiography-for-work',
+                controller: 'AutoBiographyForWorkController'
             }).
             otherwise({
                 templateUrl: 'ajax/not-found',

@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
  * Date 25.10.2015
  */
 @Path("/ajax")
-@Produces(MediaType.TEXT_HTML+ "; charset=UTF-8")
+@Produces(MediaType.TEXT_HTML + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON)
 public class AjaxViewResource {
 
@@ -71,5 +71,11 @@ public class AjaxViewResource {
     @Path("not-authorized")
     public GenericView getNotAuthorizedView() {
         return new GenericView(GenericView.NOT_AUTHORIZED_FTL);
+    }
+
+    @GET
+    @Path("autobiography-for-work")
+    public GenericView getAutobiographyForWork() {
+        return new GenericView(GenericView.AUTOBIOGRAPHY_FOR_WORK_FTL);
     }
 }

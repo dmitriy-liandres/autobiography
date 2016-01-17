@@ -32,20 +32,17 @@ autoBio.controller('LoginController', ['$scope', '$routeParams', '$location', fu
     };
 }]);
 
-autoBio.controller('ProfileController', ['$scope', 'ProfileLoaded', '$location', '$window', function ($scope, ProfileLoaded, $location, $window) {
+autoBio.controller('ProfileController', ['$scope', 'ProfileFactory', '$location', '$window', function ($scope, ProfileFactory, $location, $window) {
     $scope.profile = {};
-    var personId = $location.path().split("/")[3];
-    if (personId == undefined || personId == null) {
-        personId = "";
-    }
+    var personId = getPersonId($location);
 
-    ProfileLoaded.get({personId: personId}, function (loadedProfile) {
+    ProfileFactory.get({personId: personId}, function (loadedProfile) {
         $scope.profile = loadedProfile;
     });
 
     $scope.updateProfile = function (profileForm) {
         if (isValid(profileForm)) {
-            ProfileLoaded.add($scope.profile, function () {
+            ProfileFactory.add($scope.profile, function () {
                 $window.location.href = '/profile';
             });
         }
@@ -71,65 +68,127 @@ autoBio.controller('ErrorController', ['$scope', '$window', function ($scope, $w
 
 }]);
 
-autoBio.controller('AutoBiographyFullController', ['$scope', '$location', 'AutobiofullSaver', function ($scope, $location, AutobiofullSaver) {
-    //$scope.autobioFull = "";
-    var personId = $location.path().split("/")[3];
-    if (personId == undefined || personId == null) {
-        personId = "";
+autoBio.controller('AutoBiographyFullController', ['$scope', '$location', 'AutobioTextFactory', function ($scope, $location, AutobioTextFactory) {
+    autoBioTextController($scope, $location, AutobioTextFactory, "FULL", 10000);
+}]);
+
+
+autoBio.controller('AutoBiographyForWorkController', ['$scope', '$location', 'AutobioTextFactory', 'AutoBioTemplatesFactory', function ($scope, $location, AutobioTextFactory, AutoBioTemplatesFactory) {
+    var CKEDITORWrapper = autoBioTextController($scope, $location, AutobioTextFactory, "FOR_WORK", 5000);
+    var lang = document.getElementById("lang-input-id").value;
+    $scope.autoBioTemplates = [];
+    AutoBioTemplatesFactory.query(function (autoBioTemplates) {
+        $scope.autoBioTemplates = autoBioTemplates;
+    });
+
+    $scope.setTemplate = function () {
+        AutoBioTemplatesFactory.get({templateId: $scope.templateSelection}, function (autoBioTemplateContent) {
+            CKEDITORWrapper.CKEDITOR.instances.autobioText.setData(autoBioTemplateContent.content);
+        });
     }
+}]);
+
+function autoBioTextController($scope, $location, AutobioTextFactory,
+                               autobioTextType, maxCharCount) {
+    var personId = getPersonId($location);
+    var autobioText = null;
+    var ckEditorObject = loadCkeditor(maxCharCount);
+    AutobioTextFactory.get({personId: personId, autoBioTextType: autobioTextType}, function (autobioTextLoaded) {
+        if (autobioTextLoaded != null) {
+            autobioText = autobioTextLoaded.text;
+        } else {
+            autobioText = "";
+        }
+        ckEditorObject.setText(autobioText);
+    });
+
+    $scope.saveAutobioText = function () {
+        var data = CKEDITOR.instances.autobioText.getData();
+        console.info(data);
+        AutobioTextFactory.add({autoBioTextType: autobioTextType}, data, function () {
+
+        });
+    };
+
+    return ckEditorObject.CKEDITORWrapper;
+}
+
+/**
+ * CKEDITOR is loaded to autobioText field
+ * @returns {{setText: Function}}
+ */
+function loadCkeditor(maxCharCount) {
     var isEditorReady = false;
-    var autobioFullText = null;
+    var ckEditorText = null;
+    var CKEDITORWrapper = {CKEDITOR: null};
 
     loadScript("../../../assets/js/ckeditor/ckeditor.js", function () {
         var lang = document.getElementById("lang-input-id").value;
         /**Added plugins:
-         * Enhanced Image, Find / Replace, Font Size and Family, Image Browser,
+         * wordcount, Enhanced Image, Find / Replace, Font Size and Family, Image Browser,
          * Justify, Print, Upload Image
          * Removed plugins:
          * About CKEditor
          */
-
+        CKEDITORWrapper.CKEDITOR = CKEDITOR;
         CKEDITOR.replace('autobioText', {
-
             imageBrowser_listUrl: '/data/files',
             filebrowserUploadUrl: '/data/file',
             language: lang,
-            height: 500
-            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+            height: 500,
+            wordcount: {
+                // Whether or not you want to show the Paragraphs Count
+                showParagraphs: false,
 
+                // Whether or not you want to show the Word Count
+                showWordCount: true,
+
+                // Whether or not you want to show the Char Count
+                showCharCount: true,
+
+                // Whether or not you want to count Spaces as Chars
+                countSpacesAsChars: true,
+
+                // Whether or not to include Html chars in the Char Count
+                countHTML: false,
+
+                // Maximum allowed Word Count, -1 is default for unlimited
+                maxWordCount: -1,
+
+                // Maximum allowed Char Count, -1 is default for unlimited
+                maxCharCount: maxCharCount
+            }
 
         });
 
         CKEDITOR.on("instanceReady", function (event) {
-            if (autobioFullText != null && !isEditorReady) {
-                CKEDITOR.instances.autobioText.setData(autobioFullText);
+            if (ckEditorText != null && !isEditorReady) {
+                CKEDITOR.instances.autobioText.setData(ckEditorText);
             }
             isEditorReady = true;
 
-
         });
-
-
-    });
-    AutobiofullSaver.get({personId: personId}, function (autobioFull) {
-        if (autobioFull != null) {
-            autobioFullText = autobioFull.text;
-        } else {
-            autobioFullText = "";
-        }
-        if (isEditorReady) {
-            CKEDITOR.instances.autobioText.setData(autobioFullText);
-        }
     });
 
-    $scope.saveAutobioFull = function () {
-        var data = CKEDITOR.instances.autobioText.getData();
-        console.info(data);
-        AutobiofullSaver.add(data, function () {
-
-        });
+    return {
+        CKEDITORWrapper: CKEDITORWrapper,
+        setText: function (ckEditorTextLocal) {
+            ckEditorText = ckEditorTextLocal;
+            if (isEditorReady) {
+                CKEDITOR.instances.autobioText.setData(ckEditorText);
+            }
+        }
     }
-}]);
+}
+
+function getPersonId($location) {
+    var personId = $location.path().split("/")[3];
+    if (personId == undefined || personId == null) {
+        personId = "";
+    }
+    return personId;
+}
+
 
 function loadScript(url, callback) {
 

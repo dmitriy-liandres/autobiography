@@ -23,9 +23,11 @@ public class AutoBioFile {
     @ManyToOne()
     private Person person;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "file_type", nullable = false, unique = false)
     private FileType fileType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "data_type", nullable = false, unique = false)
     private DataType dataType;
 

@@ -8,10 +8,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Author Dmitriy Liandres
@@ -26,6 +25,7 @@ public class GenericView extends View {
     public static final String NOT_FOUND_FTL = "not-found.ftl";
     public static final String NOT_AUTHORIZED_FTL = "not-authorized.ftl";
     public static final String AUTOBIOGRAPHY_FULL_FTL = "autobiography-full.ftl";
+    public static final String AUTOBIOGRAPHY_FOR_WORK_FTL = "autobiography-for-work.ftl";
 
 
     public GenericView(String templateName) {

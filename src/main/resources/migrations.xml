@@ -36,27 +36,30 @@
                                  constraintName="fk_profile_person"
                                  referencedTableName="person"
                                  referencedColumnNames="id"
-                                 onDelete="CASCADE" />
+                                 onDelete="CASCADE"/>
     </changeSet>
 
     <changeSet id="2" author="d_liandres">
 
 
-        <createTable tableName="autobio_full">
+        <createTable tableName="autobio_text">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="autobio_text_type" type="varchar(20)">
+                <constraints nullable="false"/>
             </column>
             <column name="text" type="CLOB">
                 <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="autobio_full"
+        <addForeignKeyConstraint baseTableName="autobio_text"
                                  baseColumnNames="id"
-                                 constraintName="fk_autobio_full"
+                                 constraintName="fk_autobio_text"
                                  referencedTableName="person"
                                  referencedColumnNames="id"
-                                 onDelete="CASCADE" />
+                                 onDelete="CASCADE"/>
     </changeSet>
 
     <changeSet id="3" author="d_liandres">
@@ -85,6 +88,34 @@
                                  constraintName="fk_auto_bio_file_person_id"
                                  referencedTableName="person"
                                  referencedColumnNames="id"
-                                 onDelete="CASCADE" />
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="4" author="d_liandres">
+
+
+        <createTable tableName="auto_bio_template">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="locale" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="clob">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+        <createIndex indexName="idx_auto_bio_template_locale"
+                     tableName="auto_bio_template"
+                     unique="false">
+            <column name="locale" type="varchar(20)"/>
+        </createIndex>
+
+        <customChange class="com.autobiography.db.migration.ImportAutoBioTemplates"/>
     </changeSet>
 </databaseChangeLog>

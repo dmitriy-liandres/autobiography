@@ -8,7 +8,7 @@
             <td>
             ${message("autobioFull.description")}
                 <form action="autobiography-full.ftl" method="post">
-                    <textarea name="autobioText" id="autobioText" rows="10" cols="80">
+                    <textarea name="autobioText" id="autobioText" rows="10" cols="80" maxlength="1000">
                     </textarea>
                 </form>
             </td>
@@ -16,7 +16,7 @@
         <tr>
             <td>
                 <button type="button" class="btn btn-primary"
-                        ng-click="saveAutobioFull()">${message("save")}</button>
+                        ng-click="saveAutobioText()">${message("save")}</button>
             </td>
         </tr>
     </table>
