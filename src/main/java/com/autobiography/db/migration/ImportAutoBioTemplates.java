@@ -27,11 +27,20 @@ public class ImportAutoBioTemplates implements CustomTaskChange {
     public void execute(Database database) throws CustomChangeException {
         logger.info("Beginning Default Hiring Rules MigrationHandler");
         Connection dbConnection = null;
+        PreparedStatement psDeleteTemplate = null;
         PreparedStatement psInsertTemplate = null;
         try {
             dbConnection = ((JdbcConnection) database.getConnection()).getUnderlyingConnection();
+
+            //delete old templates
+            String sqlDeleteOld =
+                    "delete from auto_bio_template";
+            psDeleteTemplate = dbConnection.prepareStatement(sqlDeleteOld);
+            psDeleteTemplate.executeUpdate();
+
+            //insert new templates
             String sqlInsertTemplate =
-                    "insert into auto_bio_template (locale, name, content)  values (?, ?, ?) ";
+                    "insert into auto_bio_template (locale, name, template, example)  values (?, ?, ?, ?) ";
             psInsertTemplate = dbConnection.prepareStatement(sqlInsertTemplate);
 
             File[] localeDirectories = new File(getClass().getResource("/examples").toURI()).listFiles();
@@ -39,12 +48,17 @@ public class ImportAutoBioTemplates implements CustomTaskChange {
                 String locale = localeDirectory.getName();
                 File[] templates = localeDirectory.listFiles();
                 if (templates != null && templates.length > 0) {
-                    for (File templateFile : templates) {
-                        String name = templateFile.getName().replace(".txt", "");
-                        String content = FileUtils.readFileToString(templateFile);
+                    for (File templateDirectory : templates) {
+                       File nameFile = new File(templateDirectory.getPath() + "/name.txt");
+                        String name = FileUtils.readFileToString(nameFile);
+                        File templateFile = new File(templateDirectory.getPath() + "/template.txt");
+                        String template = FileUtils.readFileToString(templateFile);
+                        File exampleFile = new File(templateDirectory.getPath() + "/example.txt");
+                        String example = FileUtils.readFileToString(exampleFile);
                         psInsertTemplate.setString(1, locale);
                         psInsertTemplate.setString(2, name);
-                        psInsertTemplate.setString(3, content);
+                        psInsertTemplate.setString(3, template);
+                        psInsertTemplate.setString(4, example);
                         psInsertTemplate.executeUpdate();
                     }
                 }
@@ -52,15 +66,23 @@ public class ImportAutoBioTemplates implements CustomTaskChange {
             }
 
         } catch (Exception t) {
-            throw new CustomChangeException("Migration of Default Hiring Rules failed!", t);
+            throw new CustomChangeException("Migration of ImportAutoBioTemplates failed!", t);
         } finally {
-            try {
-                if (psInsertTemplate != null) {
+            if (psInsertTemplate != null) {
+                try {
                     psInsertTemplate.close();
+                } catch (SQLException e) {
+                    throw new CustomChangeException(e);
                 }
-            } catch (SQLException e) {
-                throw new CustomChangeException(e);
             }
+            if (psDeleteTemplate != null) {
+                try {
+                    psDeleteTemplate.close();
+                } catch (SQLException e) {
+                    throw new CustomChangeException(e);
+                }
+            }
+
         }
     }
 

@@ -73,17 +73,19 @@ autoBio.controller('AutoBiographyFullController', ['$scope', '$location', 'Autob
 }]);
 
 
-autoBio.controller('AutoBiographyForWorkController', ['$scope', '$location', 'AutobioTextFactory', 'AutoBioTemplatesFactory', function ($scope, $location, AutobioTextFactory, AutoBioTemplatesFactory) {
+autoBio.controller('AutoBiographyForWorkController', ['$scope', '$location', '$sce', 'AutobioTextFactory', 'AutoBioTemplatesFactory', function ($scope, $location, $sce, AutobioTextFactory, AutoBioTemplatesFactory) {
     var CKEDITORWrapper = autoBioTextController($scope, $location, AutobioTextFactory, "FOR_WORK", 5000);
     var lang = document.getElementById("lang-input-id").value;
     $scope.autoBioTemplates = [];
+    $scope.autoBioExample = "";
     AutoBioTemplatesFactory.query(function (autoBioTemplates) {
         $scope.autoBioTemplates = autoBioTemplates;
     });
 
     $scope.setTemplate = function () {
         AutoBioTemplatesFactory.get({templateId: $scope.templateSelection}, function (autoBioTemplateContent) {
-            CKEDITORWrapper.CKEDITOR.instances.autobioText.setData(autoBioTemplateContent.content);
+            CKEDITORWrapper.CKEDITOR.instances.autobioText.setData(autoBioTemplateContent.template);
+            $scope.autoBioExample = $sce.trustAsHtml(autoBioTemplateContent.example);
         });
     }
 }]);
@@ -112,73 +114,90 @@ function autoBioTextController($scope, $location, AutobioTextFactory,
 
     return ckEditorObject.CKEDITORWrapper;
 }
+function isEditorLoaded() {
+    return typeof CKEDITOR !== 'undefined' && CKEDITOR != null && CKEDITOR.status == 'loaded';
+}
 
 /**
  * CKEDITOR is loaded to autobioText field
  * @returns {{setText: Function}}
  */
 function loadCkeditor(maxCharCount) {
-    var isEditorReady = false;
-    var ckEditorText = null;
-    var CKEDITORWrapper = {CKEDITOR: null};
+    var CKEDITORWrapper = {
+        CKEDITOR: null,
+        isEditorReady: false,
+        ckEditorText: null
+    };
 
-    loadScript("../../../assets/js/ckeditor/ckeditor.js", function () {
-        var lang = document.getElementById("lang-input-id").value;
-        /**Added plugins:
-         * wordcount, Enhanced Image, Find / Replace, Font Size and Family, Image Browser,
-         * Justify, Print, Upload Image
-         * Removed plugins:
-         * About CKEditor
-         */
-        CKEDITORWrapper.CKEDITOR = CKEDITOR;
-        CKEDITOR.replace('autobioText', {
-            imageBrowser_listUrl: '/data/files',
-            filebrowserUploadUrl: '/data/file',
-            language: lang,
-            height: 500,
-            wordcount: {
-                // Whether or not you want to show the Paragraphs Count
-                showParagraphs: false,
+    if (isEditorLoaded()) {
+        initCkeditor(CKEDITORWrapper, maxCharCount);
+    } else {
+        loadScript("../../../assets/js/ckeditor/ckeditor.js", function () {
+            var isEditorLoaded = typeof CKEDITOR !== 'undefined' && CKEDITOR != null && CKEDITOR.status == 'loaded';
+            console.info("check CKEDITOR initialization" + isEditorLoaded);
+            return isEditorLoaded
+        }, function () {
 
-                // Whether or not you want to show the Word Count
-                showWordCount: true,
-
-                // Whether or not you want to show the Char Count
-                showCharCount: true,
-
-                // Whether or not you want to count Spaces as Chars
-                countSpacesAsChars: true,
-
-                // Whether or not to include Html chars in the Char Count
-                countHTML: false,
-
-                // Maximum allowed Word Count, -1 is default for unlimited
-                maxWordCount: -1,
-
-                // Maximum allowed Char Count, -1 is default for unlimited
-                maxCharCount: maxCharCount
-            }
-
+            initCkeditor(CKEDITORWrapper, maxCharCount);
         });
-
-        CKEDITOR.on("instanceReady", function (event) {
-            if (ckEditorText != null && !isEditorReady) {
-                CKEDITOR.instances.autobioText.setData(ckEditorText);
-            }
-            isEditorReady = true;
-
-        });
-    });
+    }
 
     return {
         CKEDITORWrapper: CKEDITORWrapper,
         setText: function (ckEditorTextLocal) {
-            ckEditorText = ckEditorTextLocal;
-            if (isEditorReady) {
-                CKEDITOR.instances.autobioText.setData(ckEditorText);
+            CKEDITORWrapper.ckEditorText = ckEditorTextLocal;
+            if (CKEDITORWrapper.isEditorReady) {
+                CKEDITOR.instances.autobioText.setData(CKEDITORWrapper.ckEditorText);
             }
         }
     }
+}
+
+function initCkeditor(CKEDITORWrapper, maxCharCount){
+    /**Added plugins:
+     * wordcount, Enhanced Image, Find / Replace, Font Size and Family, Image Browser,
+     * Justify, Print,  Upload Widget, Upload Image
+     * Removed plugins:
+     * About CKEditor, WebSpellChecker, SCAYT
+     */
+    CKEDITOR.replace('autobioText', {
+        imageBrowser_listUrl: '/data/files',
+        filebrowserUploadUrl: '/data/file',
+        filebrowserImageBrowseUrl : '/assets/js/ckeditor/plugins/imagebrowser/browser/browser.html?listUrl=%2Fdata%2Ffiles',
+        language: document.getElementById("lang-input-id").value,
+        height: 500,
+        wordcount: {
+            // Whether or not you want to show the Paragraphs Count
+            showParagraphs: false,
+
+            // Whether or not you want to show the Word Count
+            showWordCount: true,
+
+            // Whether or not you want to show the Char Count
+            showCharCount: true,
+
+            // Whether or not you want to count Spaces as Chars
+            countSpacesAsChars: true,
+
+            // Whether or not to include Html chars in the Char Count
+            countHTML: false,
+
+            // Maximum allowed Word Count, -1 is default for unlimited
+            maxWordCount: -1,
+
+            // Maximum allowed Char Count, -1 is default for unlimited
+            maxCharCount: maxCharCount
+        }
+
+    }).on('instanceReady', function (event) {
+
+        if (CKEDITORWrapper.ckEditorText != null && !CKEDITORWrapper.isEditorReady) {
+            CKEDITOR.instances.autobioText.setData(CKEDITORWrapper.ckEditorText);
+        }
+        CKEDITORWrapper.isEditorReady = true;
+        CKEDITORWrapper.CKEDITOR = CKEDITOR;
+
+    });
 }
 
 function getPersonId($location) {
@@ -190,27 +209,49 @@ function getPersonId($location) {
 }
 
 
-function loadScript(url, callback) {
+function loadScript(url, checkWhetherScriptIsLoadedFunction, callback) {
 
-    var script = document.createElement("script");
-    script.type = "text/javascript";
+    var script = document.createElement( 'script' );
+    script.type = 'text/javascript';
+    script.src = url;
 
     if (script.readyState) {  //IE
         script.onreadystatechange = function () {
             if (script.readyState == "loaded" ||
                 script.readyState == "complete") {
                 script.onreadystatechange = null;
-                callback();
+                checkScriptIsLoaded(checkWhetherScriptIsLoadedFunction, callback);
             }
         };
     } else {  //Others
         script.onload = function () {
-            callback();
+
+            // Some browsers, such as Safari, may call the onLoad function
+            // immediately. Which will break the loading sequence. (#3661)
+            setTimeout( function() {
+                checkScriptIsLoaded(checkWhetherScriptIsLoadedFunction, callback);
+            }, 0 );
         };
     }
 
-    script.src = url;
-    document.getElementsByTagName("head")[0].appendChild(script);
+    document.body.appendChild( script );
+
+
+
+}
+
+function checkScriptIsLoaded(checkWhetherScriptIsLoadedFunction, callBackAfterLoaded) {
+    var timerVar = setInterval(function () {
+        checkWhetherScriptIsLoadedFunction2(checkWhetherScriptIsLoadedFunction, callBackAfterLoaded, timerVar);
+    }, 10);
+    checkWhetherScriptIsLoadedFunction2(checkWhetherScriptIsLoadedFunction, callBackAfterLoaded, timerVar);
+}
+
+function checkWhetherScriptIsLoadedFunction2(checkWhetherScriptIsLoadedFunction, callBackAfterLoaded, timerVar){
+    if(checkWhetherScriptIsLoadedFunction()){
+        clearInterval(timerVar);
+        callBackAfterLoaded();
+    }
 }
 
 

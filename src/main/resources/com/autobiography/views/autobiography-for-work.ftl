@@ -12,14 +12,19 @@
                 </select>
                 <table>
                     <tr>
-                        <td width="50%">
+                        <td rowspan="2" width="50%">
                             <form action="autobiography-for-work.ftl" method="post">
                                 <textarea name="autobioText" id="autobioText" rows="10" cols="80" maxlength="1000">
                                 </textarea>
                             </form>
                         </td>
-                        <td>
+                        <td height="50%">
                         ${message("autobioforwork.tips")}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p ng-bind-html="autoBioExample"></p>
                         </td>
                     </tr>
                 </table>

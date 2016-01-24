@@ -24,8 +24,15 @@ public class AutoBioTemplate {
     @Column(name = "name", nullable = false, unique = false)
     private String name;
 
-    @Column(name = "content", nullable = false, unique = false)
-    private String content;
+    @Column(name = "template", nullable = false, unique = false)
+    private String template;
+
+    @Column(name = "example", nullable = false, unique = false)
+    private String example;
+
+    public String getExample() {
+        return example;
+    }
 
     public long getId() {
         return id;
@@ -51,11 +58,15 @@ public class AutoBioTemplate {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getTemplate() {
+        return template;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
+    public void setExample(String example) {
+        this.example = example;
     }
 }

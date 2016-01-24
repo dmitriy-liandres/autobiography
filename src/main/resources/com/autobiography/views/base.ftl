@@ -6,16 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <script src="../../../assets/js/angular.js"></script>
-    <script src="../../../assets/js/angular-resource.js"></script>
-    <script src="../../../assets/js/angular-route.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular-resource.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular-route.js"></script>
 
-    <script src="../../../assets/js/factories.js"></script>
-    <script src="../../../assets/js/controllers.js"></script>
-    <script src="../../../assets/js/base.js"></script>
+    <script type="text/javascript" src="../../../assets/js/factories.js"></script>
+    <script type="text/javascript" src="../../../assets/js/controllers.js"></script>
+    <script type="text/javascript" src="../../../assets/js/base.js"></script>
 
-    <script src="../../../assets/js/messages_js_${getServerLocale()}.js"></script>
+    <script type="text/javascript" src="../../../assets/js/messages_js_${getServerLocale()}.js"></script>
 
+    <!--<script type="text/javascript" src="../../../assets/js/ckeditor/ckeditor.js"></script>
+        -->
 </head>
 <body ng-controller="EmptyController">
 

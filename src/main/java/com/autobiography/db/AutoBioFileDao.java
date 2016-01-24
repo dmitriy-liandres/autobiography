@@ -23,7 +23,7 @@ public class AutoBioFileDao extends AbstractDAO<AutoBioFile> {
     }
 
     public List<AutoBioFile> findByPersonId(Long personId) {
-        return list(namedQuery("AutoBioFile.findByLocale").setLong("personId", personId));
+        return list(namedQuery("AutoBioFile.findByPersonId").setLong("personId", personId));
     }
 
     public AutoBioFile create(AutoBioFile autoBioFile) {
