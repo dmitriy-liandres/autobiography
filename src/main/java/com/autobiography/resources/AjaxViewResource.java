@@ -76,6 +76,17 @@ public class AjaxViewResource {
     @GET
     @Path("autobiography-for-work")
     public GenericView getAutobiographyForWork() {
+
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
         return new GenericView(GenericView.AUTOBIOGRAPHY_FOR_WORK_FTL);
     }
+
+    @GET
+    @Path("autobiography-interesting")
+    public GenericView getAutobiographyInteresting() {
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
+        return new GenericView(GenericView.AUTOBIOGRAPHY_INTERESTING_FTL);
+    }
+
+
 }

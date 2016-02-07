@@ -16,8 +16,8 @@
 
     <script type="text/javascript" src="../../../assets/js/messages_js_${getServerLocale()}.js"></script>
 
-    <!--<script type="text/javascript" src="../../../assets/js/ckeditor/ckeditor.js"></script>
-        -->
+
+    <link rel="stylesheet" href="../../../assets/css/ckeditor.css" type="text/css">
 </head>
 <body ng-controller="EmptyController">
 

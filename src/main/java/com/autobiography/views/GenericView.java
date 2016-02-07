@@ -1,6 +1,6 @@
 package com.autobiography.views;
 
-import com.autobiography.helpers.MessageProvider;
+import com.autobiography.helpers.MessageHelper;
 import com.autobiography.model.db.Person;
 import com.autobiography.model.db.Profile;
 import io.dropwizard.views.View;
@@ -26,6 +26,7 @@ public class GenericView extends View {
     public static final String NOT_AUTHORIZED_FTL = "not-authorized.ftl";
     public static final String AUTOBIOGRAPHY_FULL_FTL = "autobiography-full.ftl";
     public static final String AUTOBIOGRAPHY_FOR_WORK_FTL = "autobiography-for-work.ftl";
+    public static final String AUTOBIOGRAPHY_INTERESTING_FTL = "autobiography-interesting.ftl";
 
 
     public GenericView(String templateName) {
@@ -63,7 +64,7 @@ public class GenericView extends View {
 
 
     public String message(String messageKey) throws IOException {
-        return MessageProvider.message(messageKey);
+        return MessageHelper.message(messageKey);
 
     }
 }

@@ -1,0 +1,17 @@
+.ckeditor-image2-align-left {
+    float: left;
+    margin-right: 15px;
+}
+
+.ckeditor-image2-align-right {
+    float: right;
+    margin-left: 15px;
+}
+
+.ckeditor-image2-align-center {
+    text-align: center;
+}
+
+.ckeditor-image2-align-center > figure {
+    display: inline-block;
+}

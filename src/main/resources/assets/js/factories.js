@@ -38,10 +38,29 @@ autoBioFactories.factory('AutoBioTemplatesFactory', ['$resource',
         return $resource('data/autobio-text/templates/:templateId', {}, {
             query: {
                 method: 'GET',
-                isArray:true,
+                isArray: true,
                 cache: false,
                 params: {time: Date.now()}
             }
         });
+    }
+]);
+
+autoBioFactories.factory('AutoBioInterestingChaptersLoaderFactory', ['$resource',
+    function ($resource) {
+        return $resource('data/autobio-interesting/chapters/', {}, {
+            query: {
+                method: 'GET',
+                isArray: true,
+                cache: false,
+                params: {time: Date.now()}
+            }
+        });
+    }
+]);
+
+autoBioFactories.factory('AutoBioInterestingAnswerFactory', ['$resource',
+    function ($resource, personId, chapterId, subChapterId) {
+        return $resource('data/autobio-interesting/answer/chapter/:chapterId/subChapter/:subChapterId?personId=:personId');
     }
 ]);

@@ -24,13 +24,20 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
             .when('/not-authorized', {
                 templateUrl: 'ajax/not-authorized',
                 controller: 'NotAuthorizedController'
-            }) .when('/autobiography-full', {
+            })
+            .when('/autobiography-full', {
                 templateUrl: 'ajax/autobiography-full',
                 controller: 'AutoBiographyFullController'
-            }) .when('/autobiography-for-work', {
+            })
+            .when('/autobiography-for-work', {
                 templateUrl: 'ajax/autobiography-for-work',
                 controller: 'AutoBiographyForWorkController'
             }).
+            when('/autobiography-interesting', {
+                templateUrl: 'ajax/autobiography-interesting',
+                controller: 'AutoBiographyInterestingController'
+            }).
+
             otherwise({
                 templateUrl: 'ajax/not-found',
                 controller: 'NotFoundController'

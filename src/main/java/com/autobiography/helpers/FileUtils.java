@@ -55,7 +55,7 @@ public class FileUtils {
         //1. check that user have files less than maximum
         List<AutoBioFile> allFiles = autoBioFileDao.findByPersonId(autoBioFile.getPerson().getId());
         if (CollectionUtils.isNotEmpty(allFiles) && allFiles.size() >= FILES_PER_PERSON) {
-            throw new BadRequestException(String.format(MessageProvider.message("file.tooMany"), FILES_PER_PERSON));
+            throw new BadRequestException(String.format(MessageHelper.message("file.tooMany"), FILES_PER_PERSON));
 
         }
         autoBioFile = autoBioFileDao.create(autoBioFile);

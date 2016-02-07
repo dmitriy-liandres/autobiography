@@ -1,12 +1,11 @@
 package com.autobiography.resources;
 
-import com.autobiography.db.AutoBioFileDao;
-import com.autobiography.db.AutoBioTemplateDao;
-import com.autobiography.db.AutoBioTextDao;
-import com.autobiography.db.ProfileDAO;
+import com.autobiography.db.*;
+import com.autobiography.helpers.AutoBioInterestingHelper;
 import com.autobiography.helpers.FileUtils;
-import com.autobiography.helpers.MessageProvider;
+import com.autobiography.helpers.MessageHelper;
 import com.autobiography.model.db.*;
+import com.autobiography.model.view.AutoBioInterestingChapter;
 import com.autobiography.model.view.AutoBioTemplateView;
 import com.autobiography.model.view.ProfileViewModel;
 import com.autobiography.shiro.GeneralDomainPermission;
@@ -53,16 +52,19 @@ public class AjaxDataResource {
     private AutoBioTextDao autoBioTextDao;
     private AutoBioFileDao autoBioFileDao;
     private AutoBioTemplateDao autoBioTemplateDao;
+    private AutoBioInterestingAnswersDAO autoBioInterestingAnswersDAO;
 
     @Inject
     public AjaxDataResource(ProfileDAO profileDAO,
                             AutoBioTextDao autoBioTextDao,
                             AutoBioFileDao autoBioFileDao,
-                            AutoBioTemplateDao autoBioTemplateDao) {
+                            AutoBioTemplateDao autoBioTemplateDao,
+                            AutoBioInterestingAnswersDAO autoBioInterestingAnswersDAO) {
         this.profileDAO = profileDAO;
         this.autoBioTextDao = autoBioTextDao;
         this.autoBioFileDao = autoBioFileDao;
         this.autoBioTemplateDao = autoBioTemplateDao;
+        this.autoBioInterestingAnswersDAO = autoBioInterestingAnswersDAO;
     }
 
 
@@ -70,15 +72,7 @@ public class AjaxDataResource {
     @Path("profile")
     @UnitOfWork
     public ProfileViewModel getProfileView(@QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
-        Long personIdLong;
-        if (StringUtils.isNotEmpty(personId)) {
-            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId));
-            personIdLong = Long.valueOf(personId);
-        } else {
-            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
-            Person person = (Person) SecurityUtils.getSubject().getPrincipal();
-            personIdLong = person.getId();
-        }
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId);
 
         ProfileViewModel profileViewModel = new ProfileViewModel();
         Profile profile = profileDAO.findById(personIdLong);
@@ -155,6 +149,23 @@ public class AjaxDataResource {
         }
     }
 
+    /**
+     * Checks personPermissions.
+     *
+     * @param personId person id. Can be null. In this case current user permissions are checked
+     * @return person id for which permissoins where checked
+     */
+    private Long checkPersonPermissions(PermissionObjectType permissionObjectType, String action, String personId) {
+        if (StringUtils.isNotEmpty(personId)) {
+            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(permissionObjectType, action, personId));
+            return Long.valueOf(personId);
+        } else {
+            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(permissionObjectType, action));
+            Person person = (Person) SecurityUtils.getSubject().getPrincipal();
+            return person.getId();
+        }
+    }
+
     @GET
     @Path("files")
     @UnitOfWork
@@ -164,15 +175,7 @@ public class AjaxDataResource {
                                                 @QueryParam("personId") String personId) throws FileUploadException, IOException {
         List<UploadedImage> uploadedImages = new ArrayList<>();
 
-        Long personIdLong;
-        if (StringUtils.isNotEmpty(personId)) {
-            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId));
-            personIdLong = Long.valueOf(personId);
-        } else {
-            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
-            Person person = (Person) SecurityUtils.getSubject().getPrincipal();
-            personIdLong = person.getId();
-        }
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId);
         List<AutoBioFile> autoBioFiles = autoBioFileDao.findByPersonId(personIdLong);
         if (CollectionUtils.isNotEmpty(autoBioFiles)) {
             for (AutoBioFile autoBioFile : autoBioFiles) {
@@ -203,9 +206,9 @@ public class AjaxDataResource {
         String errorMessage = "";
         String fileUrl = "";
         if (CollectionUtils.isEmpty(items)) {
-            errorMessage = MessageProvider.message("file.notProvided");
+            errorMessage = MessageHelper.message("file.notProvided");
         } else if (items.get(0).getSize() > MAX_FILE_SIZE) {
-            errorMessage = MessageProvider.message("file.tooBid");
+            errorMessage = MessageHelper.message("file.tooBid");
         } else {
             //save file after validation
             AutoBioFile autoBioFile = new AutoBioFile();
@@ -249,5 +252,43 @@ public class AjaxDataResource {
             autoBioTemplate = new AutoBioTemplate();
         }
         return autoBioTemplate;
+    }
+
+
+    @GET
+    @Path("autobio-interesting/chapters")
+    @UnitOfWork
+    public List<AutoBioInterestingChapter> getAutoBioInterestingChapters() throws InvocationTargetException, IllegalAccessException, IOException {
+        return AutoBioInterestingHelper.loadChapters();
+    }
+
+    @GET
+    @Path("autobio-interesting/answer/chapter/{chapterId}/subChapter/{subChapterId}/")
+    @UnitOfWork
+    public AutoBioInterestingAnswer loadQuestionnaireInterestingAnswer(@PathParam("chapterId") Long chapterId,
+                                                                       @PathParam("subChapterId") Long subChapterId,
+                                                                       @QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException, IOException {
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId);
+        return autoBioInterestingAnswersDAO.findAnswer(personIdLong, chapterId, subChapterId);
+    }
+
+    @POST
+    @Path("autobio-interesting/answer/chapter/{chapterId}/subChapter/{subChapterId}/")
+    @UnitOfWork
+    public void addQuestionnaireInterestingAnswer(@PathParam("chapterId") Long chapterId,
+                                                  @PathParam("subChapterId") Long subChapterId,
+                                                  @QueryParam("personId") String personId,
+                                                  String text) throws InvocationTargetException, IllegalAccessException, IOException {
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.EDIT, personId);
+        AutoBioInterestingAnswer autoBioInterestingAnswer = autoBioInterestingAnswersDAO.findAnswer(personIdLong, chapterId, subChapterId);
+        if (autoBioInterestingAnswer == null) {
+            autoBioInterestingAnswer = new AutoBioInterestingAnswer();
+            autoBioInterestingAnswer.setPerson((Person) SecurityUtils.getSubject().getPrincipal());
+            autoBioInterestingAnswer.setChapterId(chapterId);
+            autoBioInterestingAnswer.setSubChapterId(subChapterId);
+        }
+        autoBioInterestingAnswer.setText(text);
+        autoBioInterestingAnswersDAO.saveOrUpdate(autoBioInterestingAnswer);
+
     }
 }

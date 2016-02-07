@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,12 +21,12 @@ import java.sql.SQLException;
  * Author Dmitriy Liandres
  * Date 17.01.2016
  */
-public class ImportAutoBioTemplates implements CustomTaskChange {
+public class ImportAutoBioTemplates extends CustomTaskChangeBase {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void execute(Database database) throws CustomChangeException {
-        logger.info("Beginning Default Hiring Rules MigrationHandler");
+        logger.info("Start ImportAutoBioTemplates");
         Connection dbConnection = null;
         PreparedStatement psDeleteTemplate = null;
         PreparedStatement psInsertTemplate = null;
@@ -43,10 +44,12 @@ public class ImportAutoBioTemplates implements CustomTaskChange {
                     "insert into auto_bio_template (locale, name, template, example)  values (?, ?, ?, ?) ";
             psInsertTemplate = dbConnection.prepareStatement(sqlInsertTemplate);
 
-            File[] localeDirectories = new File(getClass().getResource("/examples").toURI()).listFiles();
+            File[] localeDirectories = new File(getClass().getResource("/examples/locales").toURI()).listFiles();
             for (File localeDirectory : localeDirectories) {
                 String locale = localeDirectory.getName();
-                File[] templates = localeDirectory.listFiles();
+                File[] templates = localeDirectory.listFiles((dir, name) -> {
+                    return "biography-for-work".equals(name);
+                })[0].listFiles();
                 if (templates != null && templates.length > 0) {
                     for (File templateDirectory : templates) {
                        File nameFile = new File(templateDirectory.getPath() + "/name.txt");
@@ -91,18 +94,4 @@ public class ImportAutoBioTemplates implements CustomTaskChange {
         return "ImportAutoBioTemplates ran successfully";
     }
 
-    @Override
-    public void setUp() throws SetupException {
-
-    }
-
-    @Override
-    public void setFileOpener(ResourceAccessor resourceAccessor) {
-
-    }
-
-    @Override
-    public ValidationErrors validate(Database database) {
-        return new ValidationErrors();
-    }
 }

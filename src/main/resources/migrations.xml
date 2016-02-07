@@ -121,4 +121,29 @@
 
         <customChange class="com.autobiography.db.migration.ImportAutoBioTemplates"/>
     </changeSet>
+
+    <changeSet id="5" author="d_liandres">
+        <createTable tableName="auto_bio_interesting_answer">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="person_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chapter_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_chapter_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="clob">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="person_id, chapter_id, sub_chapter_id"
+                             constraintName="unique_auto_bio_interesting_answer_person_id_chapter_id_sub_chapter_id"
+                             tableName="auto_bio_interesting_answer"/>
+
+    </changeSet>
 </databaseChangeLog>

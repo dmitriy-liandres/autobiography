@@ -34,7 +34,7 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
     }
 
     private final HibernateBundle<AutobiographyConfiguration> hibernateBundle =
-            new HibernateBundle<AutobiographyConfiguration>(Person.class, Profile.class, AutoBioFile.class, AutoBioText.class, AutoBioTemplate.class) {
+            new HibernateBundle<AutobiographyConfiguration>(Person.class, Profile.class, AutoBioFile.class, AutoBioText.class, AutoBioTemplate.class, AutoBioInterestingAnswer.class) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(AutobiographyConfiguration configuration) {
                     return configuration.getDataSourceFactory();

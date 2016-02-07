@@ -35,4 +35,9 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+
+	config.image2_alignClasses = [ 'ckeditor-image2-align-left', 'ckeditor-image2-align-center', 'ckeditor-image2-align-right' ];
+
+	config.contentsCss = '../../../assets/css/ckeditor.css';
+
 };
