@@ -3,6 +3,8 @@ package com.autobiography.model.view;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Author Dmitriy Liandres
  * Date 06.12.2015
@@ -17,6 +19,17 @@ public class ProfileViewModel {
     @NotEmpty
     @Length(max = 100)
     private String surname;
+
+    @NotNull
+    private Boolean isPublic;
+
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
     public String getId() {
         return id;

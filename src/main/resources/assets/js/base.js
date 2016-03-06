@@ -9,10 +9,6 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'ajax/login',
                 controller: 'LoginController'
             })
-            .when('/main', {
-                templateUrl: 'ajax/main',
-                controller: 'EmptyController'
-            })
             .when('/profile', {
                 templateUrl: 'ajax/profile',
                 controller: 'ProfileController'

@@ -1,10 +1,22 @@
 var autoBio = angular.module('AutoBioControllersModule', ['autoBioFactories']);
 
-autoBio.controller('EmptyController', ['$scope', function ($scope) {
+autoBio.controller('EmptyController', ['$scope', 'ProfileSearchFactory', function ($scope, ProfileSearchFactory) {
+    $scope.search = function () {
+        if (isValid(profileForm)) {
+            ProfileFactory.add($scope.profile, function () {
+                $window.location.href = '/profile';
+            });
+        }
+    };
+
 
 }]);
 
-autoBio.controller('LoginController', ['$scope', '$routeParams', '$location', function ($scope, $routeParams, $location) {
+autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$location', function ($scope, $window, $routeParams, $location) {
+    if (isLoggedIn()) {
+        $window.location.href = '/profile';
+        return;
+    }
     //if next field is not empty, it means that login page was loaded after wrong loginsubmit
     $scope.error = $location.search().e;
     //param which used to decide where we should redirect user after successful login
@@ -33,6 +45,7 @@ autoBio.controller('LoginController', ['$scope', '$routeParams', '$location', fu
 }]);
 
 autoBio.controller('ProfileController', ['$scope', 'ProfileFactory', '$location', '$window', function ($scope, ProfileFactory, $location, $window) {
+    alert(2);
     $scope.profile = {};
     var personId = getPersonId($location);
 
@@ -342,7 +355,7 @@ function isValid(formName) {
 function redirectToMain($window) {
     setTimeout(function () {
         if (isLoggedIn()) {
-            $window.location.href = '/main';
+            $window.location.href = '/profile';
         } else {
             $window.location.href = '/';
         }

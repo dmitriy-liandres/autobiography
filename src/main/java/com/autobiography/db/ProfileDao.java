@@ -5,6 +5,8 @@ import com.google.inject.Inject;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
+import java.util.List;
+
 /**
  * Author Dmitriy Liandres
  * Date 06.12.2015
@@ -27,7 +29,7 @@ public class ProfileDAO extends AbstractDAO<Profile> {
         currentSession().saveOrUpdate(profile);
     }
 
-    public void save(Profile profile) {
-        currentSession().save(profile);
+    public List<Profile> findByName(String name) {
+        return list(namedQuery("Profile.findByName").setString("name", name));
     }
 }

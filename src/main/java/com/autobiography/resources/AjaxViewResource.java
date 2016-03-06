@@ -26,7 +26,7 @@ public class AjaxViewResource {
     @Path("login")
     public GenericView getLoginView() {
         if (SecurityUtils.getSubject().isAuthenticated()) {
-            return getMainView();
+            return getProfileView();
         } else {
             return new GenericView(GenericView.LOGIN_FTL);
         }
@@ -39,12 +39,6 @@ public class AjaxViewResource {
         return getLoginView();
     }
 
-    @GET
-    @Path("main")
-    public GenericView getMainView() {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
-        return new GenericView(GenericView.MAIN_FTL);
-    }
 
     @GET
     @Path("profile")

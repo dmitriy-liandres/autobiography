@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-    <script type="text/javascript" src="../../../assets/js/angular.js"></script>
-    <script type="text/javascript" src="../../../assets/js/angular-resource.js"></script>
-    <script type="text/javascript" src="../../../assets/js/angular-route.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular/angular.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular/angular-resource.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular/angular-route.js"></script>
 
     <script type="text/javascript" src="../../../assets/js/factories.js"></script>
     <script type="text/javascript" src="../../../assets/js/controllers.js"></script>
@@ -35,6 +35,7 @@
             </#if>
             <a href="?lang=en" target="_self">English</a>
             <a href="?lang=ru" target="_self">Русский</a>
+            <input type="se">
 
         </div>
     </nav>

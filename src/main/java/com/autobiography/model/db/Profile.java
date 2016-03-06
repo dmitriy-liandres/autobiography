@@ -8,7 +8,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "profile")
-
+@NamedQueries({
+        @NamedQuery(
+                name = "Profile.findByName",
+                query = "SELECT p FROM Profile p where 0.isPublic = true && o.name like ':name' or o.surname like ':name'"
+        )
+})
 public class Profile {
     @Id
     private long id;
@@ -22,6 +27,17 @@ public class Profile {
 
     @Column(name = "surname", nullable = false)
     private String surname;
+
+    @Column(name = "is_public", nullable = false)
+    private Boolean isPublic;
+
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
     public long getId() {
         return id;

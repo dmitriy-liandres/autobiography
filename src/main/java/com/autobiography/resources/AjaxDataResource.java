@@ -23,6 +23,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileCleaningTracker;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +47,8 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON)
 public class AjaxDataResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(AjaxDataResource.class);
 
     private final static Long MAX_FILE_SIZE = 1024 * 1024 * 5L;//5 MB
 
@@ -289,6 +293,28 @@ public class AjaxDataResource {
         }
         autoBioInterestingAnswer.setText(text);
         autoBioInterestingAnswersDAO.saveOrUpdate(autoBioInterestingAnswer);
+
+    }
+
+
+    @GET
+    @Path("search/{name}")
+    @UnitOfWork
+    public List<ProfileViewModel> searchForProfile(@PathParam("name") String name) throws InvocationTargetException, IllegalAccessException, IOException {
+        List<ProfileViewModel> profileViewModels = new ArrayList<>();
+        List<Profile> profiles = profileDAO.findByName(name);
+        if (CollectionUtils.isNotEmpty(profiles)) {
+            profiles.stream().forEach(profile -> {
+                ProfileViewModel profileViewModel = new ProfileViewModel();
+                try {
+                    BeanUtils.copyProperties(profileViewModel, profile);
+                    profileViewModels.add(profileViewModel);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    logger.error("Impossible to map fields", e);
+                }
+            });
+        }
+        return profileViewModels;
 
     }
 }

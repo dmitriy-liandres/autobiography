@@ -64,3 +64,16 @@ autoBioFactories.factory('AutoBioInterestingAnswerFactory', ['$resource',
         return $resource('data/autobio-interesting/answer/chapter/:chapterId/subChapter/:subChapterId?personId=:personId');
     }
 ]);
+
+autoBioFactories.factory('ProfileSearchFactory', ['$resource',
+    function ($resource) {
+        return $resource('data/search/:name', {}, {
+            query: {
+                method: 'GET',
+                isArray: true,
+                cache: false,
+                params: {time: Date.now()}
+            }
+        });
+    }
+]);

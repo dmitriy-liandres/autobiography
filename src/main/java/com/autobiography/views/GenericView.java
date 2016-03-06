@@ -20,7 +20,6 @@ public class GenericView extends View {
 
     public static final String BASE_FTL = "base.ftl";
     public static final String LOGIN_FTL = "login.ftl";
-    public static final String MAIN_FTL = "main.ftl";
     public static final String PROFILE_FTL = "profile.ftl";
     public static final String NOT_FOUND_FTL = "not-found.ftl";
     public static final String NOT_AUTHORIZED_FTL = "not-authorized.ftl";
