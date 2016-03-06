@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(
                 name = "Profile.findByName",
-                query = "SELECT p FROM Profile p where 0.isPublic = true && o.name like ':name' or o.surname like ':name'"
+                query = "SELECT p FROM Profile p where p.isPublic = true and (p.name like :userName or p.surname like :userName)"
         )
 })
 public class Profile {

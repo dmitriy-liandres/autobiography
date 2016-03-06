@@ -1,4 +1,4 @@
-var autobiographyApp = angular.module('autobiographyApp', ["AutoBioControllersModule", "ngRoute"]);
+var autobiographyApp = angular.module('autobiographyApp', ["AutoBioControllersModule", "ngRoute", "ui.bootstrap"]);
 
 
 autobiographyApp.config(['$routeProvider', '$locationProvider',

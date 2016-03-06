@@ -9,6 +9,9 @@
     <script type="text/javascript" src="../../../assets/js/angular/angular.js"></script>
     <script type="text/javascript" src="../../../assets/js/angular/angular-resource.js"></script>
     <script type="text/javascript" src="../../../assets/js/angular/angular-route.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular/angular-animate.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular/angular-touch.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular/ui-bootstrap-tpls-1.2.3.min.js"></script>
 
     <script type="text/javascript" src="../../../assets/js/factories.js"></script>
     <script type="text/javascript" src="../../../assets/js/controllers.js"></script>
@@ -16,8 +19,8 @@
 
     <script type="text/javascript" src="../../../assets/js/messages_js_${getServerLocale()}.js"></script>
 
-
     <link rel="stylesheet" href="../../../assets/css/ckeditor.css" type="text/css">
+
 </head>
 <body ng-controller="EmptyController">
 
@@ -35,7 +38,15 @@
             </#if>
             <a href="?lang=en" target="_self">English</a>
             <a href="?lang=ru" target="_self">Русский</a>
-            <input type="se">
+            <input type="text" ng-model="profileSelected" placeholder="${message("topPanel.search.tooltip")}"
+                   uib-typeahead="profile as (profile.name + ' ' + profile.surname) for profile in searchProfiles($viewValue)"
+                   typeahead-loading="loadingProfiles" typeahead-no-results="noResults" class="form-control"
+                   typeahead-on-select="selectProfile($item, $model, $label, $event)">
+            <i ng-show="loadingProfiles" class="glyphicon glyphicon-refresh"></i>
+
+            <div ng-show="noResults">
+                <i class="glyphicon glyphicon-remove"></i> ${message("topPanel.search.noResults")}
+            </div>
 
         </div>
     </nav>

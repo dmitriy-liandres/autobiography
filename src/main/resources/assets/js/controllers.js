@@ -1,14 +1,16 @@
 var autoBio = angular.module('AutoBioControllersModule', ['autoBioFactories']);
 
-autoBio.controller('EmptyController', ['$scope', 'ProfileSearchFactory', function ($scope, ProfileSearchFactory) {
-    $scope.search = function () {
-        if (isValid(profileForm)) {
-            ProfileFactory.add($scope.profile, function () {
-                $window.location.href = '/profile';
-            });
-        }
+autoBio.controller('EmptyController', ['$scope', '$http', 'ProfileSearchFactory', function ($scope, $http, ProfileSearchFactory) {
+
+    $scope.searchProfiles = function (val) {
+        return $http.get('data/search/' + val, {}).then(function (response) {
+            return response.data;
+        });
     };
 
+    $scope.selectProfile = function ($item, $model, $label, $event) {
+
+    }
 
 }]);
 
@@ -45,7 +47,6 @@ autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$lo
 }]);
 
 autoBio.controller('ProfileController', ['$scope', 'ProfileFactory', '$location', '$window', function ($scope, ProfileFactory, $location, $window) {
-    alert(2);
     $scope.profile = {};
     var personId = getPersonId($location);
 
@@ -148,7 +149,7 @@ autoBio.controller('AutoBiographyInterestingController', ['$scope', '$location',
             chapterId: $scope.currentChapterId,
             subChapterId: $scope.currentSubChapterId
         }, CKEDITOR.instances.autobioText.getData(), function (answer) {
-            alert(answer);
+          //saved  alert(answer);
         });
     };
 }]);

@@ -30,6 +30,6 @@ public class ProfileDAO extends AbstractDAO<Profile> {
     }
 
     public List<Profile> findByName(String name) {
-        return list(namedQuery("Profile.findByName").setString("name", name));
+        return list(namedQuery("Profile.findByName").setString("userName", "%" + name + "%"));
     }
 }
