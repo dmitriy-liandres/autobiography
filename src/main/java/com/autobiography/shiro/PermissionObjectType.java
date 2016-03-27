@@ -5,5 +5,5 @@ package com.autobiography.shiro;
  * Date 29.11.2015
  */
 public enum PermissionObjectType {
-    PROFILE, FILE
+    PROFILE, AUTOBIOGRAPHY
 }

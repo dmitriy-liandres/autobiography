@@ -1,10 +1,11 @@
 package com.autobiography.resources;
 
-import com.autobiography.shiro.GeneralDomainPermission;
-import com.autobiography.shiro.PermissionActionType;
-import com.autobiography.shiro.PermissionObjectType;
+import com.autobiography.model.db.AutoBioTextType;
+import com.autobiography.model.db.Person;
+import com.autobiography.views.AutobiographyReadVew;
 import com.autobiography.views.GenericView;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -25,7 +26,8 @@ public class AjaxViewResource {
     @GET
     @Path("login")
     public GenericView getLoginView() {
-        if (SecurityUtils.getSubject().isAuthenticated()) {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated() && ((Person) subject.getPrincipal()).getId() != null) {
             return getProfileView();
         } else {
             return new GenericView(GenericView.LOGIN_FTL);
@@ -43,15 +45,19 @@ public class AjaxViewResource {
     @GET
     @Path("profile")
     public GenericView getProfileView() {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
         return new GenericView(GenericView.PROFILE_FTL);
     }
 
     @GET
     @Path("autobiography-full")
     public GenericView getAutobiographyFull() {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
         return new GenericView(GenericView.AUTOBIOGRAPHY_FULL_FTL);
+    }
+
+    @GET
+    @Path("autobiography-full-read")
+    public GenericView getAutobiographyFullRead() {
+        return new AutobiographyReadVew(GenericView.AUTOBIOGRAPHY_READ_FTL, AutoBioTextType.FULL);
     }
 
 
@@ -70,17 +76,34 @@ public class AjaxViewResource {
     @GET
     @Path("autobiography-for-work")
     public GenericView getAutobiographyForWork() {
-
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
         return new GenericView(GenericView.AUTOBIOGRAPHY_FOR_WORK_FTL);
+    }
+
+    @GET
+    @Path("autobiography-for-work-read")
+    public GenericView getAutobiographyForWorkRead() {
+        return new AutobiographyReadVew(GenericView.AUTOBIOGRAPHY_READ_FTL, AutoBioTextType.FOR_WORK);
+    }
+
+    @GET
+    @Path("autobiography-interesting-read")
+    public GenericView getAutobiographyInterestingRead() {
+        return new AutobiographyReadVew(GenericView.AUTOBIOGRAPHY_READ_FTL, AutoBioTextType.INTERESTING);
     }
 
     @GET
     @Path("autobiography-interesting")
     public GenericView getAutobiographyInteresting() {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.VIEW));
         return new GenericView(GenericView.AUTOBIOGRAPHY_INTERESTING_FTL);
     }
+
+    @GET
+    @Path("all")
+    public GenericView getAll() {
+        return new GenericView(GenericView.ALL_FTL);
+    }
+
+
 
 
 }

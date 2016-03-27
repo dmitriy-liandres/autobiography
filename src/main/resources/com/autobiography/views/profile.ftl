@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="UserController">
     <table>
         <tr>
             <td>

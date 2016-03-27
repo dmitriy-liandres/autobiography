@@ -50,7 +50,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="autobio_text_type" type="varchar(20)">
-                <constraints nullable="false"/>
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="text" type="CLOB">
                 <constraints nullable="false" unique="true"/>

@@ -20,7 +20,7 @@ public class ProfileViewModel {
     @Length(max = 100)
     private String surname;
 
-    @NotNull
+
     private Boolean isPublic;
 
     public Boolean getIsPublic() {

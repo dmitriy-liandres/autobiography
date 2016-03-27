@@ -5,6 +5,8 @@ import com.google.inject.Inject;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
+import java.util.List;
+
 /**
  * Author Dmitriy Liandres
  * Date 07.02.2016
@@ -32,6 +34,12 @@ public class AutoBioInterestingAnswersDAO extends AbstractDAO<AutoBioInteresting
                 .setLong("personId", personId)
                 .setLong("chapterId", chapterId)
                 .setLong("subChapterId", subChapterId));
+
+    }
+
+    public List<AutoBioInterestingAnswer> loadAllPersonAnswers(Long personId) {
+        return list(namedQuery("AutoBioInterestingAnswer.loadAllPersonAnswers")
+                .setLong("personId", personId));
 
     }
 }

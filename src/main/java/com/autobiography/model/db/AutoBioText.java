@@ -1,6 +1,7 @@
 package com.autobiography.model.db;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Author Dmitriy Liandres
@@ -15,22 +16,31 @@ import javax.persistence.*;
         )
 })
 
+@IdClass( AutoBioText.PK.class )
 public class AutoBioText {
     @Id
-    private long id;
+    private Long id;
 
     @Column(name = "text", nullable = true, unique = false)
     private String text;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "autobio_text_type", nullable = false, unique = false)
+    @Id
     private AutoBioTextType autoBioTextType;
 
-    public long getId() {
+
+    public static class PK implements Serializable {
+        private long id;
+        private AutoBioTextType autoBioTextType;
+    }
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -25,15 +25,30 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'ajax/autobiography-full',
                 controller: 'AutoBiographyFullController'
             })
+            .when('/autobiography-full/:personId', {
+                templateUrl: 'ajax/autobiography-full-read',
+                controller: 'AutoBiographyFullReadController'
+            })
             .when('/autobiography-for-work', {
                 templateUrl: 'ajax/autobiography-for-work',
                 controller: 'AutoBiographyForWorkController'
+            })
+            .when('/autobiography-for-work/:personId', {
+                templateUrl: 'ajax/autobiography-for-work-read',
+                controller: 'AutoBiographyFullReadController'
             }).
             when('/autobiography-interesting', {
                 templateUrl: 'ajax/autobiography-interesting',
                 controller: 'AutoBiographyInterestingController'
             }).
-
+            when('/autobiography-interesting/:personId', {
+                templateUrl: 'ajax/autobiography-interesting-read',
+                controller: 'AutoBiographyFullReadController'
+            }).
+            when('/all', {
+                templateUrl: 'ajax/all',
+                controller: 'AllController'
+            }).
             otherwise({
                 templateUrl: 'ajax/not-found',
                 controller: 'NotFoundController'

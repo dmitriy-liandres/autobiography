@@ -5,5 +5,5 @@ package com.autobiography.model.db;
  * Date 17.01.2016
  */
 public enum AutoBioTextType {
-    FULL, FOR_WORK
+    FULL, FOR_WORK, INTERESTING
 }

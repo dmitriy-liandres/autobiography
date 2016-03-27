@@ -1,5 +1,9 @@
 package com.autobiography.filters;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -30,6 +34,14 @@ public class UserAuthenticationFilter implements Filter {
 //            forwardToSupportedUrl(servletRequest, servletResponse);
 //        }
 //        //todo let's do not filter for now
+
+        Subject currentUser = SecurityUtils.getSubject();
+        if (!currentUser.isAuthenticated()) {
+            UsernamePasswordToken token = new UsernamePasswordToken(null, "");
+            token.setRememberMe(false);
+            currentUser.login(token);
+        }
+
 
         filterChain.doFilter(servletRequest, servletResponse);
 //        int responseStatus = ((Response) servletResponse).getStatus();

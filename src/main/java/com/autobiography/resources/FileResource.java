@@ -53,7 +53,7 @@ public class FileResource {
             return null;
         }
         AutoBioFile autoBioFile = autoBioFileOptional.get();
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.FILE, PermissionActionType.EDIT, autoBioFile.getPerson().getId().toString()));
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.EDIT, autoBioFile.getPerson().getId().toString()));
         File fileToSend = new File(FileUtils.getFileInternalPathByFileId(fileId, autoBioFileDao));
         fileToSend.delete();
         autoBioFileDao.delete(autoBioFile);

@@ -32,4 +32,8 @@ public class ProfileDAO extends AbstractDAO<Profile> {
     public List<Profile> findByName(String name) {
         return list(namedQuery("Profile.findByName").setString("userName", "%" + name + "%"));
     }
+
+    public List<Profile> getAllPublic() {
+        return list(namedQuery("Profile.getAllPublic"));
+    }
 }

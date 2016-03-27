@@ -5,9 +5,7 @@ import com.autobiography.helpers.AutoBioInterestingHelper;
 import com.autobiography.helpers.FileUtils;
 import com.autobiography.helpers.MessageHelper;
 import com.autobiography.model.db.*;
-import com.autobiography.model.view.AutoBioInterestingChapter;
-import com.autobiography.model.view.AutoBioTemplateView;
-import com.autobiography.model.view.ProfileViewModel;
+import com.autobiography.model.view.*;
 import com.autobiography.shiro.GeneralDomainPermission;
 import com.autobiography.shiro.PermissionActionType;
 import com.autobiography.shiro.PermissionObjectType;
@@ -37,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -73,9 +72,10 @@ public class AjaxDataResource {
 
 
     @GET
-    @Path("profile")
+    @Path("profile{personId:\\/?[0-9]*}")
     @UnitOfWork
-    public ProfileViewModel getProfileView(@QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
+    public ProfileViewModel getProfileView(@PathParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
+        personId = getCorrectPersonId(personId);
         Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId);
 
         ProfileViewModel profileViewModel = new ProfileViewModel();
@@ -88,7 +88,7 @@ public class AjaxDataResource {
 
 
     @POST
-    @Path("profile")
+    @Path("profile{personId:\\/?[0-9]*}")
     @UnitOfWork
     public String saveProfileView(@Valid ProfileViewModel profileViewModel) throws InvocationTargetException, IllegalAccessException {
         SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
@@ -106,11 +106,11 @@ public class AjaxDataResource {
     }
 
     @POST
-    @Path("autobio-text/{autoBioTextType}")
+    @Path("autobio-text/{autoBioTextType}{personId:\\/?[0-9]*}")
     @UnitOfWork
     public void saveAutobioText(@PathParam("autoBioTextType") AutoBioTextType autoBioTextType,
                                 String autobioText) throws InvocationTargetException, IllegalAccessException {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
         AutoBioText autoBioText = autoBioTextDao.findByIdAndType(person.getId(), autoBioTextType);
         if (autoBioText == null) {
@@ -124,18 +124,57 @@ public class AjaxDataResource {
     }
 
     @GET
-    @Path("autobio-text/{autoBioTextType}")
+    @Path("autobio-text/{autoBioTextType}{personId:\\/?[0-9]*}")
     @UnitOfWork
-    public AutoBioText getAutobioText(@PathParam("autoBioTextType") AutoBioTextType autoBioTextType,
-                                      @QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
-        Person person = (Person) SecurityUtils.getSubject().getPrincipal();
-        AutoBioText autoBioText = autoBioTextDao.findByIdAndType(person.getId(), autoBioTextType);
-        if (autoBioText != null) {
-            return autoBioText;
+    public AutoBioTextView getAutobioText(@PathParam("autoBioTextType") AutoBioTextType autoBioTextType,
+                                          @PathParam("personId") String personId) throws InvocationTargetException, IllegalAccessException, IOException {
+        personId = getCorrectPersonId(personId);
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.VIEW, personId);
+
+        switch (autoBioTextType) {
+            case FULL:
+            case FOR_WORK:
+                AutoBioText autoBioText = autoBioTextDao.findByIdAndType(personIdLong, autoBioTextType);
+                if (autoBioText != null) {
+                    return new AutoBioTextView(autoBioText.getText());
+                }
+                break;
+            case INTERESTING:
+                List<AutoBioInterestingChapter> chapters = AutoBioInterestingHelper.loadChapters();
+                //chapterId->chapterName
+                Map<Long, String> chaptersMap = chapters.stream().collect(Collectors.toMap(AutoBioInterestingChapter::getId, AutoBioInterestingChapter::getName));
+                //chapterId->subchapterId->subChapterName
+                Map<Long, Map<Long, String>> subChaptersMap = chapters.stream()
+                        .collect(Collectors.toMap(AutoBioInterestingChapter::getId,
+                                chapter -> chapter.getSubChapters().stream().collect(Collectors.toMap(AutoBioInterestingSubChapter::getId, AutoBioInterestingSubChapter::getName))));
+
+
+                List<AutoBioInterestingAnswer> autoBioInterestingAnswers = autoBioInterestingAnswersDAO.loadAllPersonAnswers(personIdLong);
+                StringBuilder text = new StringBuilder();
+                if (CollectionUtils.isNotEmpty(autoBioInterestingAnswers)) {
+                    autoBioInterestingAnswers.sort((o1, o2) -> {
+                        int chapterComparison = o1.getId().compareTo(o2.getId());
+                        if (chapterComparison == 0) {
+                            return o1.getSubChapterId().compareTo(o2.getSubChapterId());
+                        }
+                        return chapterComparison;
+                    });
+                    Long lastChapter = -1L;
+                    for (AutoBioInterestingAnswer answer : autoBioInterestingAnswers) {
+                        if (!lastChapter.equals(answer.getChapterId())) {
+                            lastChapter = answer.getChapterId();
+                            text.append("<div class='chapter-read'>").append(chaptersMap.get(answer.getChapterId())).append("</div><br>");
+                        }
+                        text.append("<div class='subchapter-read'>").append(subChaptersMap.get(answer.getChapterId()).get(answer.getSubChapterId())).append("</div><br>");
+                        text.append(answer.getText());
+                    }
+                }
+                return new AutoBioTextView(text.toString());
         }
+
         return null;
     }
+
 
     private class UploadedImage {
         private String image;
@@ -171,15 +210,16 @@ public class AjaxDataResource {
     }
 
     @GET
-    @Path("files")
+    @Path("files{personId:\\/?[0-9]*}")
     @UnitOfWork
     public List<UploadedImage> getUploadedFiles(@Context HttpServletRequest request,
                                                 @Context ServletContext context,
                                                 @QueryParam("CKEditorFuncNum") String CKEditorFuncNum,
-                                                @QueryParam("personId") String personId) throws FileUploadException, IOException {
+                                                @PathParam("personId") String personId) throws FileUploadException, IOException {
+        personId = getCorrectPersonId(personId);
         List<UploadedImage> uploadedImages = new ArrayList<>();
 
-        Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId);
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.VIEW, personId);
         List<AutoBioFile> autoBioFiles = autoBioFileDao.findByPersonId(personIdLong);
         if (CollectionUtils.isNotEmpty(autoBioFiles)) {
             for (AutoBioFile autoBioFile : autoBioFiles) {
@@ -198,7 +238,7 @@ public class AjaxDataResource {
     public String saveFile(@Context HttpServletRequest request,
                            @Context ServletContext context,
                            @QueryParam("CKEditorFuncNum") String CKEditorFuncNum) throws FileUploadException, IOException {
-        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
+        SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
         FileCleaningTracker fileCleaningTracker
                 = FileCleanerCleanup.getFileCleaningTracker(context);
@@ -267,12 +307,12 @@ public class AjaxDataResource {
     }
 
     @GET
-    @Path("autobio-interesting/answer/chapter/{chapterId}/subChapter/{subChapterId}/")
+    @Path("autobio-interesting/answer/chapter/{chapterId}/subChapter/{subChapterId}")
     @UnitOfWork
     public AutoBioInterestingAnswer loadQuestionnaireInterestingAnswer(@PathParam("chapterId") Long chapterId,
                                                                        @PathParam("subChapterId") Long subChapterId,
                                                                        @QueryParam("personId") String personId) throws InvocationTargetException, IllegalAccessException, IOException {
-        Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.VIEW, personId);
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.VIEW, personId);
         return autoBioInterestingAnswersDAO.findAnswer(personIdLong, chapterId, subChapterId);
     }
 
@@ -283,7 +323,7 @@ public class AjaxDataResource {
                                                   @PathParam("subChapterId") Long subChapterId,
                                                   @QueryParam("personId") String personId,
                                                   String text) throws InvocationTargetException, IllegalAccessException, IOException {
-        Long personIdLong = checkPersonPermissions(PermissionObjectType.PROFILE, PermissionActionType.EDIT, personId);
+        Long personIdLong = checkPersonPermissions(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.EDIT, personId);
         AutoBioInterestingAnswer autoBioInterestingAnswer = autoBioInterestingAnswersDAO.findAnswer(personIdLong, chapterId, subChapterId);
         if (autoBioInterestingAnswer == null) {
             autoBioInterestingAnswer = new AutoBioInterestingAnswer();
@@ -301,8 +341,21 @@ public class AjaxDataResource {
     @Path("search/{name}")
     @UnitOfWork
     public List<ProfileViewModel> searchForProfile(@PathParam("name") String name) throws InvocationTargetException, IllegalAccessException, IOException {
-        List<ProfileViewModel> profileViewModels = new ArrayList<>();
         List<Profile> profiles = profileDAO.findByName(name);
+        return convertToPublic(profiles);
+    }
+
+
+    @GET
+    @Path("all")
+    @UnitOfWork
+    public List<ProfileViewModel> getAllProfiles() throws InvocationTargetException, IllegalAccessException, IOException {
+        List<Profile> profiles = profileDAO.getAllPublic();
+        return convertToPublic(profiles);
+    }
+
+    private List<ProfileViewModel> convertToPublic(List<Profile> profiles) {
+        List<ProfileViewModel> profileViewModels = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(profiles)) {
             profiles.stream().forEach(profile -> {
                 ProfileViewModel profileViewModel = new ProfileViewModel();
@@ -315,6 +368,9 @@ public class AjaxDataResource {
             });
         }
         return profileViewModels;
+    }
 
+    private String getCorrectPersonId(String personId) {
+        return StringUtils.isNotEmpty(personId) ? personId.replace("/", "") : null;
     }
 }

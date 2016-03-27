@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="UserController">
     <input type="hidden" id="lang-input-id" value="${getServerLang()}">
     <table>
         <tr>

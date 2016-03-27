@@ -1,7 +1,6 @@
 var autoBio = angular.module('AutoBioControllersModule', ['autoBioFactories']);
 
-autoBio.controller('EmptyController', ['$scope', '$http', 'ProfileSearchFactory', function ($scope, $http, ProfileSearchFactory) {
-
+autoBio.controller('EmptyController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
     $scope.searchProfiles = function (val) {
         return $http.get('data/search/' + val, {}).then(function (response) {
             return response.data;
@@ -9,8 +8,36 @@ autoBio.controller('EmptyController', ['$scope', '$http', 'ProfileSearchFactory'
     };
 
     $scope.selectProfile = function ($item, $model, $label, $event) {
+        $window.location.href = '/autobiography-for-work/' + $item.id;
+    };
+}]);
 
-    }
+autoBio.controller('AllController', ['$scope', 'AllLoaderFactory', function ($scope, AllLoaderFactory) {
+    AllLoaderFactory.query(function (all) {
+        $scope.personGroups = [];
+        var size = 3;
+        for (var groupIndex = 0, numGroups = Math.ceil(all.length / size); groupIndex < numGroups; groupIndex++) {
+            var startIndex = groupIndex * size;
+            $scope.personGroups.push(all.slice(startIndex, startIndex + size));
+        }
+    });
+
+    $scope.getName = getName;
+}]);
+
+autoBio.controller('UserController', ['$scope', '$http', '$location', 'ProfileFactory', function ($scope, $http, $location, ProfileFactory) {
+    $scope.currentUserProfile = {};
+    $scope.currentUserName = "";
+    $scope.idForLeftMenu = "";
+
+    var currentUserPersonId = getPersonId($location);
+
+    ProfileFactory.get({personId: currentUserPersonId}, function (loadedProfile) {
+        $scope.currentUserProfile = loadedProfile;
+        $scope.currentUserProfile = loadedProfile;
+        $scope.currentUserName = getNameForLeftMenu($scope.currentUserProfile);
+        $scope.idForLeftMenu = currentUserPersonId;
+    });
 
 }]);
 
@@ -23,7 +50,7 @@ autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$lo
     $scope.error = $location.search().e;
     //param which used to decide where we should redirect user after successful login
     var redirectParam = $routeParams.redir;
-    var redirectQueryParam = redirectParam == undefined ? "" : "?redir=" + redirectParam;
+    var redirectQueryParam = isNull(redirectParam)? "" : "?redir=" + redirectParam;
 
     $scope.submitted = false;
     $scope.submitLogin = function (loginForm, $event) {
@@ -48,16 +75,14 @@ autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$lo
 
 autoBio.controller('ProfileController', ['$scope', 'ProfileFactory', '$location', '$window', function ($scope, ProfileFactory, $location, $window) {
     $scope.profile = {};
-    var personId = getPersonId($location);
-
-    ProfileFactory.get({personId: personId}, function (loadedProfile) {
+    ProfileFactory.get({personId: ""}, function (loadedProfile) {
         $scope.profile = loadedProfile;
     });
+
 
     $scope.updateProfile = function (profileForm) {
         if (isValid(profileForm)) {
             ProfileFactory.add($scope.profile, function () {
-                $window.location.href = '/profile';
             });
         }
     };
@@ -84,6 +109,31 @@ autoBio.controller('ErrorController', ['$scope', '$window', function ($scope, $w
 
 autoBio.controller('AutoBiographyFullController', ['$scope', '$location', 'AutobioTextFactory', function ($scope, $location, AutobioTextFactory) {
     autoBioTextController($scope, $location, AutobioTextFactory, "FULL", 10000);
+}]);
+
+autoBio.controller('AutoBiographyFullReadController', ['$scope', '$location', '$sce', '$routeParams', 'AutobioTextFactory', function ($scope, $location, $sce, $routeParams, AutobioTextFactory) {
+    var currentUserPersonId = getPersonId($location);
+    var autoBioTextType = document.getElementById("autoBioTextTypeId").value;
+    if (isNull(autoBioTextType)) {
+        autoBioTextType = "FULL";
+    } else {
+        autoBioTextType = autoBioTextType.toUpperCase();
+    }
+
+
+    AutobioTextFactory.get({
+        personId: currentUserPersonId,
+        autoBioTextType: autoBioTextType
+    }, function (autobioTextLoaded) {
+        if (autobioTextLoaded != null) {
+            $scope.autobioText = autobioTextLoaded.text;
+        }
+        if ($scope.autobioText == null || $scope.autobioText.length == 0) {
+            $scope.autobioText = document.getElementById("noAutobiographyId").value;
+        }
+        $scope.autobioText = $sce.trustAsHtml($scope.autobioText);
+    });
+
 }]);
 
 
@@ -120,11 +170,11 @@ autoBio.controller('AutoBiographyInterestingController', ['$scope', '$location',
             $scope.ckEditorObject.CKEDITORWrapper.CKEDITOR.instances.autobioText.destroy(true);
         }
 
-        var personId = getPersonId($location);
+        var currentUserPersonId = getPersonId($location);
         $scope.currentChapterId = chapterId;
         $scope.currentSubChapterId = subChapterId;
         AutoBioInterestingAnswerFactory.get({
-            personId: personId,
+            personId: currentUserPersonId,
             chapterId: chapterId,
             subChapterId: subChapterId
         }, function (answer) {
@@ -135,7 +185,7 @@ autoBio.controller('AutoBiographyInterestingController', ['$scope', '$location',
             document.getElementById('subChapter-' + chapterId + '-' + subChapterId + '-id').parentElement.appendChild(node);
 
             $scope.ckEditorObject = loadCkeditor(100);
-            if (answer.text != null && answer.text != undefined) {
+            if (!isNull(answer.text)) {
                 $scope.ckEditorObject.setText(answer.text);
             }
 
@@ -143,23 +193,50 @@ autoBio.controller('AutoBiographyInterestingController', ['$scope', '$location',
     };
 
     $scope.saveAutobioInterestingText = function () {
-        var personId = getPersonId($location);
+        var currentUserPersonId = getPersonId($location);
         AutoBioInterestingAnswerFactory.save({
-            personId: personId,
+            personId: currentUserPersonId,
             chapterId: $scope.currentChapterId,
             subChapterId: $scope.currentSubChapterId
         }, CKEDITOR.instances.autobioText.getData(), function (answer) {
-          //saved  alert(answer);
+            //saved  alert(answer);
         });
     };
 }]);
 
+function getName(currentUserProfile) {
+    if(isNull(currentUserProfile)){
+        return "";
+    }
+    var name = (currentUserProfile.name == null ? "" : (currentUserProfile.name + " "))
+        + (currentUserProfile.surname == null ? "" : currentUserProfile.surname);
+    return name;
+}
+
+function getNameForLeftMenu(currentUserProfile) {
+    var name = getName(currentUserProfile);
+    if (name.length == 0) {
+        return name;
+    }
+    return "(" + name + ")";
+}
+
+function getIdForLeftMenu(currentUserProfile, currentUserPersonId) {
+    if (currentUserPersonId == "") {
+        return "";
+    }
+    return currentUserProfile.id;
+}
+
 function autoBioTextController($scope, $location, AutobioTextFactory,
                                autobioTextType, maxCharCount) {
-    var personId = getPersonId($location);
+    var currentUserPersonId = getPersonId($location);
     var autobioText = null;
     var ckEditorObject = loadCkeditor(maxCharCount);
-    AutobioTextFactory.get({personId: personId, autoBioTextType: autobioTextType}, function (autobioTextLoaded) {
+    AutobioTextFactory.get({
+        personId: currentUserPersonId,
+        autoBioTextType: autobioTextType
+    }, function (autobioTextLoaded) {
         if (autobioTextLoaded != null) {
             autobioText = autobioTextLoaded.text;
         } else {
@@ -265,11 +342,11 @@ function initCkeditor(CKEDITORWrapper, maxCharCount) {
 }
 
 function getPersonId($location) {
-    var personId = $location.path().split("/")[3];
-    if (personId == undefined || personId == null) {
-        personId = "";
+    var currentUserPersonId = $location.path().split("/")[2];
+    if (isNull(currentUserPersonId)) {
+        currentUserPersonId = "";
     }
-    return personId;
+    return currentUserPersonId;
 }
 
 
@@ -364,6 +441,14 @@ function redirectToMain($window) {
 }
 
 function isLoggedIn() {
-    var isLoggedInEl = document.getElementById("isLoggedIn");
-    return isLoggedInEl != undefined;
+    return getLoggedInPersonId() >= 0;
+}
+
+function getLoggedInPersonId() {
+    var loggedInPersonId = document.getElementById("loggedInPersonId");
+    return loggedInPersonId.value;
+}
+
+function isNull(value) {
+    return value == undefined || value == null;
 }

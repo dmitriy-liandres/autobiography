@@ -1,5 +1,6 @@
 package com.autobiography;
 
+import com.autobiography.filters.UserAuthenticationFilter;
 import com.autobiography.helpers.FileUtils;
 import com.autobiography.model.db.*;
 import com.hubspot.dropwizard.guice.GuiceBundle;
@@ -17,6 +18,8 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
 import java.util.Map;
 
 //import com.yammer.dropwizard.db.DatabaseConfiguration;
@@ -102,8 +105,8 @@ public class AutobiographyApplication extends Application<AutobiographyConfigura
 //        environment.jersey().register(RolesAllowedDynamicFeature.class);
 //
 //
-//        environment.servlets().addFilter("UserAuthenticationFilter", new UserAuthenticationFilter())
-//                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+        environment.servlets().addFilter("UserAuthenticationFilter", new UserAuthenticationFilter())
+                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 
         migrateDB(configuration);
         FileUtils.initFileSystem();

@@ -26,17 +26,18 @@ public class GenericView extends View {
     public static final String AUTOBIOGRAPHY_FULL_FTL = "autobiography-full.ftl";
     public static final String AUTOBIOGRAPHY_FOR_WORK_FTL = "autobiography-for-work.ftl";
     public static final String AUTOBIOGRAPHY_INTERESTING_FTL = "autobiography-interesting.ftl";
-
+    public static final String AUTOBIOGRAPHY_READ_FTL = "autobiography-read.ftl";
+    public static final String ALL_FTL = "all.ftl";
 
     public GenericView(String templateName) {
         super(templateName, Charset.forName("UTF-8"));
 
     }
 
-    public String getUsername() {
+    public String getLoggedInPersonId() {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             Person principal = (Person) SecurityUtils.getSubject().getPrincipal();
-            return principal != null ? principal.getUsername() : null;
+            return principal != null && principal.getId() != null ? principal.getId().toString() : null;
         } else {
             return null;
         }

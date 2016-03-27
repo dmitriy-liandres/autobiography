@@ -11,7 +11,14 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(
                 name = "Profile.findByName",
-                query = "SELECT p FROM Profile p where p.isPublic = true and (p.name like :userName or p.surname like :userName)"
+                query = "SELECT p FROM Profile p " +
+                        "   where p.isPublic = true and (p.name like :userName or p.surname like :userName)"
+        ),
+        @NamedQuery(
+                name = "Profile.getAllPublic",
+                query = "SELECT p FROM Profile p " +
+                        "   where p.isPublic = true" +
+                        "       order by p.name, p.surname"
         )
 })
 public class Profile {

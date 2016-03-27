@@ -31,11 +31,15 @@
     </div>
     <nav class="navigation">
         <div class="navContainer">
-            <#if username??>
-            ${message("welcome")}, ${(fullName?html)!username?html}!
-                <a class="logout-link" href="logout"> ${message("logout")}</a></li>
-                <input type="hidden" value="true" id="isLoggedIn"></a>
-            </#if>
+        <#if loggedInPersonId??>
+        ${message("welcome")}, ${(fullName?html)!loggedInPersonId?html}!
+            <a class="logout-link" href="logout"> ${message("logout")}</a></li>
+            <input type="hidden" value="${loggedInPersonId}" id="loggedInPersonId">
+        </#if>
+        <#if !loggedInPersonId??>
+            <a class="login-link" href="/"> ${message("login")}</a></li>
+            <input type="hidden" value="-1" id="loggedInPersonId">
+        </#if>
             <a href="?lang=en" target="_self">English</a>
             <a href="?lang=ru" target="_self">Русский</a>
             <input type="text" ng-model="profileSelected" placeholder="${message("topPanel.search.tooltip")}"
@@ -43,6 +47,7 @@
                    typeahead-loading="loadingProfiles" typeahead-no-results="noResults" class="form-control"
                    typeahead-on-select="selectProfile($item, $model, $label, $event)">
             <i ng-show="loadingProfiles" class="glyphicon glyphicon-refresh"></i>
+            <a class="all-bios-link" href="/all">${message("topPanel.search.all")}</a>
 
             <div ng-show="noResults">
                 <i class="glyphicon glyphicon-remove"></i> ${message("topPanel.search.noResults")}

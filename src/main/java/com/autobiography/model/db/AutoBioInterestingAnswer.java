@@ -12,6 +12,10 @@ import javax.persistence.*;
         @NamedQuery(
                 name = "AutoBioInterestingAnswer.findAnswer",
                 query = "SELECT answer FROM AutoBioInterestingAnswer answer where answer.chapterId=:chapterId and answer.subChapterId=:subChapterId and answer.person.id=:personId"
+        )  ,
+        @NamedQuery(
+                name = "AutoBioInterestingAnswer.loadAllPersonAnswers",
+                query = "SELECT answer FROM AutoBioInterestingAnswer answer where answer.person.id=:personId"
         )
 })
 public class AutoBioInterestingAnswer {

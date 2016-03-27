@@ -63,6 +63,14 @@ public class BaseViewResource {
     }
 
 
+    @GET
+    @Path("{urlPath}/{urlPath2}")
+    @Produces(MediaType.TEXT_HTML)
+    public GenericView anyView(@PathParam("urlPath") String urlPath) {
+        return getMainView(null);
+    }
+
+
     @POST
     @Path("register")
     @Produces(MediaType.TEXT_HTML)

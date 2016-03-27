@@ -5,6 +5,6 @@ package com.autobiography.shiro;
  * Date 12.12.2015
  */
 public interface PermissionActionType {
-    public static final String EDIT = "edit";
-    public static final String VIEW = "view";
+    String EDIT = "edit";
+    String VIEW = "view";
 }

@@ -3,7 +3,7 @@ var autoBioFactories = angular.module('autoBioFactories', ['ngResource']);
 
 autoBioFactories.factory('ProfileFactory', ['$resource',
     function ($resource, personId) {
-        return $resource('data/profile?personId=:personId', {}, {
+        return $resource('data/profile/:personId', {}, {
             query: {
                 method: 'GET',
                 cache: false,
@@ -19,7 +19,7 @@ autoBioFactories.factory('ProfileFactory', ['$resource',
 
 autoBioFactories.factory('AutobioTextFactory', ['$resource',
     function ($resource, personId, autoBioTextType) {
-        return $resource('data/autobio-text/:autoBioTextType?personId=:personId', {}, {
+        return $resource('data/autobio-text/:autoBioTextType/:personId', {}, {
             query: {
                 method: 'GET',
                 cache: false,
@@ -65,9 +65,9 @@ autoBioFactories.factory('AutoBioInterestingAnswerFactory', ['$resource',
     }
 ]);
 
-autoBioFactories.factory('ProfileSearchFactory', ['$resource',
+autoBioFactories.factory('AllLoaderFactory', ['$resource',
     function ($resource) {
-        return $resource('data/search/:name', {}, {
+        return $resource('data/all/', {}, {
             query: {
                 method: 'GET',
                 isArray: true,

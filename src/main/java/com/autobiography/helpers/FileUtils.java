@@ -78,7 +78,7 @@ public class FileUtils {
             fileUrl = "target/classes/assets/img/image_not_available.jpg";
         } else {
             AutoBioFile autoBioFile = autoBioFileOptional.get();
-            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.FILE, PermissionActionType.VIEW, autoBioFile.getPerson().getId().toString()));
+            SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.VIEW, autoBioFile.getPerson().getId().toString()));
             Path filesDirectory = createDirectoryPath(String.valueOf(autoBioFile.getPerson().getId()));
             fileUrl = filesDirectory.toString() + File.separator + fileId + "_" + autoBioFile.getFilename();
         }
