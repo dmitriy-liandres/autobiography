@@ -2,6 +2,7 @@ package com.autobiography.resources;
 
 import com.autobiography.db.*;
 import com.autobiography.helpers.AutoBioInterestingHelper;
+import com.autobiography.helpers.EmailHelper;
 import com.autobiography.helpers.FileUtils;
 import com.autobiography.helpers.MessageHelper;
 import com.autobiography.model.db.*;
@@ -19,6 +20,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.FileCleanerCleanup;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileCleaningTracker;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -352,6 +354,14 @@ public class AjaxDataResource {
     public List<ProfileViewModel> getAllProfiles() throws InvocationTargetException, IllegalAccessException, IOException {
         List<Profile> profiles = profileDAO.getAllPublic();
         return convertToPublic(profiles);
+    }
+
+    @POST
+    @Path("contact")
+    @UnitOfWork
+    public void contact(@Valid ContactView contactView) throws Exception {
+        EmailHelper.sendEmail("Message from \"Contact us\" page",
+                "name: " + StringEscapeUtils.escapeHtml4(contactView.getName()) + "<br>email: " + StringEscapeUtils.escapeHtml4(contactView.getEmail()) + "<br>message:<br>" + StringEscapeUtils.escapeHtml4(contactView.getMessage()), "dima-amid@tut.by");
     }
 
     private List<ProfileViewModel> convertToPublic(List<Profile> profiles) {

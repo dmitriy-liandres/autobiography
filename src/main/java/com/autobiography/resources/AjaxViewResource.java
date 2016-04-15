@@ -4,6 +4,7 @@ import com.autobiography.model.db.AutoBioTextType;
 import com.autobiography.model.db.Person;
 import com.autobiography.views.AutobiographyReadVew;
 import com.autobiography.views.GenericView;
+import com.autobiography.views.ResetPasswordView;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -39,6 +40,12 @@ public class AjaxViewResource {
     public GenericView logoutView() {
         SecurityUtils.getSubject().logout();
         return getLoginView();
+    }
+
+    @GET
+    @Path("resetPassword")
+    public GenericView resetPasswordView() {
+        return new ResetPasswordView(null);
     }
 
 
@@ -96,6 +103,19 @@ public class AjaxViewResource {
     public GenericView getAutobiographyInteresting() {
         return new GenericView(GenericView.AUTOBIOGRAPHY_INTERESTING_FTL);
     }
+
+    @GET
+    @Path("about")
+    public GenericView getAbout() {
+        return new GenericView(GenericView.ABOUT_FTL);
+    }
+
+    @GET
+    @Path("contact")
+    public GenericView getContact() {
+        return new GenericView(GenericView.CONTACT_FTL);
+    }
+
 
     @GET
     @Path("all")

@@ -20,6 +20,7 @@ public class GenericView extends View {
 
     public static final String BASE_FTL = "base.ftl";
     public static final String LOGIN_FTL = "login.ftl";
+    public static final String RESET_PASSWORD_FTL = "resetPassword.ftl";
     public static final String PROFILE_FTL = "profile.ftl";
     public static final String NOT_FOUND_FTL = "not-found.ftl";
     public static final String NOT_AUTHORIZED_FTL = "not-authorized.ftl";
@@ -28,6 +29,8 @@ public class GenericView extends View {
     public static final String AUTOBIOGRAPHY_INTERESTING_FTL = "autobiography-interesting.ftl";
     public static final String AUTOBIOGRAPHY_READ_FTL = "autobiography-read.ftl";
     public static final String ALL_FTL = "all.ftl";
+    public static final String ABOUT_FTL = "about.ftl";
+    public static final String CONTACT_FTL = "contact.ftl";
 
     public GenericView(String templateName) {
         super(templateName, Charset.forName("UTF-8"));

@@ -77,3 +77,13 @@ autoBioFactories.factory('AllLoaderFactory', ['$resource',
         });
     }
 ]);
+
+autoBioFactories.factory('ContactFactory', ['$resource',
+    function ($resource) {
+        return $resource('data/contact', {}, {
+            send: {
+                method: 'POST'
+            }
+        });
+    }
+]);

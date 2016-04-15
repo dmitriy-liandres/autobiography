@@ -2,6 +2,7 @@ package com.autobiography.resources;
 
 import com.autobiography.db.PersonDAO;
 import com.autobiography.db.ProfileDAO;
+import com.autobiography.helpers.EmailHelper;
 import com.autobiography.model.db.Person;
 import com.autobiography.views.GenericView;
 import com.google.inject.Inject;
@@ -24,7 +25,7 @@ import java.util.Locale;
  * Date 25.10.2015
  */
 @Path("/")
-@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+@Produces(MediaType.TEXT_HTML)
 public class BaseViewResource {
 
     private PersonDAO personDAO;
@@ -38,7 +39,6 @@ public class BaseViewResource {
     }
 
     @GET
-    @Produces(MediaType.TEXT_HTML)
     public GenericView getMainView(@QueryParam("lang") String lang) {
         if (lang != null) {
             switch (lang) {
@@ -57,15 +57,19 @@ public class BaseViewResource {
 
     @GET
     @Path("{urlPath}")
-    @Produces(MediaType.TEXT_HTML)
     public GenericView profileView(@PathParam("urlPath") String urlPath) {
+        return getMainView(null);
+    }
+
+    @GET
+    @Path("reset-password")
+    public GenericView resetPasswordView() {
         return getMainView(null);
     }
 
 
     @GET
     @Path("{urlPath}/{urlPath2}")
-    @Produces(MediaType.TEXT_HTML)
     public GenericView anyView(@PathParam("urlPath") String urlPath) {
         return getMainView(null);
     }
@@ -73,7 +77,6 @@ public class BaseViewResource {
 
     @POST
     @Path("register")
-    @Produces(MediaType.TEXT_HTML)
     @UnitOfWork
     public Response registerView(@FormParam("email") String email,
                                  @FormParam("password") String password,
@@ -96,7 +99,6 @@ public class BaseViewResource {
 
     @POST
     @Path("login")
-    @Produces(MediaType.TEXT_HTML)
     @UnitOfWork
     public Response loginView(@FormParam("email") String email,
                               @FormParam("password") String password,
@@ -116,6 +118,20 @@ public class BaseViewResource {
         URI uri = UriBuilder.fromUri(redirectUrl).build();
         Person principal = (Person) SecurityUtils.getSubject().getPrincipal();
         SecurityUtils.getSubject().getSession().setAttribute("profile", profileDAO.findById(principal.getId()));
+        return Response.seeOther(uri).build();
+    }
+
+    @POST
+    @Path("reset-password")
+    @UnitOfWork
+    public Response resetPassword(@FormParam("email") String email) throws Exception {
+        Person person = personDAO.findByUsername(email);
+        if (person == null) {
+            return Response.seeOther(UriBuilder.fromUri("/reset-password?e=incorrectEmail").build()).build();
+        } else {
+            EmailHelper.sendEmail("Your new password for //todo", "You password for //TODO is " + person.getPassword(), email);
+        }
+        URI uri = UriBuilder.fromUri("").build();
         return Response.seeOther(uri).build();
     }
 

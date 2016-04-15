@@ -9,14 +9,14 @@
     </div>
     <div class="form-group">
         <label for="inputEmail3" class="sr-only">${message("email")}</label>
-        <input type="text" name="email" id="email" class="form-control" placeholder="Email" ng-model="email"
+        <input type="email" name="email" id="email" class="form-control" placeholder="${message("email")}" ng-model="email"
                value="username" ng-required="true" ng-minlength="5" ng-maxlength="255">
 
     </div>
     <div class="form-group">
         <label for="inputPassword3" class="sr-only">${message("password")}</label>
         <input type="password" name="password" id="password" class="form-control" ng-model="password"
-               placeholder="Password" value="password" ng-required="true" ng-minlength="5" ng-maxlength="255">
+               placeholder="${message("password")}" value="password" ng-required="true" ng-minlength="5" ng-maxlength="255">
     </div>
     <div class="form-group">
         <label for="inputPassword3" class="sr-only">${message("rememberMe")}</label>
@@ -26,6 +26,7 @@
 
         <button type="submit" class="btn btn-primary" ng-click="submitLogin(loginForm, $event)">${message("signIn")}</button>
         <button type="submit" class="btn btn-primary" ng-click="submitRegister(loginForm, $event)">${message("register")}</button>
+        <a href="/reset-password">${message("resetPassword.forgotPassword")}</a
 
     </div>
 </form>

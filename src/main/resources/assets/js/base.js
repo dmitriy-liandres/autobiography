@@ -9,6 +9,10 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'ajax/login',
                 controller: 'LoginController'
             })
+            .when('/reset-password', {
+                templateUrl: 'ajax/resetPassword',
+                controller: 'ResetPasswordController'
+            })
             .when('/profile', {
                 templateUrl: 'ajax/profile',
                 controller: 'ProfileController'
@@ -48,6 +52,14 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
             when('/all', {
                 templateUrl: 'ajax/all',
                 controller: 'AllController'
+            }).
+            when('/about', {
+                templateUrl: 'ajax/about',
+                controller: 'AboutController'
+            }).
+            when('/contact', {
+                templateUrl: 'ajax/contact',
+                controller: 'ContactController'
             }).
             otherwise({
                 templateUrl: 'ajax/not-found',

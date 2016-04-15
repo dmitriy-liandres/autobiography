@@ -1,5 +1,25 @@
 var autoBio = angular.module('AutoBioControllersModule', ['autoBioFactories']);
 
+autoBio.controller('ResetPasswordController', ['$scope', '$location', function ($scope, $location) {
+    $scope.error = $location.search().e;
+}]);
+
+autoBio.controller('AboutController', ['$scope',  function ($scope) {
+}]);
+
+autoBio.controller('ContactController', ['$scope', 'ContactFactory', function ($scope, ContactFactory) {
+    $scope.contactView = {};
+    $scope.messageSent = false;
+    $scope.contact = function (contactForm) {
+        if (isValid(contactForm)) {
+            ContactFactory.send($scope.contactView, function () {
+                $scope.messageSent = true;
+            });
+        }
+    };
+}]);
+
+
 autoBio.controller('EmptyController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
     $scope.searchProfiles = function (val) {
         return $http.get('data/search/' + val, {}).then(function (response) {
@@ -413,6 +433,8 @@ function isValid(formName) {
             errorText = VALIDATION_MIN_LENGTH;
         } else if (key == "maxlength") {
             errorText = VALIDATION_MAX_LENGTH;
+        }  else if (key == "email") {
+            errorText = VALIDATION_EMAIL;
         }
 
         if (errorText != null) {

@@ -47,11 +47,13 @@
                    typeahead-loading="loadingProfiles" typeahead-no-results="noResults" class="form-control"
                    typeahead-on-select="selectProfile($item, $model, $label, $event)">
             <i ng-show="loadingProfiles" class="glyphicon glyphicon-refresh"></i>
-            <a class="all-bios-link" href="/all">${message("topPanel.search.all")}</a>
-
             <div ng-show="noResults">
                 <i class="glyphicon glyphicon-remove"></i> ${message("topPanel.search.noResults")}
             </div>
+            <a class="all-bios-link" href="/all">${message("topPanel.search.all")}</a>
+            <a class="all-bios-link" href="/about">${message("about.name")}</a>
+            <a class="all-bios-link" href="/contact">${message("contact.name")}</a>
+
 
         </div>
     </nav>
