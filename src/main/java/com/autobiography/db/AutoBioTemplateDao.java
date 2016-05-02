@@ -26,4 +26,13 @@ public class AutoBioTemplateDao extends AbstractDAO<AutoBioTemplate> {
         return list(namedQuery("AutoBioTemplate.findByLocale").setString("locale", locale));
     }
 
+    public int deleteAll() {
+        return namedQuery("AutoBioTemplate.deleteAll").executeUpdate();
+    }
+
+    public AutoBioTemplate create(AutoBioTemplate autoBioTemplate) {
+        return persist(autoBioTemplate);
+    }
+
+
 }

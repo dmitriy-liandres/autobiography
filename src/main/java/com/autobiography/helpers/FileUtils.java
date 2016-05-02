@@ -24,9 +24,9 @@ import java.util.List;
  */
 public class FileUtils {
     //this will be changed in payment plan
-    public static final Integer FILES_PER_PERSON = 5;
+    public static final Integer FILES_PER_PERSON = 3;
 
-    private static final String ROOT_FILES_PATH = "target" + File.separator + "files" + File.separator;
+    private static final String ROOT_FILES_PATH = "files" + File.separator;
 
     public static void initFileSystem() throws IOException {
         Path filesDirectory = Paths.get(ROOT_FILES_PATH);
@@ -75,7 +75,7 @@ public class FileUtils {
         String fileUrl = null;
         Optional<AutoBioFile> autoBioFileOptional = autoBioFileDao.findById(fileId);
         if (!autoBioFileOptional.isPresent()) {
-            fileUrl = "target/classes/assets/img/image_not_available.jpg";
+            fileUrl = "classes/assets/img/image_not_available.jpg";
         } else {
             AutoBioFile autoBioFile = autoBioFileOptional.get();
             SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.AUTOBIOGRAPHY, PermissionActionType.VIEW, autoBioFile.getPerson().getId().toString()));

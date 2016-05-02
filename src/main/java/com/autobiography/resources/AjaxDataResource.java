@@ -45,8 +45,8 @@ import java.util.stream.Collectors;
  * Date 06.12.2015
  */
 @Path("/data")
-@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+@Consumes(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 public class AjaxDataResource {
 
     private static final Logger logger = LoggerFactory.getLogger(AjaxDataResource.class);
@@ -93,6 +93,7 @@ public class AjaxDataResource {
     @Path("profile{personId:\\/?[0-9]*}")
     @UnitOfWork
     public String saveProfileView(@Valid ProfileViewModel profileViewModel) throws InvocationTargetException, IllegalAccessException {
+        logger.info("profileViewModel: add, profileViewModel = {}", profileViewModel);
         SecurityUtils.getSubject().checkPermission(new GeneralDomainPermission(PermissionObjectType.PROFILE, PermissionActionType.EDIT));
         Person person = (Person) SecurityUtils.getSubject().getPrincipal();
         Profile profile = profileDAO.findById(person.getId());

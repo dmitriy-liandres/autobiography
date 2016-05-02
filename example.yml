@@ -6,16 +6,20 @@ defaultName: ${DW_DEFAULT_NAME:-Stranger}
 database:
 
   # the name of your JDBC driver
-  driverClass: org.postgresql.Driver
+  #driverClass: org.postgresql.Driver
+  driverClass: com.mysql.jdbc.Driver
 
   # the username
-  user: ptc
+  #user: ptc
+  user: root
 
   # the password
-  password: ptc
+  #password: ptc
+  password: 2520486
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost:5432/ptc
+  #url: jdbc:postgresql://localhost:5432/ptc
+  url: jdbc:mysql://localhost/autobiography
 
 # use the simple server factory if you only want to run on a single port
 #server:
@@ -32,7 +36,7 @@ server:
       port: 8080
     - type: https
       port: 8443
-      keyStorePath: example.keystore
+      keyStorePath: classes/example.keystore
       keyStorePassword: example
       validateCerts: false
 # this requires the alpn-boot library on the JVM's boot classpath
@@ -46,7 +50,7 @@ server:
       port: 8081
     - type: https
       port: 8444
-      keyStorePath: example.keystore
+      keyStorePath: classes/example.keystore
       keyStorePassword: example
       validateCerts: false
 

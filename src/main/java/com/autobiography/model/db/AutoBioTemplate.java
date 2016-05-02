@@ -12,10 +12,15 @@ import javax.persistence.*;
         @NamedQuery(
                 name = "AutoBioTemplate.findByLocale",
                 query = "SELECT abt FROM AutoBioTemplate abt where abt.locale=:locale"
+        ),
+        @NamedQuery(
+                name = "AutoBioTemplate.deleteAll",
+                query = "delete FROM AutoBioTemplate"
         )
 })
 public class AutoBioTemplate {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "locale", nullable = false, unique = false)

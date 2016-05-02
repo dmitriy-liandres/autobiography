@@ -53,7 +53,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="text" type="CLOB">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
 
@@ -122,13 +122,17 @@
             <column name="locale" type="varchar(20)"/>
         </createIndex>
 
-        <customChange class="com.autobiography.db.migration.ImportAutoBioTemplates"/>
+
     </changeSet>
 
     <changeSet id="5" author="d_liandres">
+        <customChange class="com.autobiography.db.migration.ImportAutoBioTemplates"/>
+    </changeSet>
+
+    <changeSet id="6" author="d_liandres">
         <createTable tableName="auto_bio_interesting_answer">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"/>
             </column>
             <column name="person_id" type="bigint">
                 <constraints nullable="false"/>
@@ -145,8 +149,12 @@
         </createTable>
 
         <addUniqueConstraint columnNames="person_id, chapter_id, sub_chapter_id"
-                             constraintName="unique_auto_bio_interesting_answer_person_id_chapter_id_sub_chapter_id"
+                             constraintName="unique_auto_bio_interesting_answer_p_id_c_id_sub_c_id"
                              tableName="auto_bio_interesting_answer"/>
 
+    </changeSet>
+
+    <changeSet id="7" author="d_liandres">
+        <customChange class="com.autobiography.db.migration.ImportAutoBioTemplates"/>
     </changeSet>
 </databaseChangeLog>

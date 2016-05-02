@@ -30,7 +30,7 @@ public class MessageHelper {
                     propertiesWithMessages = new Properties();
                     InputStream in = null;
                     try {
-                        in = MessageHelper.class.getResourceAsStream("../messages_" + locale.toString() + ".properties");
+                        in = MessageHelper.class.getResourceAsStream("/messages/messages_" + locale.toString() + ".properties");
                         InputStreamReader isr = new InputStreamReader(in, "UTF-8");
                         propertiesWithMessages.load(isr);
                         MESSAGES_PER_LOCATION.put(locale, propertiesWithMessages);

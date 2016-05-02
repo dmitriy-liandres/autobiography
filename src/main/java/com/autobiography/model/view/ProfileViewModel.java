@@ -54,4 +54,14 @@ public class ProfileViewModel {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    @Override
+    public String toString() {
+        return "ProfileViewModel{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", isPublic=" + isPublic +
+                '}';
+    }
 }

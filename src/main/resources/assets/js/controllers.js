@@ -1,4 +1,4 @@
-var autoBio = angular.module('AutoBioControllersModule', ['autoBioFactories']);
+var autoBio = angular.module('AutoBioControllersModule', ['autoBioFactories','ui.bootstrap.modal']);
 
 autoBio.controller('ResetPasswordController', ['$scope', '$location', function ($scope, $location) {
     $scope.error = $location.search().e;
@@ -127,8 +127,8 @@ autoBio.controller('ErrorController', ['$scope', '$window', function ($scope, $w
 
 }]);
 
-autoBio.controller('AutoBiographyFullController', ['$scope', '$location', 'AutobioTextFactory', function ($scope, $location, AutobioTextFactory) {
-    autoBioTextController($scope, $location, AutobioTextFactory, "FULL", 10000);
+autoBio.controller('AutoBiographyFullController', ['$scope', '$location', 'AutobioTextFactory', '$uibModal', function ($scope, $location, AutobioTextFactory, $uibModal) {
+    autoBioTextController($scope, $location, AutobioTextFactory, "FULL", 10000, $uibModal);
 }]);
 
 autoBio.controller('AutoBiographyFullReadController', ['$scope', '$location', '$sce', '$routeParams', 'AutobioTextFactory', function ($scope, $location, $sce, $routeParams, AutobioTextFactory) {
@@ -157,17 +157,19 @@ autoBio.controller('AutoBiographyFullReadController', ['$scope', '$location', '$
 }]);
 
 
-autoBio.controller('AutoBiographyForWorkController', ['$scope', '$location', '$sce', 'AutobioTextFactory', 'AutoBioTemplatesFactory', function ($scope, $location, $sce, AutobioTextFactory, AutoBioTemplatesFactory) {
-    var CKEDITORWrapper = autoBioTextController($scope, $location, AutobioTextFactory, "FOR_WORK", 5000);
+autoBio.controller('AutoBiographyForWorkController', ['$scope', '$location', '$sce', 'AutobioTextFactory', 'AutoBioTemplatesFactory', '$uibModal', function ($scope, $location, $sce, AutobioTextFactory, AutoBioTemplatesFactory, $uibModal) {
+    var CKEDITORWrapper = autoBioTextController($scope, $location, AutobioTextFactory, "FOR_WORK", 5000, $uibModal);
     var lang = document.getElementById("lang-input-id").value;
     $scope.autoBioTemplates = [];
     $scope.autoBioExample = "";
     AutoBioTemplatesFactory.query(function (autoBioTemplates) {
         $scope.autoBioTemplates = autoBioTemplates;
     });
+    $scope.templateSelection = {};
+    $scope.templateSelection.value = 0;
 
     $scope.setTemplate = function () {
-        AutoBioTemplatesFactory.get({templateId: $scope.templateSelection}, function (autoBioTemplateContent) {
+        AutoBioTemplatesFactory.get({templateId: $scope.templateSelection.value}, function (autoBioTemplateContent) {
             CKEDITORWrapper.CKEDITOR.instances.autobioText.setData(autoBioTemplateContent.template);
             $scope.autoBioExample = $sce.trustAsHtml(autoBioTemplateContent.example);
         });
@@ -249,7 +251,7 @@ function getIdForLeftMenu(currentUserProfile, currentUserPersonId) {
 }
 
 function autoBioTextController($scope, $location, AutobioTextFactory,
-                               autobioTextType, maxCharCount) {
+                               autobioTextType, maxCharCount, $uibModal) {
     var currentUserPersonId = getPersonId($location);
     var autobioText = null;
     var ckEditorObject = loadCkeditor(maxCharCount);
@@ -269,12 +271,28 @@ function autoBioTextController($scope, $location, AutobioTextFactory,
         var data = CKEDITOR.instances.autobioText.getData();
         console.info(data);
         AutobioTextFactory.add({autoBioTextType: autobioTextType}, data, function () {
-
+            var modalInstance = $uibModal.open({
+                animation: false,
+                controller: 'CloseInstanceCtrl',
+                template : '<div>' + MESSAGE_SAVED + '</div></div><div class="modal-footer"><button class="btn btn-primary" type="button" ng-click="close()">Close</button></div>',
+                size: "sm"
+            });
+            $scope.close = function () {
+                modalInstance.dismiss('cancel');
+            };
         });
     };
 
     return ckEditorObject.CKEDITORWrapper;
 }
+
+autoBio.controller('CloseInstanceCtrl', function ($scope, $uibModalInstance) {
+    $scope.close = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+
 function isEditorLoaded() {
     return typeof CKEDITOR !== 'undefined' && CKEDITOR != null && CKEDITOR.status == 'loaded';
 }

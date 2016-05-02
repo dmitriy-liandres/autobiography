@@ -7,7 +7,7 @@
             </td>
             <td>
             ${message("autobioforwork.description")}
-                <select ng-model="templateSelection" ng-change="setTemplate()">
+                <select ng-model="templateSelection.value" ng-change="setTemplate()">
                     <option ng-repeat="autoBioTemplate in autoBioTemplates" value="{{autoBioTemplate.id}}">{{autoBioTemplate.name}}</option>
                 </select>
                 <table>

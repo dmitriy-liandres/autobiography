@@ -23,8 +23,8 @@ import java.io.IOException;
  * Date 10.01.2016
  */
 @Path("/file")
-@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+@Consumes(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 public class FileResource {
 
     private AutoBioFileDao autoBioFileDao;

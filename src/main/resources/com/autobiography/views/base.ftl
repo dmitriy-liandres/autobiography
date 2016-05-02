@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../../../assets/js/angular/angular-route.js"></script>
     <script type="text/javascript" src="../../../assets/js/angular/angular-animate.js"></script>
     <script type="text/javascript" src="../../../assets/js/angular/angular-touch.js"></script>
-    <script type="text/javascript" src="../../../assets/js/angular/ui-bootstrap-tpls-1.2.3.min.js"></script>
+    <script type="text/javascript" src="../../../assets/js/angular/ui-bootstrap-tpls-1.3.2.min.js"></script>
 
     <script type="text/javascript" src="../../../assets/js/factories.js"></script>
     <script type="text/javascript" src="../../../assets/js/controllers.js"></script>
@@ -20,6 +20,19 @@
     <script type="text/javascript" src="../../../assets/js/messages_js_${getServerLocale()}.js"></script>
 
     <link rel="stylesheet" href="../../../assets/css/ckeditor.css" type="text/css">
+    <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" type="text/css">
+
+    <script>
+        var host = window.location.hostname;
+        if(!host.indexOf("historyabout") >=0 ) {
+            window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+            ga('create', 'UA-77196908-1', 'auto');
+            ga('require', 'autotrack');
+            ga('send', 'pageview');
+        }
+   </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <script type="text/javascript" src="../../../assets/js/autotrack.js"></script>
 
 </head>
 <body ng-controller="EmptyController">

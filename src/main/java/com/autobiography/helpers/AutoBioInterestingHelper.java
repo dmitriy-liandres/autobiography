@@ -33,7 +33,7 @@ public class AutoBioInterestingHelper {
                     autoBioInterestingChapters = new ArrayList<>();
                     InputStream in = null;
                     try {
-                        in = MessageHelper.class.getResourceAsStream("../../../examples/biography-interesting/chapters.csv");
+                        in = MessageHelper.class.getResourceAsStream("/examples/biography-interesting/chapters.csv");
                         InputStreamReader isr = new InputStreamReader(in, "UTF-8");
                         CSVParser parser = new CSVParser(isr, CSVFormat.DEFAULT);
                         AutoBioInterestingChapter autoBioInterestingChapter = null;
