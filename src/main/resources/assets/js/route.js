@@ -17,6 +17,10 @@ autobiographyApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'ajax/profile',
                 controller: 'ProfileController'
             })
+            .when('/profile/:personId', {
+                templateUrl: 'ajax/profile-read',
+                controller: 'ProfileController'
+            })
             .when('/logout', {
                 templateUrl: 'ajax/logout',
                 controller: 'LogoutController'

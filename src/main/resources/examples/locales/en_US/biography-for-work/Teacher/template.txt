@@ -1,0 +1,17 @@
+<p style="text-align: center;"><strong>Biography Template for Teacher</strong></p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ____________ (First and last name) has been a ________ (your position, e.g. high school math teacher) in ___________ (school name) since ____ (year). (He/she) graduated from __________ (University name) in _______ (year). (He/she) holds a __________ (your degree, e.g. Bachelor&rsquo;s degree in Mathematics; Master&rsquo;s degree in Education).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms ___________ performs such duties as ___________ (e.g. planning and delivering lessons; preparing and checking tests; organizing extra-curricular activities; preparing and reviewing school curriculum with other staff; monitoring and assessing pupils&rsquo; progress). Moreover, (he/she) has been a presenter at numerous conferences at the local, state and national level.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms ________ is able to create an effective learning environment, motivate students and earn the respect of students. (He/she) has a positive and creative approach to teaching, and is committed to comprehensive education for all. (He/she) can support students with emotional or behavioral problems and helps develop their social skills.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms ______________ is the author of ____________ (e.g. training modules; schoolbooks; development programs; a series workbooks). (He/she) is affiliated with _________ (professional society name).</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>

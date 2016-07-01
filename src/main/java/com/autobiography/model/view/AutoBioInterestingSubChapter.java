@@ -7,7 +7,6 @@ package com.autobiography.model.view;
 public class AutoBioInterestingSubChapter {
     private Long id;
     private String name;
-    private String description;
 
     public Long getId() {
         return id;
@@ -25,14 +24,11 @@ public class AutoBioInterestingSubChapter {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public String toString() {
+        return "AutoBioInterestingSubChapter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
-
 }

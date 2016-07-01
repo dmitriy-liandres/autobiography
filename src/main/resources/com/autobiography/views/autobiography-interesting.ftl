@@ -24,4 +24,6 @@
         </tr>
 
     </table>
+
+    <a href="/autobiography-interesting/${loggedInPersonId}">${message("autobio-interesting.view")}</a>
 </div>

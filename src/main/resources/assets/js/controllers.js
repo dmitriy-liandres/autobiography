@@ -66,6 +66,8 @@ autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$lo
         $window.location.href = '/profile';
         return;
     }
+    $scope.duplicateLogin = !isNull($routeParams.duplicateLogin);
+
     //if next field is not empty, it means that login page was loaded after wrong loginsubmit
     $scope.error = $location.search().e;
     //param which used to decide where we should redirect user after successful login
@@ -95,7 +97,7 @@ autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$lo
 
 autoBio.controller('ProfileController', ['$scope', 'ProfileFactory', '$location', '$window', function ($scope, ProfileFactory, $location, $window) {
     $scope.profile = {};
-    ProfileFactory.get({personId: ""}, function (loadedProfile) {
+    ProfileFactory.get({personId: getPersonId($location)}, function (loadedProfile) {
         $scope.profile = loadedProfile;
     });
 
@@ -161,7 +163,6 @@ autoBio.controller('AutoBiographyForWorkController', ['$scope', '$location', '$s
     var CKEDITORWrapper = autoBioTextController($scope, $location, AutobioTextFactory, "FOR_WORK", 5000, $uibModal);
     var lang = document.getElementById("lang-input-id").value;
     $scope.autoBioTemplates = [];
-    $scope.autoBioExample = "";
     AutoBioTemplatesFactory.query(function (autoBioTemplates) {
         $scope.autoBioTemplates = autoBioTemplates;
     });
@@ -171,7 +172,6 @@ autoBio.controller('AutoBiographyForWorkController', ['$scope', '$location', '$s
     $scope.setTemplate = function () {
         AutoBioTemplatesFactory.get({templateId: $scope.templateSelection.value}, function (autoBioTemplateContent) {
             CKEDITORWrapper.CKEDITOR.instances.autobioText.setData(autoBioTemplateContent.template);
-            $scope.autoBioExample = $sce.trustAsHtml(autoBioTemplateContent.example);
         });
     }
 }]);

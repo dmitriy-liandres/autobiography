@@ -1,0 +1,13 @@
+<p style="text-align:center"><strong>Biography Template for Accountant</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;________ (First and last name) is a/an ____________ (your position title, e.g. accounting clerk; senior accountant; accounting adviser; tax accountant) at _______ (company name). &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;_______ (He/she) has more than _____ years of progressive experience in providing quality accounting services. (His/her) duties include ________ (describe your main duties, e.g. bookkeeping; conducting and supervising audits; financial statements for small clients; preparation of tax returns). (He/she) has worked with _________ (enumerate your employers, e.g. corporations; limited liability companies; not-for-profit organizations; individuals) in _______ (year) respectively.</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Mr/Ms ) ________ is proficient in ________ (name of accounting software and other computer programs, e.g. BillQuick, SAP, Oracle, Excel). Moreover, (his/her) personal qualities, such as ________ (responsibility, excellent communication and analytical skills, accuracy, ability to present complex information in an easy to understand way, stress resistance) help to succeed in any project.</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Mr/Ms) ________ received (his/her) ________ (your degree, e.g. Bachelor of Science Degree in Accounting) from ___________ (College, University name). (He/she) is also a member of ___________ (professional societies or associations name, e.g New York Society of Certified Public Accountants).</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>

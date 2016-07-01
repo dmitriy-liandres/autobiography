@@ -1,0 +1,19 @@
+<p style="text-align: center;"><strong>Biography Template for Software Developer</strong></p>
+
+<p>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ___________ (First and last name) is a Software Developer of Web and Enterprise applications using ________ (e.g. JAVA Script, J2EE technologies).&nbsp;&nbsp;&nbsp;&nbsp; (He/she) obtained __________ (degree, e.g. Bachelor of Science in IT; Master of Computer Applications degree) from ______ (University name) in ______ (year). (His/ her) technical skills include __________ (e.g. operating systems Windows &ndash; all versions; programming languages &ndash; Java, C++, C#; databases &ndash; Oracle 11g; web technologies &ndash; JSF/Richfaces, HTML, JavaScript). (He/she) has a vast experience of _________ (e.g. developing the code as per requirements; developing the JSF/Richfaces pages; writing UI/Business validations).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (His/her) career started in _____ (year) when he joined ______ (company name) as a/an _________ (position, e.g. Software Engineer). In _____ (year) (he/she) was invited to develop the project for _________ (company name) as a ______ (e.g. Chief Developer).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms _______ developed some important projects for _______ (enumerate your employers). Project X is ________________ (describe one of your projects, its structure, used environment and tools).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (His/her) main personal skills are _________ (e.g. ability to work under pressure to meet deadlines; keen intellect; flexibility) which make (him/her) a valuable and cohesive team player.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms _________ is fluent in _______ (languages, e.g. English and German; intermediate in Chinese).</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>

@@ -1,8 +1,6 @@
-<div>
-${message("contact.description")}
-    <p ng-if="messageSent">${message("contact.sent")}</p>
-</div>
-<div>
+<div ng-if="messageSent">${message("contact.sent")}</div>
+<div  ng-if="!messageSent">
+    <p ng-if="messageSent">${message("contact.description")}</p>
     <form class="form-horizontal login-form" role="form" name="contactForm" method="post" novalidate
           action="#">
         <div class="form-group">

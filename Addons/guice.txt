@@ -1,0 +1,9 @@
+https://github.com/HubSpot/dropwizard-guice
+https://github.com/HubSpot/dropwizard-guice/tree/master/src/main/java/com/hubspot/dropwizard/guice
+https://github.com/HubSpot/dropwizard-guice/blob/master/src/main/java/com/hubspot/dropwizard/guice/GuiceBundle.java
+http://kielczewski.eu/2013/07/developing-restful-web-services-using-dropwizard-part-iii/
+http://kielczewski.eu/2013/04/developing-restful-web-services-using-dropwizard/
+http://www.codingricky.com/dropwizard-and-guice-integration/
+http://stash.odesk.com/projects/EN/repos/ptc/compare/diff?targetBranch=refs%2Fheads%2Fmaster&sourceBranch=refs%2Fheads%2FJPA_TEST#ds/service/src/main/java/com/odesk/agora/hello/HelloResource.java
+
+валютный маклер

@@ -6,6 +6,7 @@
       action="{{submitAction}}">
     <div class="form-group">
         <label ng-if="error">${message("wrongUsernameOrPass")}</label>
+        <label ng-if="duplicateLogin">${message("duplicateLogin")}</label>
     </div>
     <div class="form-group">
         <label for="inputEmail3" class="sr-only">${message("email")}</label>

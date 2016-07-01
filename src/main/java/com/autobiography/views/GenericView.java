@@ -22,6 +22,7 @@ public class GenericView extends View {
     public static final String LOGIN_FTL = "login.ftl";
     public static final String RESET_PASSWORD_FTL = "resetPassword.ftl";
     public static final String PROFILE_FTL = "profile.ftl";
+    public static final String PROFILE_READ_FTL = "profile-read.ftl";
     public static final String NOT_FOUND_FTL = "not-found.ftl";
     public static final String NOT_AUTHORIZED_FTL = "not-authorized.ftl";
     public static final String AUTOBIOGRAPHY_FULL_FTL = "autobiography-full.ftl";

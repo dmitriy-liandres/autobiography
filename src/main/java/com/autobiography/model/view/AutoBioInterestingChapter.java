@@ -10,7 +10,6 @@ import java.util.List;
 public class AutoBioInterestingChapter {
     private Long id;
     private String name;
-    private String description;
     private List<AutoBioInterestingSubChapter> subChapters = new ArrayList<>();
 
     public Long getId() {
@@ -29,14 +28,6 @@ public class AutoBioInterestingChapter {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public List<AutoBioInterestingSubChapter> getSubChapters() {
         return subChapters;
     }
@@ -48,5 +39,14 @@ public class AutoBioInterestingChapter {
 
     public void setSubChapters(List<AutoBioInterestingSubChapter> subChapters) {
         this.subChapters = subChapters;
+    }
+
+    @Override
+    public String toString() {
+        return "AutoBioInterestingChapter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subChapters=" + subChapters +
+                '}';
     }
 }

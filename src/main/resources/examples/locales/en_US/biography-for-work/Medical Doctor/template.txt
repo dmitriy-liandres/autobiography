@@ -1,0 +1,17 @@
+<p style="text-align:center"><strong>Biography Template for Medical Doctor</strong></p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__________ (First and last name) is an experienced ______ (position title, e.g. physiotherapist; cardiologist; surgeon) working at a ____________ (name of hospital, clinic, medical center). (He/she) has been successfully diagnosing and treating patients&rsquo; illnesses and diseases for ______ years. (He/she) is a highly motivated and confident individual, a patient focused specialist able to work closely with other health care professionals.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dr. ________ obtained (degree, e.g. Bachelor of Science in Biology Degree; Bachelor of Medicine and Bachelor of Surgery Degree; Doctorate Degree in Orthopedics) from ________ (University or College name) in ________ (year).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After graduation (he/she) joined _________ (name of hospital, clinic, medical center) as a _________ (position). (His/her) duties included ___________ (e.g. diagnosing disease and providing medical help to patients; prescribing medicines; assisting in surgical operations; conducting tests; filling in medical documents). Since ______ (year) Dr. _______ has been working as a/an ________ (current position, e.g. Chief Surgeon) at _______ (hospital name). (He/she) has attended many seminars, participated in different conferences as chief guest.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(He/she) has been a member of _______ (professional society or association name, e.g. Orthopedic Surgeons Association) since ______ (e.g. September 2009).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dr. ___________ is the author of _________ (e.g. articles, research papers) published in ________ (journal name).</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>

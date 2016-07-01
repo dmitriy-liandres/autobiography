@@ -110,9 +110,6 @@
             <column name="template" type="clob">
                 <constraints nullable="false"/>
             </column>
-            <column name="example" type="clob">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
 
@@ -123,10 +120,6 @@
         </createIndex>
 
 
-    </changeSet>
-
-    <changeSet id="5" author="d_liandres">
-        <customChange class="com.autobiography.db.migration.ImportAutoBioTemplates"/>
     </changeSet>
 
     <changeSet id="6" author="d_liandres">
@@ -157,4 +150,5 @@
     <changeSet id="7" author="d_liandres">
         <customChange class="com.autobiography.db.migration.ImportAutoBioTemplates"/>
     </changeSet>
+
 </databaseChangeLog>

@@ -1,0 +1,15 @@
+<p style="text-align: center;"><strong>Biography Template for Network Administrator</strong></p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________ (First and last name) is a passionate and diligent ________ (your position, e.g. System admin, Network Engineer, Desktop Support Engineer) with ____ years of cumulative experience.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(He/she) possesses __________ (your skills, e.g. technical knowledge in system administration, network and hardware maintenance; analytical thinking; willingness to learn; ability to troubleshoot, solve problems quickly and completely).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(His/her) technical skills include __________ (e.g. operating systems Linux, Windows, MS-DOS; network processing; installing, configuring, administering network technologies; good understanding of OSI Model, TCP/IP protocol suite; IP addressing and subnetting; computer assembling and maintenance; installing software and application to user standards).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr./Ms __________ started (his/her) career in _____ (year) as a/an _______ (position, e.g. Service Engineer) with ___________ (company name). In _____ (year) (he/she) joined ___________ (company name) as a/an ________ (position, e.g. Network Administrator). (He/she) is currently responsible for _______ (your duties, e.g. maximizing corporate network services uptime; implementing network security measures to protect data; giving over the phone, email and remote support to customers).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr./Ms ________ graduated from ___________ (name of University) in ___ (year) obtaining __________ (your degree, e.g. Bachelor of Science in Information Technology). In _____ (year) (he/she) attended ______ (name of courses) and was awarded ________ (diploma, e.g. Diploma in Computer Application; Diploma in Computer Networking and Hardware). Language skills: ________ (e.g. German &ndash; fluent, French &ndash; intermediate).</p>
+
+<p>Contact information: ________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; _________ (email address).</p>

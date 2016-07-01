@@ -56,6 +56,12 @@ public class AjaxViewResource {
     }
 
     @GET
+    @Path("profile-read")
+    public GenericView getProfileRadView() {
+        return new GenericView(GenericView.PROFILE_READ_FTL);
+    }
+
+    @GET
     @Path("autobiography-full")
     public GenericView getAutobiographyFull() {
         return new GenericView(GenericView.AUTOBIOGRAPHY_FULL_FTL);

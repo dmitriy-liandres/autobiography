@@ -32,13 +32,6 @@ public class AutoBioTemplate {
     @Column(name = "template", nullable = false, unique = false)
     private String template;
 
-    @Column(name = "example", nullable = false, unique = false)
-    private String example;
-
-    public String getExample() {
-        return example;
-    }
-
     public long getId() {
         return id;
     }
@@ -71,7 +64,4 @@ public class AutoBioTemplate {
         this.template = template;
     }
 
-    public void setExample(String example) {
-        this.example = example;
-    }
 }

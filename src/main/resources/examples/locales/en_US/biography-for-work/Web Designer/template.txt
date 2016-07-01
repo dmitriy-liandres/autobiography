@@ -1,0 +1,19 @@
+<p style="text-align: center;"><strong>Biography Template for Web Designer</strong></p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________ (First and last name) is a thorough and precise Web Designer/Developer with _________ years of experience in the field of software development. (He/she) is continually upgrading his/her skills in order to stay at the cutting edge of web development.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr./Ms __________ successfully completed projects for _________ (your clients, e.g. IT departments; web design agencies; software houses). (He/she) is proficient in _________ (your technical skills, e.g. operating systems MS-DOS, Windows, Linux; PHP, Java Script, HTML, CSS, Flash; Adobe Photoshop CS4, Coral Draw). As a person (he/she) is _______ (your qualities, e.g. confident; adaptable; able to quickly pick up new techniques; friendly and easy to get along with; a team worker).</p>
+
+<p>(He/she) received ___________ (your degrees, diploma, certificates, e.g. Bachelor of Computer Applications; BA (Hons) in Graphic Design; Diploma in Digital Visual Media; Certificate in Website Development) from _______ (University, College name) in _________ (year).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr./Ms _________ worked with __________ (company name) as a/an ______ (position, e.g. junior web designer) from ______ to _______. In _____ (year) (he/she) joined _________ (company name) where (he/she) is presently working as a/an ________ (your current position, e.g. senior web developer). Main responsibilities involve _________ (your current duties, e.g. writing internal and external design specifications; performing maintenance and updates to existing client web sites; participating in brainstorming sessions to come up with ideas; documenting software and technical specifications; providing guidance and advice to less experienced staff).</p>
+
+<p>&nbsp;You can look at his/her completed projects following the links _________ (provide hyperlinks to your projects).</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>

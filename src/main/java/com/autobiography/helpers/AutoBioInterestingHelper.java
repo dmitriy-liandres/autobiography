@@ -42,20 +42,17 @@ public class AutoBioInterestingHelper {
                             String subChapterIdStr = csvRecord.get(1);
                             Long subChapterId = StringUtils.isNoneEmpty(subChapterIdStr) ? Long.valueOf(subChapterIdStr) : null;
                             String nameKey = csvRecord.get(2);
-                            String descriptionKey = nameKey + ".description";
                             if (subChapterId == null) {
                                 //new chapter
                                 autoBioInterestingChapter = new AutoBioInterestingChapter();
                                 autoBioInterestingChapter.setId(chapterId);
                                 autoBioInterestingChapter.setName(MessageHelper.message(nameKey));
-                                autoBioInterestingChapter.setDescription(MessageHelper.message(descriptionKey));
                                 autoBioInterestingChapters.add(autoBioInterestingChapter);
                                 SUB_CHAPTERS_PER_LOCALE.get(locale).putIfAbsent(chapterId, new HashMap<>());
                             } else {
                                 //new subchapter
                                 AutoBioInterestingSubChapter autoBioInterestingSubChapter = new AutoBioInterestingSubChapter();
                                 autoBioInterestingSubChapter.setName(MessageHelper.message(nameKey));
-                                autoBioInterestingSubChapter.setDescription(MessageHelper.message(descriptionKey));
                                 autoBioInterestingSubChapter.setId(subChapterId);
                                 autoBioInterestingChapter.addSubChapters(autoBioInterestingSubChapter);
 

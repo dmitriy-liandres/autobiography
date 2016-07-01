@@ -57,12 +57,9 @@ public class MigrationResource {
                     String name = FileUtils.readFileToString(nameFile);
                     File templateFile = new File(templateDirectory.getPath() + "/template.txt");
                     String template = FileUtils.readFileToString(templateFile);
-                    File exampleFile = new File(templateDirectory.getPath() + "/example.txt");
-                    String example = FileUtils.readFileToString(exampleFile);
                     AutoBioTemplate autoBioTemplate = new AutoBioTemplate();
                     autoBioTemplate.setName(name);
                     autoBioTemplate.setTemplate(template);
-                    autoBioTemplate.setExample(example);
                     autoBioTemplate.setLocale(locale);
                     autoBioTemplateDao.create(autoBioTemplate);
                 }

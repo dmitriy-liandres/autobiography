@@ -22,11 +22,6 @@
                         ${message("autobioforwork.tips")}
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <p ng-bind-html="autoBioExample"></p>
-                        </td>
-                    </tr>
                 </table>
             </td>
         </tr>

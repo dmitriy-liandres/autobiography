@@ -146,7 +146,7 @@ public class AjaxDataResource {
                 List<AutoBioInterestingChapter> chapters = AutoBioInterestingHelper.loadChapters();
                 //chapterId->chapterName
                 Map<Long, String> chaptersMap = chapters.stream().collect(Collectors.toMap(AutoBioInterestingChapter::getId, AutoBioInterestingChapter::getName));
-                //chapterId->subchapterId->subChapterName
+                //chapterId->subChapterId->subChapterName
                 Map<Long, Map<Long, String>> subChaptersMap = chapters.stream()
                         .collect(Collectors.toMap(AutoBioInterestingChapter::getId,
                                 chapter -> chapter.getSubChapters().stream().collect(Collectors.toMap(AutoBioInterestingSubChapter::getId, AutoBioInterestingSubChapter::getName))));
@@ -165,12 +165,17 @@ public class AjaxDataResource {
                     Long lastChapter = -1L;
                     for (AutoBioInterestingAnswer answer : autoBioInterestingAnswers) {
                         if (!lastChapter.equals(answer.getChapterId())) {
+                            if (lastChapter != -1) {
+                                text.append("</div>");
+                            }
+                            text.append("<div class='chapter-read'>").append(chaptersMap.get(answer.getChapterId()));
                             lastChapter = answer.getChapterId();
-                            text.append("<div class='chapter-read'>").append(chaptersMap.get(answer.getChapterId())).append("</div><br>");
                         }
-                        text.append("<div class='subchapter-read'>").append(subChaptersMap.get(answer.getChapterId()).get(answer.getSubChapterId())).append("</div><br>");
+                        text.append("<div class='subchapter-read'>").append(subChaptersMap.get(answer.getChapterId()).get(answer.getSubChapterId()));
                         text.append(answer.getText());
+                        text.append("</div>");
                     }
+                    text.append("</div>");
                 }
                 return new AutoBioTextView(text.toString());
         }

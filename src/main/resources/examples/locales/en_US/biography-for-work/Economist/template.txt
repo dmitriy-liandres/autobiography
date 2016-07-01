@@ -1,0 +1,15 @@
+<p style="text-align:center"><strong>Biography Template for Economist</strong>&nbsp; &nbsp; &nbsp;</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _____________ (First and last name) obtained a Bachelor of Science degree in Economics from __________ (name of University) in ________ (year). In _____ (year) (he/she) was awarded ___________ (other degrees, e.g. MS Economics; PhD Economics) form _________ (name of University). In ____ (year) (he/she) participated in an exchange program with _______ (name of Academy or University) in ______ (country, e.g. Germany).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms _________ started working as a/an _______ (position, e.g. junior economist; associate economist) for __________ (name of company) in ______ (year). (His/her) main responsibilities involved _________ (e.g. preparing charts and tables for analysis and presentations; monitoring economic trends; analyzing economic factors). In ____ (year) (he/she) was promoted to his/her current position of a/an _______ (your current position, e.g. economist I; senior economist). In this position (he/she) is performing such services as ____________ (reviewing stocks and corporate actions; monitoring market and stock developments; providing analysis on earnings, dividends and repurchases; conducting investments researches; developing reports; managing current client accounts).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms _________ is the author of some articles in Economics published in journals such as _________ (name of journals).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (His/her) unique set of personal and professional skills include ___________ (strong communication skills; expertise in decision making; outstanding ability to work with a wide range of clients; strong attention to detail; reliability; remarkable ability to synthesize and analyze complex information). Another Mr./Ms ______&rsquo;s strong point is technical literacy: _______ (STATA, Matlab, Microsoft Excel and Access, PowerPoint, Adobe InDesign).</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>

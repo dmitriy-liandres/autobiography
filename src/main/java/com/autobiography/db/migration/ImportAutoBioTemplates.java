@@ -50,7 +50,7 @@ public class ImportAutoBioTemplates extends CustomTaskChangeBase {
 
             //insert new templates
             String sqlInsertTemplate =
-                    "insert into auto_bio_template (locale, name, template, example)  values (?, ?, ?, ?) ";
+                    "insert into auto_bio_template (locale, name, template)  values (?, ?, ?) ";
             psInsertTemplate = dbConnection.prepareStatement(sqlInsertTemplate);
 
             final String path = "examples/locales";
@@ -97,11 +97,9 @@ public class ImportAutoBioTemplates extends CustomTaskChangeBase {
                     String pathToTemplate = "/" + path + "/" + locale + "/biography-for-work/" + templateName;
                     String name = loadFile(pathToTemplate + "/name.txt");
                     String template = loadFile(pathToTemplate + "/template.txt");
-                    String example = loadFile(pathToTemplate + "/example.txt");
                     psInsertTemplate.setString(1, locale);
                     psInsertTemplate.setString(2, name);
                     psInsertTemplate.setString(3, template);
-                    psInsertTemplate.setString(4, example);
                     psInsertTemplate.executeUpdate();
                 }
             }

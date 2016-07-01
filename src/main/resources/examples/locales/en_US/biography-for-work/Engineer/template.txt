@@ -1,0 +1,13 @@
+<p style="text-align:center"><strong>Biography Template for Engineer</strong></p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _________ (First and last name) was born in _________ (city/town, country) in ______ (year). (He/she) received __________ (your degree, e.g. B.E. in electrical engineering) from __________ (name of University) in _______ (year). After ____ years of engineering practice (he/she) continued education at (name of University/Institute) where (he/she) earned ______ (degree, e.g. M.S. degree; PhD degree in engineering).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms _______ has over _____ years of experience in ________ (branch, e.g. engineering design; manufacturing; mechanical engineering; computer science). In _____ (year) (he/she) joined _________ (name of company, organization) as a/an ______ (position, e.g. Senior Engineer; Director of the Laboratory), where he/she __________ (describe your duties and achievements, e.g. designed cameras, related mechanisms and high-speed automated machinery) for ______ years. Then Mr./Ms ________ spent _______ years at __________ (name of company) ___________(describe your duties there, e.g. constructing robots). At present (he/she) is a/an ________ (your current position, e.g Senior Director of Technology; independent consultant on engineering projects). (His/her) current research interests include ________ (e.g. power electronics; electrical machines and drives; active filters; renewable energy systems).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mr./Ms ________ &nbsp;holds some patents for ________(your inventions, devices). (He/she) is the author of technical papers and journal articles covering _________ (branch of engineering, e.g. kinematics; dynamics of machinery; cam design and manufacturing; computers in education; engineering education). (He/she) is a Fellow of ______ (name of society or association, e.g. the American Society of Mechanical Engineers).&nbsp;</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>

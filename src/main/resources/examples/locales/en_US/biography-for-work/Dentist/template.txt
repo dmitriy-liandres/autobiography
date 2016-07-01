@@ -1,0 +1,19 @@
+<p style="text-align:center"><strong>Biography Template for Dentist</strong></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;___________ (First and last name) graduated in ______ (year) from __________ (name of University or College), obtaining (his/her) ___________ (your degree, e.g. DMD degree; DDS degree; Bachelor of Dental Science).</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(He/she) started a career at ________ (name of clinic, hospital) in ______ (year) working there as a __________ (position, e.g. dental assistant; dental hygienist). In ______ (year) (he/she) was invited to complete a general practice residency at __________ (name of hospital), which provided (his/her) with advanced training in all the specialties of dentistry including oral surgery, anesthesia, and treatment of medically compromised patients.</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Dr. _______ has been working as a __________ (your current position, e.g. dental surgeon; orthodontist) at _____________ (name of hospital or medical center) for ____ years. (He/she) is responsible for _______ (your current duties, e.g. examining patients&rsquo; teeth and diagnosing their dental conditions; examining x-rays; dealing with emergency cases; dealing with medical documents). (He/she) also has a private dental practice and gives lectures for students at ________ (name of University, faculty).</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(His/her) gentle manner, enthusiasm and desire to maintain high standards in the profession are most appreciated by the patients and make (him/her) a valuable member of the team.</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Dr. ________ is a member of ___________ (name of professional societies and associations, e.g. BC Dental Association).</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Outside her professional activities, Dr. ___________ enjoys (your interests and hobby, e.g. swimming, reading, travelling).</p>
+
+<p>Contact information: ___________ (phone number)</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ___________ (e-mail address).</p>
+
+<p>&nbsp;</p>

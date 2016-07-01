@@ -85,7 +85,7 @@ public class BaseViewResource {
         Person person = personDAO.findByUsername(email);
         if (person != null) {
 //error
-            URI uri = UriBuilder.fromUri("/").build();
+            URI uri = UriBuilder.fromUri("/?duplicateLogin=true").build();
             return Response.seeOther(uri).build();
         } else {
             person = new Person();
