@@ -30,5 +30,18 @@
         <a href="/reset-password">${message("resetPassword.forgotPassword")}</a
 
     </div>
+
+    <div class="main-example">
+        <div class="main-example-image"><img src="/assets/img/main-photos/1.jpg"></div>
+        <div class="main-example-text">${message("bio.1")}</div>
+    </div>
+    <div class="main-example">
+        <div class="main-example-image"><img src="/assets/img/main-photos/2.jpg"></div>
+        <div class="main-example-text">${message("bio.2")}</div>
+    </div>
+    <div class="main-example">
+        <div class="main-example-image"><img src="/assets/img/main-photos/3.jpg"></div>
+        <div class="main-example-text">${message("bio.3")}</div>
+    </div>
 </form>
 
