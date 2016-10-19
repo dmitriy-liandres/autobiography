@@ -62,7 +62,7 @@ html, body{background:#f4f8fe;}
 
 .container table a{font-size: 14px;color: #454e6d;text-decoration:none;}
 .container table a.list{line-height:20px;}
-.container table a:hover{text-transform:uppercase;}
+.container table a:hover{text-decoration:underline;}
 .container .form-group{margin:10px 0;}
 .container .form-group label{min-width: 84px;display: inline-block;font-size: 14px;color: #454e6d;}
 .container .form-group input[type=text],
