@@ -1,3 +1,3 @@
 <div>
-${message("notAuthorized")}
+    <p>${message("notAuthorized")}</p>
 </div>

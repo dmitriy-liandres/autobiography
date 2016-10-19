@@ -20,12 +20,14 @@
         </div>
         <div class="form-group">
             <label for="inputEmail3" class="sr-only">${message("contact.user.message")}</label>
-        <textarea name="message" id="message" class="form-control" placeholder="${message("contact.user.message")}"
+        </div>
+        <textarea style="width: 100%; height: 110px;" name="message" id="message" class="form-control" placeholder="${message("contact.user.message")}"
                   ng-model="contactView.message"
                   ng-required="true" ng-minlength="5" ng-maxlength="1000">  </textarea>
 
+        <div class="form-group">
+            <button type="button" class="btn btn-primary"
+                    ng-click="contact(contactForm)">${message("contact.send")}</button>
         </div>
-        <button type="button" class="btn btn-primary"
-                ng-click="contact(contactForm)">${message("contact.send")}</button>
     </form>
 </div>
