@@ -21,7 +21,7 @@
         <div class="form-group">
             <label for="inputEmail3" class="sr-only">${message("contact.user.message")}</label>
         </div>
-        <textarea style="width: 252px; height: 58px;" name="message" id="message" class="form-control" placeholder="${message("contact.user.message")}"
+        <textarea style="width: 100%; height: 110px;" name="message" id="message" class="form-control" placeholder="${message("contact.user.message")}"
                   ng-model="contactView.message"
                   ng-required="true" ng-minlength="5" ng-maxlength="1000">  </textarea>
 
