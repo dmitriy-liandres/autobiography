@@ -1,3 +1,3 @@
 <div>
-${message("notFound")}
+    <p>${message("notFound")}</p>
 </div>

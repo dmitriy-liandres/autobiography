@@ -1,10 +1,10 @@
 <div ng-controller="UserController">
     <table>
         <tr>
-            <td>
+            <td valign="top">
             <#include "widgets/left-panel.ftl">
             </td>
-            <td>
+            <td valign="top">
                 <form name="profileForm">
                     <table>
                         <tr>

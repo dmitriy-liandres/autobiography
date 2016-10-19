@@ -10,7 +10,8 @@
             <select ng-model="templateSelection.value" ng-change="setTemplate()">
                 <option ng-repeat="autoBioTemplate in autoBioTemplates" value="{{autoBioTemplate.id}}">{{autoBioTemplate.name}}</option>
             </select>
-                <table>
+                <p>&nbsp;</p>
+                <table cellpadding="2px">
                     <tr>
                         <td rowspan="2" valign="top" width="65%">
                             <form action="autobiography-for-work.ftl" method="post">
@@ -26,9 +27,12 @@
             </td>
         </tr>
         <tr>
+            <td></td>
             <td>
-                <button type="button" class="btn btn-primary"
-                        ng-click="saveAutobioText()">${message("save")}</button>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary"
+                            ng-click="saveAutobioText()">${message("save")}</button>
+                </div>
             </td>
         </tr>
     </table>

@@ -60,6 +60,9 @@ html, body{background:#f4f8fe;}
     margin-top:0;
 }
 
+.container table a{font-size: 14px;color: #454e6d;text-decoration:none;}
+.container table a.list{line-height:20px;}
+.container table a:hover{text-transform:uppercase;}
 .container .form-group{margin:10px 0;}
 .container .form-group label{min-width: 84px;display: inline-block;font-size: 14px;color: #454e6d;}
 .container .form-group input[type=text],
@@ -84,3 +87,18 @@ html, body{background:#f4f8fe;}
 .left-menu li{height:40px;position: relative;}
 .left-menu li:hover:before{content:"";width:2px; height:30px;position:absolute;left:-10px;top:-5px;display:block;background:#454e6d;}
 .left-menu li a{color:#454e6d; font-size:14px;margin:0;text-decoration:none;}
+
+.modal-dialog.modal-sm{
+    width: 260px;
+    height: auto;
+    position: fixed;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    left: 50%;
+    margin-left: -150px;
+    top: 20%;
+    z-index: 1000;
+    text-align: center;
+    padding: 20px;
+}
