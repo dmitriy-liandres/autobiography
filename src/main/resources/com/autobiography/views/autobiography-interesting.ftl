@@ -2,10 +2,10 @@
     <input type="hidden" id="lang-input-id" value="${getServerLang()}">
     <table>
         <tr>
-            <td>
+            <td valign="top">
             <#include "widgets/left-panel.ftl">
             </td>
-            <td>
+            <td valign="top">
                 <div ng-repeat="chapter in chapters">
                     <a href=""  ng-click="chapter[$index].visible = !chapter[$index].visible">{{$index + 1}}. {{chapter.name}}</a>
 

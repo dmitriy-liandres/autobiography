@@ -2,10 +2,10 @@
     <input type="hidden" id="lang-input-id" value="${getServerLang()}">
     <table>
         <tr>
-            <td>
+            <td valign="top">
             <#include "widgets/left-panel.ftl">
             </td>
-            <td>
+            <td valign="top">
             ${message("autobioFull.description")}
                 <form action="autobiography-full.ftl" method="post">
                     <textarea name="autobioText" id="autobioText" rows="10" cols="80" maxlength="1000">

@@ -57,16 +57,20 @@ html, body{background:#f4f8fe;}
 .container p{
     font-size:14px;
     color:#454e6d;
+    margin-top:0;
 }
 
 .container .form-group{margin:10px 0;}
 .container .form-group label{min-width: 84px;display: inline-block;font-size: 14px;color: #454e6d;}
 .container .form-group input[type=text],
 .container .form-group input[type=email],
-.container .form-group input[type=password]{
+.container .form-group input[type=password],
+.container select{
     border: 1px solid #c4c4c4;
     height:30px;
+    text-indent:10px;
 }
+.container .form-group button[type=button],
 .container .form-group button[type=submit]{
     border: 1px solid #a7a7a7;
     border-radius:0;
@@ -75,3 +79,8 @@ html, body{background:#f4f8fe;}
     padding: 0 20px;
 }
 .container .form-group a{font-size:14px;color: #454e6d;display:inline-block;margin-left:20px;}
+
+.left-menu{list-style:none;margin:0;padding:0;min-width:230px;}
+.left-menu li{height:40px;position: relative;}
+.left-menu li:hover:before{content:"";width:2px; height:30px;position:absolute;left:-10px;top:-5px;display:block;background:#454e6d;}
+.left-menu li a{color:#454e6d; font-size:14px;margin:0;text-decoration:none;}
