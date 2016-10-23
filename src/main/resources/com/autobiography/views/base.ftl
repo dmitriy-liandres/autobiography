@@ -23,6 +23,8 @@
     <!--<link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" type="text/css">-->
     <link rel="stylesheet" href="../../../assets/css/main.css" type="text/css">
 
+    <link rel="icon" type="image/png" href="../../../assets/favicon.ico" />
+
     <script>
         var host = window.location.hostname;
         if(!host.indexOf("historyabout") >=0 ) {
@@ -69,7 +71,12 @@
                 <div class="clear"></div>
             </div>
             <div class="navContainer">
-                <a class="all-bios-link" href="/">${message("topPanel.main")}</a>
+                <#if loggedInPersonId??>
+                    <a class="all-bios-link" href="/profile">${message("topPanel.main")}</a>
+                </#if>
+                <#if !loggedInPersonId??>
+                    <a class="all-bios-link" href="/">${message("topPanel.main")}</a>
+                </#if>
                 <a class="all-bios-link" href="/about">${message("about.name")}</a>
                 <a class="all-bios-link" href="/all">${message("topPanel.search.all")}</a>
                 <a class="all-bios-link" href="/about">${message("about.name")}</a>

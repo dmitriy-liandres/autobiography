@@ -5,6 +5,7 @@
             <#include "widgets/left-panel.ftl">
             </td>
             <td valign="top">
+                <p id="current-user-name-id">${message("autobio.autobiographyAbout")} {{currentUserName}}</p>
                 <p ng-bind-html="autobioText"></p>
                 <input type="hidden" id="noAutobiographyId" value="${message("autobio.noAutobiography")}">
                 <input type="hidden" id="autoBioTextTypeId" value="${autoBioTextType}">

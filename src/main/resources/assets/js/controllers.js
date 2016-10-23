@@ -20,7 +20,7 @@ autoBio.controller('ContactController', ['$scope', 'ContactFactory', function ($
 }]);
 
 
-autoBio.controller('EmptyController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+autoBio.controller('EmptyController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
     $scope.searchProfiles = function (val) {
         return $http.get('data/search/' + val, {}).then(function (response) {
             return response.data;
@@ -28,7 +28,7 @@ autoBio.controller('EmptyController', ['$scope', '$http', '$window', function ($
     };
 
     $scope.selectProfile = function ($item, $model, $label, $event) {
-        $window.location.href = '/autobiography-for-work/' + $item.id;
+        $location.path('/autobiography-for-work/' + $item.id);
     };
 }]);
 
@@ -54,16 +54,15 @@ autoBio.controller('UserController', ['$scope', '$http', '$location', 'ProfileFa
 
     ProfileFactory.get({personId: currentUserPersonId}, function (loadedProfile) {
         $scope.currentUserProfile = loadedProfile;
-        $scope.currentUserProfile = loadedProfile;
-        $scope.currentUserName = getNameForLeftMenu($scope.currentUserProfile);
+        $scope.currentUserName = getName($scope.currentUserProfile);
         $scope.idForLeftMenu = currentUserPersonId;
     });
 
 }]);
 
-autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$location', function ($scope, $window, $routeParams, $location) {
+autoBio.controller('LoginController', ['$scope', '$routeParams', '$location', function ($scope, $routeParams, $location) {
     if (isLoggedIn()) {
-        $window.location.href = '/profile';
+        $location.path('/profile');
         return;
     }
     $scope.duplicateLogin = !isNull($routeParams.duplicateLogin);
@@ -95,7 +94,7 @@ autoBio.controller('LoginController', ['$scope', '$window', '$routeParams', '$lo
     };
 }]);
 
-autoBio.controller('ProfileController', ['$scope', 'ProfileFactory', '$location', '$window', function ($scope, ProfileFactory, $location, $window) {
+autoBio.controller('ProfileController', ['$scope', 'ProfileFactory', '$location', function ($scope, ProfileFactory, $location) {
     $scope.profile = {};
     ProfileFactory.get({personId: getPersonId($location)}, function (loadedProfile) {
         $scope.profile = loadedProfile;
@@ -115,17 +114,17 @@ autoBio.controller('LogoutController', ['$scope', '$window', function ($scope, $
     $window.location.href = '/';
 }]);
 
-autoBio.controller('NotFoundController', ['$scope', '$window', function ($scope, $window) {
-    redirectToMain($window);
+autoBio.controller('NotFoundController', ['$scope', '$location', function ($scope, $location) {
+    redirectToMain($location);
 
 }]);
 
-autoBio.controller('NotAuthorizedController', ['$scope', '$window', function ($scope, $window) {
-    redirectToMain($window);
+autoBio.controller('NotAuthorizedController', ['$scope', '$location', function ($scope, $location) {
+    redirectToMain($location);
 }]);
 
-autoBio.controller('ErrorController', ['$scope', '$window', function ($scope, $window) {
-    redirectToMain($window);
+autoBio.controller('ErrorController', ['$scope', '$location', function ($scope, $location) {
+    redirectToMain($location);
 
 }]);
 
@@ -470,12 +469,12 @@ function isValid(formName) {
     return formName.$valid;
 }
 
-function redirectToMain($window) {
+function redirectToMain($location) {
     setTimeout(function () {
         if (isLoggedIn()) {
-            $window.location.href = '/profile';
+            $location.path('/profile');
         } else {
-            $window.location.href = '/';
+            $location.path('/');
         }
     }, 5000);
 }
