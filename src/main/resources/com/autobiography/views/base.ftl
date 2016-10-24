@@ -48,14 +48,16 @@
         <nav class="navigation">
             <div>
                 <div class="topPanelBiography">${message("topPanel.biography")}</div>
-                <input type="text" ng-model="profileSelected" placeholder="${message("topPanel.search.tooltip")}"
-                       uib-typeahead="profile as (profile.name + ' ' + profile.surname) for profile in searchProfiles($viewValue)"
-                       typeahead-loading="loadingProfiles" typeahead-no-results="noResults" class="form-control search"
-                       typeahead-on-select="selectProfile($item, $model, $label, $event)">
-                <i ng-show="loadingProfiles" class="glyphicon glyphicon-refresh"></i>
+                <div class="search-block">
+                    <input type="text" ng-model="profileSelected" placeholder="${message("topPanel.search.tooltip")}"
+                           uib-typeahead="profile as (profile.name + ' ' + profile.surname) for profile in searchProfiles($viewValue)"
+                           typeahead-loading="loadingProfiles" typeahead-no-results="noResults" class="form-control search"
+                           typeahead-on-select="selectProfile($item, $model, $label, $event)">
+                    <i ng-show="loadingProfiles" class="glyphicon glyphicon-refresh"></i>
 
-                <div ng-show="noResults">
-                    <i class="glyphicon glyphicon-remove"></i> ${message("topPanel.search.noResults")}
+                    <div ng-show="noResults" class="no-results">
+                        <i class="glyphicon glyphicon-remove"></i> ${message("topPanel.search.noResults")}
+                    </div>
                 </div>
                 <div class="logged">
                     <#if loggedInPersonId??>
