@@ -60,3 +60,9 @@ body {
 	max-width: 200px;
 	max-height: 200px;
 }
+
+.js-image-delete-link{
+	width: 25px !important;
+	position: relative;
+	top: -106px;
+}
