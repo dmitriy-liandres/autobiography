@@ -120,3 +120,4 @@ a{color:#454e6d;font-size:14px;}
 .search-block .no-results{position: absolute;width: 100%;background: #fff;padding: 10px;border: 1px solid #ccc;z-index: 1;top: 69px;left: 20px;padding-right: 0;font-size: 14px;color: #666;}
 .search-block .dropdown-menu.ng-isolate-scope a{color:#454e6d;font-size:14px;}
 
+.ng-scope{font-size:14px; color:#454e6d;}
