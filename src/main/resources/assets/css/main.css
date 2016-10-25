@@ -121,3 +121,20 @@ a{color:#454e6d;font-size:14px;}
 .search-block .dropdown-menu.ng-isolate-scope a{color:#454e6d;font-size:14px;}
 
 .ng-scope{font-size:14px; color:#454e6d;}
+
+.chapter-read{
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.subchapter-read{
+    font-style: italic;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.subchapter-read p{
+    font-style: normal;
+    margin-left: 10px;
+    margin-top: 5px;
+}
