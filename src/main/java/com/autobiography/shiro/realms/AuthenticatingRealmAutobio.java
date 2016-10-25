@@ -47,7 +47,6 @@ public class AuthenticatingRealmAutobio extends AuthorizingRealm {
             }
 
             if (!person.getPassword().equals(new String(usernamePasswordToken.getPassword()))) {
-                //todo change message
                 throw new UnknownAccountException("Password is not correct for [" + usernamePasswordToken.getUsername() + "]");
             }
             return new SimpleAuthenticationInfo(person, person.getPassword(), getName());

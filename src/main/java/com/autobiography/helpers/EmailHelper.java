@@ -33,7 +33,7 @@ public final class EmailHelper {
         msg.setSentDate(new Date());
         SMTPTransport t =
                 (SMTPTransport) session.getTransport("smtps");
-        t.connect("smtp.mailgun.com", "postmaster@sandbox5381a5678d9340c4a1a48bc5ecfdc5d2.mailgun.org", "d6b3305e2cfe11b59362e8f5a33da155");
+        t.connect("smtp.mailgun.com", "postmaster@historyabout.me", "fbd6f1e1e91c2d20610ac79d8968ee03");
         t.sendMessage(msg, msg.getAllRecipients());
         t.close();
     }

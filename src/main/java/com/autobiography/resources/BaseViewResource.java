@@ -129,7 +129,7 @@ public class BaseViewResource {
         if (person == null) {
             return Response.seeOther(UriBuilder.fromUri("/reset-password?e=incorrectEmail").build()).build();
         } else {
-            EmailHelper.sendEmail("Your new password for //todo", "You password for //TODO is " + person.getPassword(), email);
+            EmailHelper.sendEmail("Your password for http://toolformoney.com/", "Your password for http://toolformoney.com/ is " + person.getPassword(), email);
         }
         URI uri = UriBuilder.fromUri("").build();
         return Response.seeOther(uri).build();
