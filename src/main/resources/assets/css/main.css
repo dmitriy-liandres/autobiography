@@ -123,18 +123,38 @@ a{color:#454e6d;font-size:14px;}
 .ng-scope{font-size:14px; color:#454e6d;}
 
 .chapter-read{
-    font-style: italic;
+    //font-style: italic;
     margin-top: 10px;
+    font-size:16px;
+    position:relative;
+    margin-left: 7px;
+}
+
+.chapter-read:before{
+    content: "";
+    display: block;
+    width: 2px;
+    height: 19px;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    background: #454e6d;
 }
 
 .subchapter-read{
-    font-style: italic;
+    //font-style: italic;
     margin-left: 10px;
-    margin-top: 5px;
+    margin-top: 15px;
+    border-left: 2px solid #454e6d;
+    padding-left:10px;
 }
 
 .subchapter-read p{
     font-style: normal;
-    margin-left: 10px;
+    margin-left: -20px;
     margin-top: 5px;
+    background:#fff;
+    padding-left:40px;
 }
+
+#current-user-name-id{font-size:20px;}
