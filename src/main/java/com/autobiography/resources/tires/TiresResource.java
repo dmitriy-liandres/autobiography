@@ -28,7 +28,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This resource is used parsing http://tires.yad2.co.il/
@@ -48,6 +51,15 @@ public class TiresResource {
 
     private static final Integer maxHourToSendRequests = 20;
     private static final Integer minHourToSendRequests = 8;
+    private static Boolean isStop = false;
+    private static Boolean isRun = false;
+
+    @GET
+    @Path("stop")
+    public String stopParseRires() throws Exception {
+        isStop = true;
+        return "ok";
+    }
 
     @GET
     @Produces("application/csv")
@@ -56,7 +68,10 @@ public class TiresResource {
                              @QueryParam("diameter") List<String> providedDiameters,
                              @QueryParam("aspectRatio") List<String> providedAspectRatios,
                              @QueryParam("nominalWidth") List<String> providedNominalWidths) throws Exception {
-
+        if (isRun) {
+            return "Previous request still runs".getBytes();
+        }
+        isRun = true;
         Date start = new Date();
         logger.info("parseRires start at {}", start);
 
@@ -84,15 +99,16 @@ public class TiresResource {
             if ("-1".equals(value)) {
                 continue;
             }
-            if (CollectionUtils.isEmpty(providedDiameters) || providedDiameters.contains(text)) {
-                diameters.add(new TiresJsonItem(value, text));
-            }
+            diameters.add(new TiresJsonItem(value, text));
+
         }
 
 
         for (TiresJsonItem diameter : diameters) {
             logger.info("diameter = {}", diameter);
-            overworkLoadDiameter(tiresResultItems, 1, objectMapper, diameter, providedAspectRatios, providedNominalWidths);
+            if (!isStop && (CollectionUtils.isEmpty(providedDiameters) || providedDiameters.contains(diameter.getText()))) {
+                overworkLoadDiameter(tiresResultItems, 1, objectMapper, diameter, providedAspectRatios, providedNominalWidths);
+            }
         }
 
 
@@ -108,7 +124,8 @@ public class TiresResource {
 
         logger.info("parseRires end at {}, duration = {}", end, (end.getTime() - start.getTime()) / 1000);
         logger.info("parseRires result = {}", resultStr);
-
+        isStop = false;
+        isRun = false;
         return resultStr.getBytes();
     }
 
@@ -122,7 +139,7 @@ public class TiresResource {
                 return;
             }
             for (TiresJsonItem aspectRatio : aspectRatioJson.getResult()) {
-                if (CollectionUtils.isEmpty(providedAspectRatios) || providedAspectRatios.contains(aspectRatio.getText())) {
+                if (!isStop && (CollectionUtils.isEmpty(providedAspectRatios) || providedAspectRatios.contains(aspectRatio.getText()))) {
                     overworkLoadAspectRatio(tiresResultItems, 1, objectMapper, diameter, aspectRatio, providedNominalWidths);
                 }
             }
@@ -148,7 +165,7 @@ public class TiresResource {
                 return;
             }
             for (TiresJsonItem nominalWidth : nominalWidthOfTireInMillimetersStrJson.getResult()) {
-                if (CollectionUtils.isEmpty(providedNominalWidths) || providedNominalWidths.contains(nominalWidth.getText())) {
+                if (!isStop && (CollectionUtils.isEmpty(providedNominalWidths) || providedNominalWidths.contains(nominalWidth.getText()))) {
                     overworkResultPage(tiresResultItems, 1, diameter, aspectRatio, nominalWidth);
                 }
             }
@@ -176,6 +193,9 @@ public class TiresResource {
                 return;
             }
             for (Element row : resultDataTableRows) {
+                if (isStop) {
+                    break;
+                }
                 Elements tireData = row.getElementsByClass("tireData");
                 if (tireData.size() == 0) {
                     continue;
